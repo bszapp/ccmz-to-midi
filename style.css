@@ -1,0 +1,392 @@
+html {
+    display: flex;
+    justify-content: center;
+}
+
+body {
+    max-width: 600px;
+}
+
+#title {
+    text-align: center;
+    width: 100%;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+#inputfile {
+    width: calc(100% - 64px);
+    margin: 16px;
+    padding: 16px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    border-radius: 16px;
+    border: 2px dashed #888;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+}
+
+#drop-zz {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0001;
+}
+
+#drop-zz.show {
+    opacity: 1;
+    backdrop-filter: blur(6px);
+}
+
+#tip1 {
+    width: calc(100% - 56px);
+    margin: 16px;
+    padding: 12px;
+    border-radius: 16px;
+    border: 2px solid #ffbb00;
+    background-color: #ffbb0038;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+img {
+    width: 100%;
+    max-width: 400px;
+    object-fit: cover;
+    margin: 4px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+}
+
+#tip2 {
+    width: calc(100% - 56px);
+    margin: 16px;
+    padding: 12px;
+    border-radius: 16px;
+    background-color: #ededed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tip-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tip-title-text {
+    line-height: 20px;
+    font-weight: bold;
+}
+
+.tip-text {
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+@font-face {
+    font-family: 'icon';
+    src: url('boxicons.woff2') format('woff2');
+}
+
+.icon-warn,
+.icon-tip {
+    font-family: icon;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.icon-warn:before {
+    content: "\f113"
+}
+
+.icon-tip:before {
+    content: "\f493"
+}
+
+#inputtip {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#inputtip2 {
+    font-size: 14px;
+    color: #444;
+}
+
+#inputfilebtn {
+    margin-top: 12px;
+    width: calc(100% - 32px);
+    height: 36px;
+    border-radius: 18px;
+    border: none;
+    background-color: #0088ff;
+    color: #fff;
+    cursor: pointer;
+}
+
+body:not(.mobile) #inputfilebtn:hover {
+    background-color: hsl(208, 100%, 45%);
+}
+
+#inputfilebtn:active {
+    background-color: hsl(208, 100%, 40%) !important;
+}
+
+#run {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #0008;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+* {
+    transition: all 0.2s;
+}
+
+#runbox {
+    width: 400px;
+    min-height: 200px;
+    max-width: calc(100% - 40px);
+    max-height: calc(100% - 40px);
+    background-color: #fff;
+    box-shadow: 0 0 8px #0004;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 14px;
+    user-select: none;
+    overflow: hidden;
+}
+
+#box-title {
+    padding: 12px;
+    font-size: 18px;
+    padding-bottom: 12px;
+    background-color: #6800e6;
+    color: #fff;
+    word-break: break-all;
+}
+
+#box-title.c_success {
+    background-color: #008800;
+}
+
+#box-title.c_error {
+    background-color: #d80000;
+}
+
+#box-title.c_waiting {
+    background-color: #0088ff;
+}
+
+
+.text {
+    margin-left: 16px;
+    white-space: nowrap;
+}
+
+.title2 {
+    margin: 12px;
+    font-size: 18px;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.input-xz {
+    display: flex;
+    margin-left: 16px;
+    margin-right: 16px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.input-xz .xx {
+    white-space: nowrap;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 32px;
+    height: 32px;
+    margin: 4px;
+    background-color: #eee;
+}
+
+body:not(.mobile) .input-xz .xx:hover {
+    background-color: #ddd;
+}
+
+body .input-xz .xx:active {
+    background-color: #ccc !important;
+}
+
+.input-xz .xx.xz {
+    background-color: #ffbb00 !important;
+}
+
+
+input {
+    accent-color: #007e4c;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    margin: 8px;
+}
+
+#buttons button {
+    border: none;
+    width: 100%;
+    margin: 8px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 16px;
+}
+
+
+
+#cancelbtn,
+#closebtn {
+    background-color: #e8e8e8;
+    cursor: pointer;
+}
+
+body:not(.mobile) #cancelbtn:hover,
+#closebtn:hover {
+    background-color: hsl(0, 0%, 85%);
+}
+
+#cancelbtn:active,
+#closebtn:active {
+    background-color: hsl(0, 0%, 75%) !important;
+}
+
+#okbtn,
+#downloadbtn {
+    background-color: #0088ff;
+    color: #fff;
+    cursor: pointer;
+}
+
+body:not(.mobile) #okbtn:hover,
+#downloadbtn:hover {
+    background-color: hsl(208, 100%, 45%);
+}
+
+#okbtn:active,
+#downloadbtn:active {
+    background-color: hsl(208, 100%, 40%) !important;
+}
+
+.input-checkbox {
+    display: flex;
+    margin-left: 16px;
+    margin-right: 16px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.infotext {
+    font-size: 16px;
+    display: flex;
+    padding: 4px;
+    align-items: center;
+    width: calc(100% - 12px);
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+body:not(.mobile) .infotext:hover {
+    background-color: #0001;
+}
+
+
+.infotext.error {
+    color: #d80000;
+    background-color: #f001;
+}
+
+.infotext-btn {
+    color: #0088ff;
+    margin-left: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#box2 {
+    min-height: 80px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#box3 {
+    border-top: 1px solid #0002;
+    padding-top: 12px;
+}
+
+.input-text {
+    display: flex;
+    margin-left: 16px;
+    margin-right: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-text input {
+    width: 100%;
+    border: none;
+    background-color: #0000;
+    border-bottom: 2px solid #666;
+    font-size: 16px;
+
+    &:focus {
+        outline: none;
+        border-bottom: 2px solid #ffbb00;
+    }
+}
+
+::selection {
+    background-color: #ffbb0020;
+}
+
+.input-text div {
+    white-space: nowrap;
+    font-size: 16px;
+}
+
+#pageview {
+    background-color: #fff;
+}
+
+body.mobile div,
+body.mobile button {
+    cursor: default !important;
+}

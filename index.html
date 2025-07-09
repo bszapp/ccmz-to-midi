@@ -4,20 +4,89 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="*.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-pc.css" media="(min-width: 900px) and (min-height: 600px)">
     <script src="jszip.min.js"></script>
     <script src="midi.js"></script>
     <script src="index.js"></script>
 </head>
 
 <body>
-    ccmz获取方法：虫虫钢琴电脑浏览器曲谱简谱模式网络请求记录中
-    <br>
-    本工具暂不支持设置音符音量、设置小节速度，请自行对照修改
-    <br>
-    <div style="color: #bb0000;"> 免责声明：本工具仅用于学习，请勿传播生成后的文件，造成后果概不负责。</div>
-    <br>
-    <input type="file" id="file" />
+    <div id="pageview">
+        <div id="part1">
+            <div id="title">ccmz解析工具</div>
+            <div id="inputfile">
+                <div id="inputtip">请选择ccmz文件或拖入此处</div>
+                <div id="inputtip2">解析步骤将在本地运行</div>
+                <button id="inputfilebtn">选择文件</button>
+                <div id="drop-zz">
+                    <div id="inputtip">松手即可使用此文件</div>
+                </div>
+            </div>
+            <div id="tip1">
+                <div class="tip-title">
+                    <div class="icon-warn"></div>
+                    <div class="tip-title-text">免责声明</div>
+                </div>
+                <div class="tip-text">请确保你已经购买此曲谱或已经开通vip再转换，转换后的文件<b>仅供个人学习使用</b>，请勿传播，造成后果概不负责。</div>
+            </div>
+        </div>
+        <div id="part2">
+            <div id="tip2">
+                <div class="tip-title">
+                    <div class="icon-tip"></div>
+                    <div class="tip-title-text">ccmz获取方式</div>
+                </div>
+                <div class="tip-text">前往虫虫钢琴官网（电脑版），搜索曲谱并打开，点击曲谱播放栏简谱模式；</div>
+                <img src="tip1.png" />
+                <div class="tip-text">按F12打开开发人员工具（DevTools），切换网络面板，刷新页面；</div>
+                <div class="tip-text">在过滤输入框中输入ccmz，双击列表中类型为xhr的文件即可下载。</div>
+                <img src="tip2.png" />
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="file" style="display: none;" />
+
+    <div id="run" style="display: none;">
+        <div id="runbox">
+            <div id="box-title"></div>
+
+            <div id="box1" style="display: none;">
+                <div class="title2">操作</div>
+                <div class="text">音量对比度：</div>
+                <div id="config-yinliang" class="input-xz" data-value="1">
+                    <div class="xx">0.5x</div>
+                    <div class="xx">1x</div>
+                    <div class="xx">2x</div>
+                    <div class="xx">3x</div>
+                </div>
+                <div class="text">音符长度缩放：</div>
+                <div id="config-suofang" class="input-xz" data-value="1">
+                    <div class="xx">0.25x</div>
+                    <div class="xx">0.5x</div>
+                    <div class="xx">1x</div>
+                    <div class="xx">2x</div>
+                </div>
+            </div>
+            <div id="box2" style="display: none;"></div>
+            <div id="box3" style="display: n1one;">
+                <div class="input-text">
+                    <div>文件名：</div>
+                    <input type="text" id="filename" />
+                    <div>.mid</div>
+                </div>
+            </div>
+
+            <div id="buttons">
+                <button id="cancelbtn">取消</button>
+                <button id="okbtn">确定</button>
+                <button id="stopbtn" style="display: none;">停止</button>
+                <button id="closebtn" style="display: none;">关闭</button>
+                <button id="downloadbtn" style="display: none;">下载</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
