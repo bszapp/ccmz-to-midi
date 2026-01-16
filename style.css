@@ -33,6 +33,10 @@ body {
     user-select: none;
 }
 
+#inputfile.dragover {
+    border-color: #0066ee;
+}
+
 #drop-zz {
     position: absolute;
     left: 0;
@@ -46,6 +50,7 @@ body {
     align-items: center;
     justify-content: center;
     background-color: #0001;
+    color: #0066ee;
 }
 
 #drop-zz.show {
@@ -66,7 +71,7 @@ body {
     flex-direction: column;
 }
 
-img {
+#tip2 img {
     width: 100%;
     max-width: 400px;
     object-fit: cover;
@@ -385,6 +390,51 @@ body:not(.mobile) .infotext:hover {
 #pageview {
     background-color: #fff;
 }
+
+#shuqianitem {
+    margin: 16px;
+    padding: 12px;
+    border-radius: 16px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid #ddd;
+}
+
+.shuqian-tip {
+    font-size: 16px;
+    margin: 2px;
+}
+
+#shuqian-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    user-select: none;
+    color: #444;
+    text-decoration: none;
+    padding: 0px 8px 0px 8px;
+    margin: 4px;
+    height: 26px;
+    border-radius: 16px;
+    font-size: 14px;
+    border: #0002 solid 1px;
+
+    &:hover {
+        background-color: #0001;
+        border: #0001 solid 1px;
+    }
+}
+
+.shuqian-tip-small {
+    font-size: 12px;
+    margin: 2px;
+    color: #666;
+}
+
 
 body.mobile div,
 body.mobile button {

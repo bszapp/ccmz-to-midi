@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>曲谱下载中心</title>
+
+    <style>
+        /* 书签样式 */
+        #bookmark {
+            padding: 8px;
+            border-radius: 8px;
+            background-color: #ddd;
+            text-align: center;
+            cursor: move;
+            text-decoration: none;
+        }
+
+        #bookmark strong {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        #bookmark span {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* 弹窗 */
+        #modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #panel {
+            background: #fff;
+            width: 320px;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .3);
+        }
+
+        #title {
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .track {
+            height: 14px;
+            background: #eee;
+            border-radius: 7px;
+            overflow: hidden;
+        }
+
+        #bar {
+            height: 100%;
+            width: 0%;
+            background: #4caf50;
+            transition: width .15s;
+        }
+
+        #info {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        #downloadBtn {
+            margin-top: 16px;
+            display: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            background: #1a73e8;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        #downloadBtn:hover {
+            background: #1665cc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a id="bookmark" href="#">
+        <span>ccmz解析工具</span>
+    </a>
+
+    <!-- 下载弹窗 -->
+    <div id="modal">
+        <div id="panel">
+            <div id="title">正在下载文件…</div>
+            <div class="track">
+                <div id="bar"></div>
+            </div>
+            <div id="info">准备中…</div>
+            <button id="downloadBtn">下载文件</button>
+        </div>
+    </div>
+
+    <script>
+        const currentPage = location.origin + location.pathname;
+
+        /* ===== 书签脚本（在曲谱页执行） ===== */
+        const bookmarkCode = `
+javascript:(async()=>{
+try{
+    const iframe = document.querySelector('iframe');
+    if(!iframe) throw new Error('未找到资源');
+
+    const realUrl = new URL(iframe.src).searchParams.get('url');
+    if(!realUrl) throw new Error('未找到真实下载地址');
+
+    const response = await fetch(realUrl);
+
+    /* === 文件名解析（核心修正点） === */
+    let filename = '';
+
+    const cd = response.headers.get('content-disposition');
+    if (cd) {
+        const m =
+            cd.match(/filename\\*=UTF-8''([^;]+)/i) ||
+            cd.match(/filename="?([^";]+)"?/i);
+        if (m) {
+            filename = decodeURIComponent(m[1]);
+        }
+    }
+
+    if (!filename) {
+        const p = new URL(realUrl).pathname.split('/').pop();
+        if (p) filename = decodeURIComponent(p);
+    }
+
+    if (!filename) filename = 'download.bin';
+
+    const total = parseInt(response.headers.get('content-length'),10) || 0;
+    const reader = response.body.getReader();
+
+    const w = window.open('${currentPage}');
+    window.addEventListener('message', async e => {
+        if (e.data !== 'READY') return;
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) {
+                w.postMessage({ action:'DONE', filename }, '*');
+                break;
+            }
+            w.postMessage(
+                { action:'CHUNK', chunk:value, total },
+                '*',
+                [value.buffer]
+            );
+        }
+    });
+}catch(e){ alert(e.message); }
+})();
+`;
+        document.getElementById('bookmark').href = bookmarkCode;
+
+        /* ===== 接收端 ===== */
+        const modal = document.getElementById('modal');
+        const bar = document.getElementById('bar');
+        const info = document.getElementById('info');
+        const btn = document.getElementById('downloadBtn');
+
+        let chunks = [];
+        let loaded = 0;
+        let totalSize = 0;
+        let fileName = 'download.bin';
+
+        const readyTimer = setInterval(() => {
+            if (window.opener) {
+                window.opener.postMessage('READY', '*');
+            }
+        }, 500);
+
+        window.addEventListener('message', e => {
+            const d = e.data;
+            if (!d || d === 'READY') return;
+
+            if (d.action === 'CHUNK') {
+                modal.style.display = 'flex';
+                chunks.push(d.chunk);
+                loaded += d.chunk.length;
+                totalSize = d.total || 0;
+
+                if (totalSize) {
+                    const p = Math.round(loaded / totalSize * 100);
+                    bar.style.width = p + '%';
+                    info.textContent = `已下载 ${p}% (${(loaded / 1024).toFixed(1)} KB)`;
+                } else {
+                    bar.style.width = Math.min(95, loaded / 1024 / 50) + '%';
+                    info.textContent = `已下载 ${(loaded / 1024).toFixed(1)} KB`;
+                }
+            }
+
+            if (d.action === 'DONE') {
+                clearInterval(readyTimer);
+                fileName = d.filename || fileName;
+                bar.style.width = '100%';
+                info.textContent = '下载完成';
+                btn.style.display = 'block';
+
+                const blob = new Blob(chunks);
+                console.log('文件准备就绪:', fileName, blob);
+                btn.onclick = () => {
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = fileName;
+                    a.click();
+                    URL.revokeObjectURL(a.href);
+                };
+
+                chunks = [];
+                loaded = 0;
+            }
+        });
+    </script>
+
+    <script>
+        /* ===== 拖拽成功后自动跳转 ===== */
+        const bookmark = document.getElementById('bookmark');
+        let droppedInside = false;
+
+        document.addEventListener('dragover', e => e.preventDefault());
+        document.addEventListener('drop', () => droppedInside = true);
+
+        bookmark.addEventListener('dragend', () => {
+            setTimeout(() => {
+                if (!droppedInside) {
+                    window.location.href = 'https://www.gangqinpu.com/search/0__0.htm';
+                }
+                droppedInside = false;
+            }, 50);
+        });
+    </script>
+
+</body>
+
+</html>
