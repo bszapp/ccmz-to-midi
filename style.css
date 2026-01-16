@@ -427,7 +427,7 @@ body:not(.mobile) .infotext:hover {
     padding: 12px;
     border-radius: 16px;
     background-color: #ffffff;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
