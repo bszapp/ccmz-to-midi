@@ -1,4 +1,0 @@
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"app"}},[(_vm.ccmz)?_c('Player',{ref:"player",attrs:{"ccmz":_vm.ccmz,"defaultJianpu":_vm.jianpu,"defaultReadingMode":_vm.readingMode,"defaultWaterfallMode":_vm.waterfallMode,"defaultLocked":_vm.locked,"defaultCovered":_vm.covered,"defaultDisableTouchSeek":_vm.disableTouchSeek,"defaultBackgroundColor":_vm.backgroundColor},on:{"onUpdateState":_vm.onUpdateState}}):_vm._e()],1)}
-var staticRenderFns = []
-
-export { render, staticRenderFns }
