@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         document.body.className = 'mobile';
+    } else {
+        shuqianitem.style.display = 'flex';
     }
 
     const dropZone = $('#inputfile');
@@ -47,58 +49,60 @@ document.addEventListener('DOMContentLoaded', () => {
     $('input').onchange = e => start(e.target.files[0]);
     dropZone.ondrop = e => start(e.dataTransfer.files[0]);
 
-    $('#shuqian-item').href = `javascript:(async()=>{
-        const tourl='${location.origin + location.pathname}';
-    try{
-        const iframe = document.querySelector('iframe');
-        if(!iframe) throw 1;
+    //     $('#shuqian-item').href = `javascript:(async()=>{
+    //         const tourl='${location.origin + location.pathname}';
+    //     try{
+    //         const iframe = document.querySelector('iframe');
+    //         if(!iframe) throw 1;
 
-        const realUrl = new URL(iframe.src).searchParams.get('url');
-        if(!realUrl) throw 1;
+    //         const realUrl = new URL(iframe.src).searchParams.get('url');
+    //         if(!realUrl) throw 1;
 
-        const response = await fetch(realUrl);
+    //         const response = await fetch(realUrl);
 
-        let filename = '';
+    //         let filename = '';
 
-        const cd = response.headers.get('content-disposition');
-        if (cd) {
-            const m =
-                cd.match(/filename\\*=UTF-8''([^;]+)/i) ||
-                cd.match(/filename="?([^";]+)"?/i);
-            if (m) {
-                filename = decodeURIComponent(m[1]);
-            }
-        }
+    //         const cd = response.headers.get('content-disposition');
+    //         if (cd) {
+    //             const m =
+    //                 cd.match(/filename\\*=UTF-8''([^;]+)/i) ||
+    //                 cd.match(/filename="?([^";]+)"?/i);
+    //             if (m) {
+    //                 filename = decodeURIComponent(m[1]);
+    //             }
+    //         }
 
-        if (!filename) {
-            const p = new URL(realUrl).pathname.split('/').pop();
-            if (p) filename = decodeURIComponent(p);
-        }
+    //         if (!filename) {
+    //             const p = new URL(realUrl).pathname.split('/').pop();
+    //             if (p) filename = decodeURIComponent(p);
+    //         }
 
-        if (!filename) filename = 'download.bin';
+    //         if (!filename) filename = 'download.bin';
 
-        const total = parseInt(response.headers.get('content-length'),10) || 0;
-        const reader = response.body.getReader();
+    //         const total = parseInt(response.headers.get('content-length'),10) || 0;
+    //         const reader = response.body.getReader();
 
-        const w = window.open(tourl);
-        window.addEventListener('message', async e => {
-            if (e.data !== 'READY') return;
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) {
-                    w.postMessage({ action:'DONE', filename }, '*');
-                    break;
-                }
-                w.postMessage(
-                    { action:'CHUNK', chunk:value, total },
-                    '*',
-                    [value.buffer]
-                );
-            }
-        });
-    }catch(e){ window.open(tourl) }
-    })();
-`;
+    //         const w = window.open(tourl);
+    //         window.addEventListener('message', async e => {
+    //             if (e.data !== 'READY') return;
+    //             while (true) {
+    //                 const { done, value } = await reader.read();
+    //                 if (done) {
+    //                     w.postMessage({ action:'DONE', filename }, '*');
+    //                     break;
+    //                 }
+    //                 w.postMessage(
+    //                     { action:'CHUNK', chunk:value, total },
+    //                     '*',
+    //                     [value.buffer]
+    //                 );
+    //             }
+    //         });
+    //     }catch(e){ window.open(tourl) }
+    //     })();
+    // `;
+    $('#shuqian-item').href = `javascript:(async()=>{const e="${location.origin + location.pathname}";try{const t=document.querySelector("iframe");if(!t)throw 1;const n=new URL(t.src).searchParams.get("url");if(!n)throw 1;const o=await fetch(n);let a="";const s=o.headers.get("content-disposition");if(s){const e=s.match(/filename\\*=UTF-8''([^;]+)/i)||s.match(/filename="?([^";]+)"?/i);e&&(a=decodeURIComponent(e[1]))}if(!a){const e=new URL(n).pathname.split("/").pop();e&&(a=decodeURIComponent(e))}a||(a="download.bin");const c=parseInt(o.headers.get("content-length"),10)||0,i=o.body.getReader(),d=window.open(e);window.addEventListener("message",async e=>{if("READY"===e.data)for(;;){const{done:e,value:t}=await i.read();if(e){d.postMessage({action:"DONE",filename:a},"*");break}d.postMessage({action:"CHUNK",chunk:t,total:c},"*",[t.buffer])}})}catch(t){window.open(e)}})();`;
+
     document.addEventListener('dragover', e => e.preventDefault());
     document.addEventListener('drop', () => droppedInside = true);
     $('#shuqian-item').addEventListener('dragend', () => {
@@ -166,8 +170,8 @@ const start = async file => {
             $('#box-title').innerText = `正在处理...`;
             $('#box-title').className = "c_waiting";
             var data = await covert(buffer, {
-                yinliang: [0.5, 1, 2, 3][Number($('#config-yinliang').dataset.value)],
-                suofang: [0.25, 0.5, 1, 2][Number($('#config-suofang').dataset.value)]
+                yinliang: [0, 1, 2, 3][Number($('#config-yinliang').dataset.value)],
+                //suofang: [0.25, 0.5, 1, 2][Number($('#config-suofang').dataset.value)]
             }, addinfo);
             output.array = data.array;
             output.name = data.name || file.name;

@@ -2,10 +2,13 @@
 <html>
 
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ccmz解析工具</title>
+    <meta name="description" content="在线将虫虫钢琴的曲谱转为MIDI格式，完全在浏览器中运行">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style-pc.css" media="(min-width: 900px) and (min-height: 600px)">
+    <link rel="stylesheet" href="style-pc.css" media="(min-width: 950px) and (min-height: 600px)">
     <script src="jszip.min.js"></script>
     <script src="midi.js"></script>
     <script src="index.js"></script>
@@ -14,7 +17,15 @@
 <body>
     <div id="pageview">
         <div id="part1">
-            <div id="title">ccmz解析工具</div>
+            <div id="title-container">
+                <div id="title">ccmz解析工具</div>
+                <div id="title2">将虫虫钢琴的曲谱转为MIDI格式</div>
+                <div id="githublink">
+                    <img src="icon_github.svg" />
+                    Github项目
+                    <img src="icon_openinnew.svg" />
+                </div>
+            </div>
             <div id="inputfile">
                 <div id="inputtip">请选择ccmz文件或拖入此处</div>
                 <div id="inputtip2">解析步骤将在本地运行</div>
@@ -47,11 +58,15 @@
                     <div class="icon-tip"></div>
                     <div class="tip-title-text">ccmz获取方式</div>
                 </div>
-                <div class="tip-text">前往虫虫钢琴官网（电脑版），搜索曲谱并打开，点击曲谱播放栏简谱模式；</div>
+                <div class="tip-text"><strong>电脑操作：</strong>前往虫虫钢琴官网（电脑版），搜索曲谱并打开，点击曲谱播放栏简谱模式；</div>
                 <img src="tip1.png" />
                 <div class="tip-text">按F12打开开发人员工具（DevTools），切换网络面板，刷新页面；</div>
                 <div class="tip-text">在过滤输入框中输入ccmz，双击列表中类型为xhr的文件即可下载。</div>
                 <img src="tip2.png" />
+                <div class="tip-text">
+                    <strong>手机操作：</strong>
+                    如果你的Android设备已经root，可以使用官方手机客户端打开曲谱，点击“AI看谱”，然后使用文件管理器访问/data/data/com.yusi.chongchong/files/ccmz/目录，按修改日期从新到旧排序，直接复制出最新的ccmz文件。
+                </div>
             </div>
         </div>
     </div>
@@ -66,18 +81,18 @@
                 <div class="title2">操作</div>
                 <div class="text">音量对比度：</div>
                 <div id="config-yinliang" class="input-xz" data-value="1">
-                    <div class="xx">0.5x</div>
+                    <div class="xx">0x</div>
                     <div class="xx">1x</div>
                     <div class="xx">2x</div>
                     <div class="xx">3x</div>
                 </div>
-                <div class="text">音符长度缩放：</div>
+                <!-- <div class="text">音符长度缩放：</div>
                 <div id="config-suofang" class="input-xz" data-value="1">
                     <div class="xx">0.25x</div>
                     <div class="xx">0.5x</div>
                     <div class="xx">1x</div>
                     <div class="xx">2x</div>
-                </div>
+                </div> -->
             </div>
             <div id="box2" style="display: none;"></div>
             <div id="box3" style="display: n1one;">

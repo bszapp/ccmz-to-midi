@@ -7,13 +7,44 @@ body {
     max-width: 600px;
 }
 
-#title {
-    text-align: center;
+#title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     width: 100%;
+    margin-top: 24px;
+}
+
+#title {
     font-size: 24px;
     font-weight: bold;
-    margin-top: 24px;
-    margin-bottom: 24px;
+}
+
+#title2 {
+    font-size: 16px;
+    color: #444;
+    margin: 4px;
+}
+
+#githublink {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: normal;
+    margin: 4px;
+    color: #004fb7;
+    background-color: #0088ff20;
+    padding: 0px 10px 0px 10px;
+    height: 28px;
+    border-radius: 14px;
+    user-select: none;
+}
+
+#githublink:hover {
+    background-color: #0088ff30;
 }
 
 #inputfile {
@@ -87,7 +118,6 @@ body {
     border-radius: 16px;
     background-color: #ededed;
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
 }
@@ -106,6 +136,7 @@ body {
 .tip-text {
     margin-top: 4px;
     font-size: 14px;
+    word-break: break-all;
 }
 
 @font-face {
@@ -396,7 +427,7 @@ body:not(.mobile) .infotext:hover {
     padding: 12px;
     border-radius: 16px;
     background-color: #ffffff;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;

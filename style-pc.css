@@ -15,10 +15,10 @@ body {
 #pageview {
     display: flex;
     padding: 8px;
-    width: 1100px;
+    width: 1000px;
     border-radius: 24px;
 }
 
 #part2 {
-    width: 600px;
+    width: 750px;
 }
