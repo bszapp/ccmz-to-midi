@@ -114,6 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 50);
     });
 
+    $('#githublink').onclick = () => open("https://github.com/bszapp/ccmz-to-midi");
+
     readyTimer = setInterval(() => {
         if (window.opener) {
             window.opener.postMessage('READY', '*');
