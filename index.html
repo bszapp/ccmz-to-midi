@@ -8,7 +8,7 @@
     <title>ccmz解析工具</title>
     <meta name="description" content="在线将虫虫钢琴的曲谱转为MIDI格式，完全在浏览器中运行">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style-pc.css" media="(min-width: 950px) and (min-height: 600px)">
+    <link rel="stylesheet" href="style-pc.css" media="(min-width: 1050px) and (min-height: 720px)">
     <script src="jszip.min.js"></script>
     <script src="midi.js"></script>
     <script src="index.js"></script>
@@ -20,10 +20,17 @@
             <div id="title-container">
                 <div id="title">ccmz解析工具</div>
                 <div id="title2">将虫虫钢琴的曲谱转为MIDI格式</div>
-                <div id="githublink">
-                    <img src="icon_github.svg" />
-                    Github项目
-                    <img src="icon_openinnew.svg" />
+                <div id="links">
+                    <div id="githublink">
+                        <img src="icon_github.svg" />
+                        Github项目
+                        <img src="icon_openinnew_blue.svg" />
+                    </div>
+                    <div id="chongchonglink">
+                        <img src="icon_chongchong.ico" />
+                        虫虫钢琴官网
+                        <img src="icon_openinnew_yellow.svg" />
+                    </div>
                 </div>
             </div>
             <div id="inputfile">
@@ -43,7 +50,20 @@
                 <div class="shuqian-tip">在官网打开曲谱详情页后点击可直接下载</div>
 
                 <div class="shuqian-tip-small">Tip: 按Ctrl+Shift+B可显示/隐藏浏览器书签栏，拖拽添加后会自动跳转到官网搜索页</div>
+                <div class="shuqian-tip" style="margin-top: 8px;">另外，你可以通过安装Tampermonkey脚本来实现：</div>
+
+                <div id="tampermonkeylink">
+                    <img src="icon_tampermonkey.svg" />
+                    安装Tampermonkey脚本
+                    <img src="icon_openinnew_red.svg" />
+                </div>
+                <div class="shuqian-tip-small">
+                    此脚本由
+                    <linkitem href="https://github.com/TesterNaN">@TesterNaN</linkitem>
+                    提供，除了下载之外还包含一些额外的辅助功能
+                </div>
             </div>
+
             <div id="tip1">
                 <div class="tip-title">
                     <div class="icon-warn"></div>

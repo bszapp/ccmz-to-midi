@@ -27,7 +27,9 @@ body {
     margin: 4px;
 }
 
-#githublink {
+#githublink,
+#tampermonkeylink,
+#chongchonglink {
     display: flex;
     align-items: center;
     gap: 2px;
@@ -43,8 +45,32 @@ body {
     user-select: none;
 }
 
-#githublink:hover {
+#githublink:hover,
+#tampermonkeylink:hover,
+#chongchonglink:hover {
     background-color: #0088ff30;
+}
+
+#tampermonkeylink {
+    color: #b70000;
+    background-color: #ff000020;
+}
+
+#tampermonkeylink:hover {
+    background-color: #ff000030;
+}
+
+#chongchonglink {
+    color: #9a8300;
+    background-color: #ffbb0020;
+}
+
+#chongchonglink:hover {
+    background-color: #ffbb0030;
+}
+
+#links {
+    display: flex;
 }
 
 #inputfile {
@@ -104,7 +130,7 @@ body {
 
 #tip2 img {
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     object-fit: cover;
     margin: 4px;
     border: 1px solid #aaa;
@@ -466,8 +492,18 @@ body:not(.mobile) .infotext:hover {
     color: #666;
 }
 
+linkitem {
+    color: #0066ff;
+    cursor: pointer;
+}
+
+linkitem:hover {
+    text-decoration: underline;
+}
+
 
 body.mobile div,
-body.mobile button {
+body.mobile button,
+body.mobile a {
     cursor: default !important;
 }
