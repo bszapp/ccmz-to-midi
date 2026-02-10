@@ -5,8 +5,8 @@ import formatFileSize from '../utils/formatFileSize';
 
 interface ConfigProps {
     file: File;
-    fileType: 'midi' | 'pdf' | 'mscz';
-    setFileType: (t: 'midi' | 'pdf' | 'mscz') => void;
+    fileType: 'midi' | 'pdf' | 'xml';
+    setFileType: (t: 'midi' | 'pdf' | 'xml') => void;
     volume: number;
     setVolume: (v: number) => void;
     onClose: () => void;
@@ -35,13 +35,9 @@ function ConfigContent({ file, fileType, setFileType, volume, setVolume, onClose
 
             <Spacer height='16px' />
             <div style={{ fontSize: '16px', color: '#222' }}>转换类型</div>
-            <div style={{ padding: '2px 4px', fontSize: '12px', color: '#666' }}>
-                <div>midi:只要声音<Spacer width='8px' />pdf:只要图像</div>
-                <div>mscz:小孩子才做选择，我全都要</div>
-            </div>
             <Spacer height='8px' />
             <RadioGroup
-                options={['midi', 'pdf', 'mscz']}
+                options={['midi', 'pdf', 'xml']}
                 value={fileType}
                 onChange={(val) => setFileType(val as any)}
             />
@@ -72,10 +68,10 @@ function ConfigContent({ file, fileType, setFileType, volume, setVolume, onClose
                                 特别鸣谢虫虫钢琴官网提供的在线查看器.map文件，由此还原出查看器源码
                             </div>
                         )}
-                        {type === 'mscz' && (
+                        {type === 'xml' && (
                             <>
                                 <div style={{ padding: '4px 4px 0', fontSize: '14px', color: '#666' }}>
-                                    既可以直接打印（排版有较小差别），也可以编辑的格式，需要使用MuseScore打开
+                                    既可以直接打印，也可以编辑的格式
                                 </div>
                                 <div style={{ padding: '4px 4px 0', fontSize: '14px', color: '#c00' }}>
                                     前面的区域，以后再来探索吧 []~(￣▽￣)~*
@@ -88,7 +84,7 @@ function ConfigContent({ file, fileType, setFileType, volume, setVolume, onClose
             <Spacer height='16px' />
             <div style={{ display: 'flex', gap: '12px' }}>
                 <Button onClick={onClose}>取消</Button>
-                <Button onClick={onStart} isPrimary disabled={fileType === 'mscz'}>开始</Button>
+                <Button onClick={onStart} isPrimary disabled={fileType === 'xml'}>开始</Button>
             </div>
         </div>
     );

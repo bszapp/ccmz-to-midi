@@ -19,7 +19,7 @@ declare global {
     }
 }
 
-type FileType = 'midi' | 'pdf' | 'mscz';
+type FileType = 'midi' | 'pdf' | 'xml';
 
 type LogType = 'info' | 'error' | 'success';
 
