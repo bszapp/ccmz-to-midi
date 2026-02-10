@@ -2,7 +2,7 @@ import JSZip from 'jszip';
 
 export const ccmzScore = async (
     file: File | Blob,
-    onLog: (message: string, action: { label: string, onClick: () => void } | null, isDone?: boolean) => void,
+    onLog: (message: string, action: { label: string, onClick: () => void } | null, replaceLast?: boolean) => void,
 ): Promise<any> => {
     const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -29,7 +29,7 @@ export const ccmzScore = async (
     onLog("解密文件...", null);
     const { data, type } = decodeCCMZ(buffer);
 
-    await wait(200);
+    await wait(100);
 
     onLog("解密文件...完成", {
         label: "下载原始数据",

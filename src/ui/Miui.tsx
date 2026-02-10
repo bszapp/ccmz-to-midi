@@ -19,6 +19,7 @@ function BaseSlider({ value, onChange, pointNumber = 0 }: CustomSliderProps) {
 
     const displayValueRef = useRef(value);
     const requestRef = useRef<number>(0);
+    const innerThumbRef = useRef<HTMLDivElement>(null);
 
     const sliderHeight = 26;
     const thumbSize = 19;
@@ -40,8 +41,8 @@ function BaseSlider({ value, onChange, pointNumber = 0 }: CustomSliderProps) {
         const pos = `calc(${radius}px + ${val} * (100% - ${sliderHeight}px))`;
         if (thumbRef.current) thumbRef.current.style.left = pos;
         if (fillRef.current) fillRef.current.style.width = pos;
+        if (innerThumbRef.current) innerThumbRef.current.style.left = pos;
 
-        // 实时更新点的颜色
         pointsRef.current.forEach((point, i) => {
             if (point) {
                 const pointVal = (i + 1) / (pointNumber + 1);
@@ -161,6 +162,20 @@ function BaseSlider({ value, onChange, pointNumber = 0 }: CustomSliderProps) {
                 }}
             />
 
+            <div
+                ref={thumbRef}
+                style={{
+                    position: 'absolute',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: `${sliderHeight}px`,
+                    height: `${sliderHeight}px`,
+                    background: 'var(--primary-color)',
+                    borderRadius: '50%',
+                    pointerEvents: 'auto',
+                }}
+            />
+
             {pointNumber > 0 && Array.from({ length: pointNumber }).map((_, i) => {
                 const pointVal = (i + 1) / (pointNumber + 1);
                 return (
@@ -176,7 +191,6 @@ function BaseSlider({ value, onChange, pointNumber = 0 }: CustomSliderProps) {
                             height: '7px',
                             backgroundColor: displayValueRef.current >= pointVal ? '#ffffff33' : '#00000010',
                             borderRadius: '50%',
-                            zIndex: 1,
                             pointerEvents: 'none',
                         }}
                     />
@@ -184,34 +198,20 @@ function BaseSlider({ value, onChange, pointNumber = 0 }: CustomSliderProps) {
             })}
 
             <div
-                ref={thumbRef}
+                ref={innerThumbRef}
                 style={{
                     position: 'absolute',
+                    left: `calc(${radius}px + ${value} * (100% - ${sliderHeight}px))`,
                     top: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: `${sliderHeight}px`,
-                    height: `${sliderHeight}px`,
-                    background: 'var(--primary-color)',
+                    width: `${thumbSize * (isDragging ? 1 : 0.9)}px`,
+                    height: `${thumbSize * (isDragging ? 1 : 0.9)}px`,
+                    background: '#fff',
                     borderRadius: '50%',
-                    pointerEvents: 'auto',
-                    zIndex: 2,
+                    pointerEvents: 'none',
+                    transition: 'width 0.1s, height 0.1s',
                 }}
-            >
-                <div
-                    style={{
-                        position: 'absolute',
-                        left: '50%',
-                        top: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: `${thumbSize * (isDragging ? 1 : 0.9)}px`,
-                        height: `${thumbSize * (isDragging ? 1 : 0.9)}px`,
-                        background: '#fff',
-                        borderRadius: '50%',
-                        pointerEvents: 'none',
-                        transition: 'width 0.1s, height 0.1s'
-                    }}
-                />
-            </div>
+            />
         </div>
     );
 }

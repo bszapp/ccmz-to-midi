@@ -130,11 +130,16 @@ function RunningContent({ state, logs, outputFile, onClose }: {
                             return (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
                                     <div style={{ padding: '4px 4px 0', fontSize: '14px', color: '#666' }}>
-                                        PDF已经准备，请在此页面点击打印或者按下Ctrl+P，打印机选择“保存为PDF”即可保存
+                                        PDF已经准备，请在此页面点击打印或者按下Ctrl+P，打印机选择“另存为PDF”即可保存
                                     </div>
                                     <div style={{ display: 'flex', gap: '12px' }}>
                                         <Button onClick={onClose}>关闭</Button>
-                                        <Button onClick={print} isPrimary>打印</Button>
+                                        <Button onClick={() => {
+                                            const title = document.title;
+                                            document.title = fileName;
+                                            window.print();
+                                            document.title = title;
+                                        }} isPrimary>打印</Button>
                                     </div>
                                 </div>
                             );

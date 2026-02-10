@@ -120,7 +120,6 @@ export const ccmzToMidi = async (file, onLog, config) => {
     const jsonToMidiUint8Array = (json) => {
         const data = typeof json === 'string' ? JSON.parse(json) : json;
         const midi = new Midi();
-        //midi.header.ppq = data.header.ppq;
 
         midi.header.timeSignatures = data.timeSignatures.map(ts => ({
             ticks: ts.tick,

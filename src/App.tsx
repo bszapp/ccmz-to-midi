@@ -96,8 +96,6 @@ function App() {
     const handleStart = async () => {
         if (!fileData) return;
 
-        const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
         const taskId = crypto.randomUUID();
         currentTaskIdRef.current = taskId;
 
@@ -127,18 +125,14 @@ function App() {
         try {
             if (fileType === 'pdf') {
                 const scoreData = await ccmzScore(fileData, onLog);
-                onLog('生成PDF...', null);
 
                 if (destroyPdfRef.current) destroyPdfRef.current();
 
-                const destroyFn = await loadPdf(scoreData);
-                destroyPdfRef.current = destroyFn;
+                const { resultInfo, destroy } = await loadPdf(scoreData, onLog);
+                destroyPdfRef.current = destroy;
 
-                onLog('生成PDF...完成', null, true);
-
-                await wait(100);
-
-                setLogs(prev => [...prev, { text: `完成`, type: 'success', id: crypto.randomUUID() }]);
+                setLogs(prev => [...prev, { text: `${resultInfo.fileName} 页面渲染完成 共${resultInfo.pageCount}页`, type: 'success', id: crypto.randomUUID() }]);
+                setOutputFile(new File([], resultInfo.fileName, {}));
                 setRunState('success-pdf');
             } else if (fileType === 'midi') {
                 const resultFile: File = await ccmzToMidi(fileData, onLog, { volume: volume / 100, fileType });
@@ -158,7 +152,7 @@ function App() {
 
     return (
         <div
-            className="no-print" // 1. 添加此类名
+            className="no-print"
             style={{
                 '--primary-color': '#3482ff',
                 WebkitTapHighlightColor: 'transparent'
@@ -170,7 +164,6 @@ function App() {
                     background: color-mix(in srgb, var(--primary-color), transparent 70%);
                 }
                 
-                /* 2. 增加打印时隐藏规则 */
                 @media print {
                     .no-print {
                         display: none !important;
