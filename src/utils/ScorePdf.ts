@@ -1,26 +1,19 @@
-import JSZip from "jszip";
 import Vue, { type CreateElement } from "vue";
 // @ts-ignore
 import { SvgScore } from "./xmlscore.esm.min.js";
 
-export const loadPdf = async (file: File | Blob) => {
-    const buffer = await file.arrayBuffer();
-    const version = new Uint8Array(buffer.slice(0, 1))[0];
-    let data = new Uint8Array(buffer.slice(1));
-    const fileName = version === 1 ? "data.ccxml" : "score.json";
+export const loadPdf = async (scoreData: JSON): Promise<() => void> => {
+    const style = document.createElement('style');
+    const container = document.createElement('div');
+    let vm: Vue | null = null;
 
-    if (version === 2) {
-        data = data.map((v) => (v % 2 === 0 ? v + 1 : v - 1));
-    }
+    const destroy = () => {
+        if (vm) vm.$destroy();
+        if (document.body.contains(container)) document.body.removeChild(container);
+        if (document.head.contains(style)) document.head.removeChild(style);
+    };
 
-    const zip = await JSZip.loadAsync(data);
-    const targetFile = zip.file(fileName);
-
-    if (targetFile) {
-        const json = await targetFile.async("string");
-        const scoreData = JSON.parse(json);
-
-        const style = document.createElement('style');
+    try {
         style.innerHTML = `
             @font-face { font-family: 'Aloisen New'; src: url('./music.woff') format('woff'); }
             @media screen { .print-container-temp { display: none; } }
@@ -39,11 +32,10 @@ export const loadPdf = async (file: File | Blob) => {
         `;
         document.head.appendChild(style);
 
-        const container = document.createElement('div');
         container.className = 'print-container-temp';
         document.body.appendChild(container);
 
-        const vm = new Vue({
+        vm = new Vue({
             render: (h: CreateElement) => h(SvgScore, {
                 props: {
                     score: scoreData,
@@ -55,18 +47,13 @@ export const loadPdf = async (file: File | Blob) => {
 
         container.appendChild(vm.$el);
 
-        await Promise.all([
-            document.fonts.load('1em "Aloisen New"'),
-            new Promise(resolve => setTimeout(resolve, 500))
-        ]);
+        await document.fonts.load('1em "Aloisen New"');
 
-        const tempTitle = document.title;
-        document.title = "乐谱";
-        window.print();
-        document.title = tempTitle;
+        // 返回销毁函数给外部调用
+        return destroy;
 
-        vm.$destroy();
-        document.body.removeChild(container);
-        document.head.removeChild(style);
+    } catch (error) {
+        destroy();
+        throw error;
     }
 };

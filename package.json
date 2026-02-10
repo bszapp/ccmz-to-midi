@@ -16,6 +16,7 @@
     "@mui/icons-material": "^7.3.7",
     "@mui/material": "^7.3.7",
     "@tonejs/midi": "^2.0.28",
+    "@vue/compiler-sfc": "^3.5.28",
     "core-js": "^3.48.0",
     "framer-motion": "^12.33.2",
     "jszip": "^3.10.1",

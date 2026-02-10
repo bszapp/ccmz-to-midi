@@ -14,7 +14,7 @@ interface LogItem {
 }
 
 function RunningContent({ state, logs, outputFile, onClose }: {
-    state: 'running' | 'success' | 'error';
+    state: 'running' | 'success' | 'error' | 'success-pdf';
     logs: LogItem[];
     outputFile: File | null;
     onClose: () => void
@@ -49,7 +49,7 @@ function RunningContent({ state, logs, outputFile, onClose }: {
                 fontWeight: 500,
                 textAlign: 'center'
             }}>
-                {{ running: '正在处理', success: '转换成功', error: '转换失败' }[state]}
+                {{ running: '正在处理', success: '转换成功', 'success-pdf': '转换成功', error: '转换失败' }[state]}
             </div>
 
             <Spacer height='16px' />
@@ -123,6 +123,18 @@ function RunningContent({ state, logs, outputFile, onClose }: {
                                                 URL.revokeObjectURL(url);
                                             }
                                         }} isPrimary>下载</Button>
+                                    </div>
+                                </div>
+                            );
+                        case 'success-pdf':
+                            return (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
+                                    <div style={{ padding: '4px 4px 0', fontSize: '14px', color: '#666' }}>
+                                        PDF已经准备，请在此页面点击打印或者按下Ctrl+P，打印机选择“保存为PDF”即可保存
+                                    </div>
+                                    <div style={{ display: 'flex', gap: '12px' }}>
+                                        <Button onClick={onClose}>关闭</Button>
+                                        <Button onClick={print} isPrimary>打印</Button>
                                     </div>
                                 </div>
                             );
