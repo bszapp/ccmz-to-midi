@@ -6,6 +6,8 @@ import ConfigContent from './ui/ConfigContent';
 import RunningContent from './ui/RunningContent';
 import AnimatedContent from './ui/AnimatedContent';
 
+import { loadPdf } from './utils/ScorePrinter';
+
 // @ts-ignore
 import { ccmzToMidi } from './utils/ccmzToMidi.js';
 import formatFileSize from './utils/formatFileSize.js';
@@ -79,6 +81,13 @@ function App() {
     const handleStart = async () => {
         if (!fileData) return;
 
+        // 如果是 pdf 格式，执行打印逻辑并拦截后续 midi 转换
+        if (fileType === 'pdf') {
+            setIsOpen(false);
+            await loadPdf(fileData);
+            return;
+        }
+
         const taskId = crypto.randomUUID();
         currentTaskIdRef.current = taskId;
 
@@ -121,16 +130,26 @@ function App() {
     };
 
     return (
-        <div style={{
-            '--primary-color': '#3482ff',
-            WebkitTapHighlightColor: 'transparent'
-        } as React.CSSProperties}>
+        <div
+            className="no-print" // 1. 添加此类名
+            style={{
+                '--primary-color': '#3482ff',
+                WebkitTapHighlightColor: 'transparent'
+            } as React.CSSProperties}
+        >
             <style>
                 {`
-                    div::selection {
-                        background: color-mix(in srgb, var(--primary-color), transparent 70%);
+                div::selection {
+                    background: color-mix(in srgb, var(--primary-color), transparent 70%);
+                }
+                
+                /* 2. 增加打印时隐藏规则 */
+                @media print {
+                    .no-print {
+                        display: none !important;
                     }
-                `}
+                }
+            `}
             </style>
             <FileInput onFileSelect={handleFile} />
             <WarnTip title="免责声明">
