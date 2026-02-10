@@ -7,3 +7,6 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 )
+
+// @ts-ignore
+window.rendered = true;
