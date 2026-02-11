@@ -24,6 +24,7 @@
     "lucide-react": "^0.563.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "serve-handler": "^6.1.6",
     "vue": "^2.7.16"
   },
   "devDependencies": {

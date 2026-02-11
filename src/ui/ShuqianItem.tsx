@@ -1,7 +1,14 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 function ShuqianItem({ link, text }: { link: string; text: string }) {
     const [status, setStatus] = useState<'default' | 'hover' | 'active'>('default');
+    const anchorRef = useRef<HTMLAnchorElement>(null);
+
+    useEffect(() => {
+        if (anchorRef.current) {
+            anchorRef.current.href = link;
+        }
+    }, [link]);
 
     const getBgColor = () => {
         if (status === 'active') return '#ddd';
@@ -11,7 +18,7 @@ function ShuqianItem({ link, text }: { link: string; text: string }) {
 
     return (
         <a
-            href={link}
+            ref={anchorRef}
             style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -28,7 +35,7 @@ function ShuqianItem({ link, text }: { link: string; text: string }) {
                 width: 'fit-content',
                 userSelect: 'none',
                 backgroundColor: getBgColor(),
-                transition: 'background-color 0.1s'
+                transition: 'background-color 0.2s'
             }}
             onClick={e => e.preventDefault()}
             onMouseEnter={() => setStatus('hover')}

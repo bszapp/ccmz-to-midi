@@ -44,6 +44,8 @@ function App() {
         setIsOpen(true);
     };
 
+
+    //#region 文件接收
     useEffect(() => {
         let chunks: Uint8Array[] = [];
         let fileName = 'download.bin';
@@ -79,7 +81,9 @@ function App() {
     }, []);
 
     const currentTaskIdRef = useRef<string | null>(null);
+
     const destroyPdfRef = useRef<(() => void) | null>(null);
+    const printPdfRef = useRef<(() => void) | null>(null);
 
     useEffect(() => {
         if (!isOpen && destroyPdfRef.current) {
@@ -94,6 +98,7 @@ function App() {
         };
     }, []);
 
+    //#region 转换流程
     const handleStart = async () => {
         if (!fileData) return;
 
@@ -129,12 +134,14 @@ function App() {
 
                 if (destroyPdfRef.current) destroyPdfRef.current();
 
-                const { resultInfo, destroy } = await loadPdf(scoreData, onLog);
+                const { resultInfo, print, destroy } = await loadPdf(scoreData, onLog);
                 destroyPdfRef.current = destroy;
+                printPdfRef.current = print;
 
                 setLogs(prev => [...prev, { text: `${resultInfo.fileName} 页面渲染完成 共${resultInfo.pageCount}页`, type: 'success', id: crypto.randomUUID() }]);
                 setOutputFile(new File([], resultInfo.fileName, {}));
                 setRunState('success-pdf');
+
             } else if (fileType === 'midi') {
                 const resultFile: File = await ccmzToMidi(fileData, onLog, { volume: volume / 100, fileType });
                 if (taskId !== currentTaskIdRef.current) return;
@@ -203,6 +210,11 @@ function App() {
                                     logs={logs}
                                     outputFile={outputFile}
                                     onClose={() => setIsOpen(false)}
+                                    onPrint={() => {
+                                        if (printPdfRef.current) {
+                                            printPdfRef.current();
+                                        }
+                                    }}
                                 />
                             )}
                         </div>

@@ -13,11 +13,12 @@ interface LogItem {
     id: string;
 }
 
-function RunningContent({ state, logs, outputFile, onClose }: {
+function RunningContent({ state, logs, outputFile, onClose, onPrint }: {
     state: 'running' | 'success' | 'error' | 'success-pdf';
     logs: LogItem[];
     outputFile: File | null;
-    onClose: () => void
+    onClose: () => void;
+    onPrint: () => void;
 }) {
     const [fileName, setFileName] = useState('');
 
@@ -134,12 +135,7 @@ function RunningContent({ state, logs, outputFile, onClose }: {
                                     </div>
                                     <div style={{ display: 'flex', gap: '12px' }}>
                                         <Button onClick={onClose}>关闭</Button>
-                                        <Button onClick={() => {
-                                            const title = document.title;
-                                            document.title = fileName;
-                                            window.print();
-                                            document.title = title;
-                                        }} isPrimary>打印</Button>
+                                        <Button onClick={onPrint} isPrimary>打印</Button>
                                     </div>
                                 </div>
                             );
