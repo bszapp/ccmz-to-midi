@@ -51,7 +51,6 @@ function FileInput({ onFileSelect }: FileInputProps) {
     return (
         <div
             style={{
-                width: 'calc(100% - 64px)',
                 margin: '16px',
                 padding: '24px 16px',
                 borderRadius: '16px',

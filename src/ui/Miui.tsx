@@ -438,7 +438,7 @@ export function Input({ title, value, onChange }: InputProps) {
                 style={{
                     position: 'absolute',
                     left: '16px',
-                    top: isFloating ? '4px' : '50%',
+                    top: isFloating ? '2px' : '50%',
                     transform: isFloating ? 'none' : 'translateY(-50%)',
                     fontSize: isFloating ? '10px' : '16px',
                     color: 'rgba(0, 0, 0, 0.4)',

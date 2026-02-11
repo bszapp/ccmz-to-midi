@@ -180,15 +180,6 @@ function App() {
             `}
             </style>
             <FileInput onFileSelect={handleFile} />
-            <WarnTip title="免责声明">
-                <center>
-                    请确保你已经购买此曲谱或已经开通vip再转换，转换后的文件<b>仅供个人学习使用</b>，请勿传播，造成后果概不负责。
-                    <br />
-                    尊重版权，支持正版音乐。如果你支持创作者，请在平台购买正版曲谱。
-                </center>
-            </WarnTip>
-
-            <HelpContent />
 
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <AnimatedContent targetState={view}>

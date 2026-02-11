@@ -1,6 +1,3 @@
-// @ts-ignore
-import { SvgScore } from "./xmlscore.esm.min.js";
-
 export const loadPdf = async (
     scoreData: any,
     onLog: (message: string, action: { label: string; onClick: () => void } | null, replaceLast?: boolean) => void
@@ -27,22 +24,62 @@ export const loadPdf = async (
     onLog("初始化环境...完成", null, true);
 
     try {
+        onLog("加载xmlscore...", null);
 
-        onLog("加载vue2...", null);
-        await wait(100);
+        // 1. 获取混淆的代码文本
+        const jsResponse = await fetch(`${baseUrl}xmlscore.esm.min.js`);
+        if (!jsResponse.ok) throw new Error("无法获取 xmlscore.esm.min.js，请检查 public 目录");
+        let jsText = await jsResponse.text();
 
-        const script = iframeDoc.createElement('script');
-        script.src = `${baseUrl}vue.min.js`;
-        iframeDoc.head.appendChild(script);
+        // 2. 正则“手术”：
+        // 移除 core-js 导入
+        jsText = jsText.replace(/import\s+['"]core-js\/[^'"]+['"];?/g, '');
+        // 将 import t from "vue" 替换为从 iframe 全局获取 Vue (Vue2)
+        jsText = jsText.replace(/import\s+(\w+)\s+from\s+['"]vue['"];?/, 'const $1 = window.Vue;');
 
+        const blob = new Blob([jsText], { type: 'application/javascript' });
+        const blobUrl = URL.createObjectURL(blob);
+
+        onLog("加载xmlscore...完成", null, true);
+        onLog("加载 Vue 环境...", null);
+        const vueScript = iframeDoc.createElement('script');
+        vueScript.src = `${baseUrl}vue.min.js`;
+        iframeDoc.head.appendChild(vueScript);
+        await new Promise(r => vueScript.onload = r);
+
+        // 5. 注入修复后的核心模块
+        const coreScript = iframeDoc.createElement('script');
+        coreScript.type = 'module';
+        coreScript.innerHTML = `
+            import { SvgScore } from '${blobUrl}';
+            window.SvgScore = SvgScore;
+            console.log('Core Component Injected.');
+        `;
+        iframeDoc.head.appendChild(coreScript);
+
+        // 6. 轮询检查挂载
         await new Promise((resolve, reject) => {
-            script.onload = resolve;
-            script.onerror = () => reject(new Error(`Vue 加载失败: ${script.src}`));
+            let retry = 0;
+            const check = () => {
+                if (iframeWin.SvgScore) {
+                    URL.revokeObjectURL(blobUrl);
+                    resolve(true);
+                } else if (retry > 60) {
+                    URL.revokeObjectURL(blobUrl);
+                    reject(new Error("核心组件初始化超时"));
+                } else {
+                    retry++;
+                    setTimeout(check, 100);
+                }
+            };
+            check();
         });
 
+        const SvgScore = iframeWin.SvgScore;
         const Vue2 = iframeWin.Vue;
+        onLog("加载核心组件...完成", null, true);
 
-
+        // 7. 样式注入
         const style = iframeDoc.createElement('style');
         style.innerHTML = `
             @font-face { 
@@ -52,22 +89,11 @@ export const loadPdf = async (
             }
             html, body { margin: 0; padding: 0; background: white; }
             svg { display: block; width: 100% !important; height: auto !important; page-break-after: always; break-after: page; }
-            
-            .disable0 .track0,.disable1 .track1,.disable10 .track10,.disable11 .track11,.disable2 .track2,.disable3 .track3,.disable4 .track4,.disable5 .track5,.disable6 .track6,.disable7 .track7,.disable8 .track8,.disable9 .track9{fill:#d3d3d3;stroke:#d3d3d3}
-            .scorefont[data-v-1d111dd8]{font-family:Aloisen New,Arial,Times New Roman,Times,serif}
+            .scorefont[data-v-1d111dd8]{font-family:Aloisen New,Arial,serif}
             @media print{
-                .noprint[data-v-1d111dd8]{display:none}
-                .print[data-v-1d111dd8]{display:block}
                 @page { size: A4; margin: 0; }
+                .noprint { display: none; }
             }
-            @media screen{.print[data-v-1d111dd8]{display:none}}
-            .title[data-v-9ea6a786]{font-family:Times New Roman,Times,serif;white-space:pre}
-            .slurline[data-v-fe23292a]{stroke-width:.5;fill:#000;stroke:#000}
-            .num[data-v-fe23292a]{fill:#000;font-style:italic;font-size:16px}
-            .slurline[data-v-35a9c118]{stroke-width:.5;fill:#000;stroke:#000}
-            .slurlinejp[data-v-35a9c118]{stroke-width:2;fill:transparent;stroke:#000}
-            .footer[data-v-5c1c5b43]{font-family:Times New Roman,Times,serif;white-space:pre}
-            .qrcode[data-v-38b00224]{font-family:Times New Roman,Times,serif;white-space:pre}
         `;
         iframeDoc.head.appendChild(style);
 
@@ -75,10 +101,10 @@ export const loadPdf = async (
         appDir.id = 'app';
         iframeDoc.body.appendChild(appDir);
 
-        onLog("加载vue2...完成", null, true);
         onLog("渲染页面...", null);
         await wait(200);
 
+        // 8. 执行渲染
         const vm = new Vue2({
             render: (h: any) => h(SvgScore, {
                 props: {
@@ -91,13 +117,12 @@ export const loadPdf = async (
 
         onLog("渲染页面...完成", null, true);
         onLog("加载字体...", null);
-        await wait(100);
 
         await iframeWin.document.fonts.load('1em "Aloisen New"');
         await iframeWin.document.fonts.ready;
 
         const pageCount = Array.from(vm.$el.children).filter((node: any) =>
-            node.tagName.toLowerCase() === 'g' && node.id.startsWith('page_')
+            node.tagName?.toLowerCase() === 'g' && node.id?.startsWith('page_')
         ).length;
 
         const fileName = scoreData?.title?.title || 'output';
@@ -107,13 +132,12 @@ export const loadPdf = async (
 
         return {
             resultInfo: { fileName, pageCount },
-            print: () => {
-                iframeWin.print();
-            },
+            print: () => { iframeWin.print(); },
             destroy
         };
 
     } catch (error) {
+        console.error(error);
         destroy();
         throw error;
     }

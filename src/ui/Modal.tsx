@@ -26,7 +26,12 @@ function Modal({ isOpen, onClose, children }: ModalProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)' }}
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            background: 'rgba(0,0,0,0.5)',
+                            backdropFilter: 'blur(4px)',
+                        }}
                     />
                     <motion.div
                         initial={{ scale: 0.95, opacity: 0 }}

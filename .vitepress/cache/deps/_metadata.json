@@ -1,0 +1,91 @@
+{
+  "hash": "2fdd3c97",
+  "configHash": "2b4f0848",
+  "lockfileHash": "258c2ee2",
+  "browserHash": "5146e314",
+  "optimized": {
+    "react": {
+      "src": "../../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "0a1d14d3",
+      "needsInterop": true
+    },
+    "react-dom": {
+      "src": "../../../node_modules/react-dom/index.js",
+      "file": "react-dom.js",
+      "fileHash": "eccc276c",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "fec3eeb3",
+      "needsInterop": true
+    },
+    "react/jsx-runtime": {
+      "src": "../../../node_modules/react/jsx-runtime.js",
+      "file": "react_jsx-runtime.js",
+      "fileHash": "1845b650",
+      "needsInterop": true
+    },
+    "vue": {
+      "src": "../../../node_modules/vitepress/node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "file": "vue.js",
+      "fileHash": "f29f5da3",
+      "needsInterop": false
+    },
+    "vitepress > @vue/devtools-api": {
+      "src": "../../../node_modules/@vue/devtools-api/dist/index.js",
+      "file": "vitepress___@vue_devtools-api.js",
+      "fileHash": "6abde59c",
+      "needsInterop": false
+    },
+    "vitepress > @vueuse/core": {
+      "src": "../../../node_modules/@vueuse/core/index.mjs",
+      "file": "vitepress___@vueuse_core.js",
+      "fileHash": "276b6069",
+      "needsInterop": false
+    },
+    "@tonejs/midi": {
+      "src": "../../../node_modules/@tonejs/midi/dist/Midi.js",
+      "file": "@tonejs_midi.js",
+      "fileHash": "6069f536",
+      "needsInterop": true
+    },
+    "framer-motion": {
+      "src": "../../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "65687d71",
+      "needsInterop": false
+    },
+    "jszip": {
+      "src": "../../../node_modules/jszip/dist/jszip.min.js",
+      "file": "jszip.js",
+      "fileHash": "dff6d86e",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "c7095546",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-M6PQLJQG": {
+      "file": "chunk-M6PQLJQG.js"
+    },
+    "chunk-IMRRC3YQ": {
+      "file": "chunk-IMRRC3YQ.js"
+    },
+    "chunk-LFICIZYC": {
+      "file": "chunk-LFICIZYC.js"
+    },
+    "chunk-XHW6JCQC": {
+      "file": "chunk-XHW6JCQC.js"
+    },
+    "chunk-PLDDJCW6": {
+      "file": "chunk-PLDDJCW6.js"
+    }
+  }
+}
