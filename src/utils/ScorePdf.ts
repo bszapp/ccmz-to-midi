@@ -5,8 +5,10 @@ export const loadPdf = async (
     scoreData: any,
     onLog: (message: string, action: { label: string; onClick: () => void } | null, replaceLast?: boolean) => void
 ): Promise<{ resultInfo: { fileName: string; pageCount: number }; print: () => void; destroy: () => void }> => {
+    const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
     onLog("初始化环境...", null);
+    await wait(100);
 
     const { origin, pathname } = window.location;
     const baseUrl = origin + pathname.substring(0, pathname.lastIndexOf('/') + 1);
@@ -27,6 +29,7 @@ export const loadPdf = async (
     try {
 
         onLog("加载vue2...", null);
+        await wait(100);
 
         const script = iframeDoc.createElement('script');
         script.src = `${baseUrl}vue.min.js`;
@@ -74,6 +77,7 @@ export const loadPdf = async (
 
         onLog("加载vue2...完成", null, true);
         onLog("渲染页面...", null);
+        await wait(200);
 
         const vm = new Vue2({
             render: (h: any) => h(SvgScore, {
@@ -87,6 +91,7 @@ export const loadPdf = async (
 
         onLog("渲染页面...完成", null, true);
         onLog("加载字体...", null);
+        await wait(100);
 
         await iframeWin.document.fonts.load('1em "Aloisen New"');
         await iframeWin.document.fonts.ready;
