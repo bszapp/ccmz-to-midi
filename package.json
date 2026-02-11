@@ -20,11 +20,13 @@
     "@vue/compiler-sfc": "^3.5.28",
     "core-js": "^3.48.0",
     "framer-motion": "^12.33.2",
+    "jspdf": "^4.1.0",
     "jszip": "^3.10.1",
     "lucide-react": "^0.563.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "serve-handler": "^6.1.6",
+    "svg2pdf.js": "^2.7.0",
     "vue": "^2.7.16"
   },
   "devDependencies": {
