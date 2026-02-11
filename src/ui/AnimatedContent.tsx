@@ -57,7 +57,7 @@ function AnimatedContent({ targetState, children }: AnimatedContentProps) {
             //border: isAnimating ? '1px solid red' : 'none',
             overflow: 'hidden',
             willChange: 'height',
-            position: 'relative'
+            position: 'relative',
         }}>
             <div style={{ opacity, transition: 'opacity 0.2s ease-in-out' }}>
                 {children(displayState)}

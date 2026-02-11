@@ -21,7 +21,7 @@ function WarnTip({ children, title }: { children: ReactNode; title: string }) {
             }}>
                 <div style={{
                     lineHeight: '20px',
-                    fontWeight: 'bold'
+                    fontWeight: '500'
                 }}>{title}</div>
             </div>
             <div style={{

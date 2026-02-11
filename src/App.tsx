@@ -12,6 +12,7 @@ import { loadPdf } from './utils/ScorePdf.js';
 import { ccmzToMidi } from './utils/ccmzToMidi.js';
 import formatFileSize from './utils/formatFileSize.js';
 import { ccmzScore } from './utils/ccmzScore.js';
+import HelpContent from './ui/HelpContent.js';
 
 declare global {
     interface Window {
@@ -179,6 +180,8 @@ function App() {
                     尊重版权，支持正版音乐。如果你支持创作者，请在平台购买正版曲谱。
                 </center>
             </WarnTip>
+
+            <HelpContent />
 
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <AnimatedContent targetState={view}>
