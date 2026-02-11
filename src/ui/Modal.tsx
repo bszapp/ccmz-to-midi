@@ -37,7 +37,7 @@ function Modal({ isOpen, onClose, children }: ModalProps) {
                         initial={{ scale: 0.95, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.95, opacity: 0 }}
-                        transition={{ type: 'tween', ease: 'easeOut', duration: 0.2 }}
+                        transition={{ type: 'tween', ease: 'easeOut', duration: 0.1 }}
                         style={{
                             background: 'white',
                             borderRadius: '32px',

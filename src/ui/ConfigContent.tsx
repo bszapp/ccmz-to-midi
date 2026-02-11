@@ -16,7 +16,7 @@ interface ConfigProps {
 function ConfigContent({ file, fileType, setFileType, volume, setVolume, onClose, onStart }: ConfigProps) {
     const volumeMax = 400;
     return (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', color: '#000' }}>
             <div style={{ fontSize: '20px', fontWeight: 500, textAlign: 'center' }}>转换配置</div>
 
             <Spacer height='16px' />

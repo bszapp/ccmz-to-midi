@@ -35,3 +35,28 @@
 .dark .VPNavBar:not(.home) .content-body {
     background-color: rgba(27, 27, 31, 0.7) !important;
 }
+
+.VPHome {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.VPHome .vp-doc {
+    order: 1;
+}
+
+.VPHome .VPFeatures {
+    order: 2;
+}
+
+
+
+:root {
+    --text-color: #000;
+    --text-secondary-color: #444;
+}
+
+.dark {
+    --text-color: #fff;
+    --text-secondary-color: #ccc;
+}

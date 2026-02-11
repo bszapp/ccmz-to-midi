@@ -43,7 +43,8 @@ function RunningContent({ state, logs, outputFile, onClose, onPrint }: {
         <div style={{
             display: 'flex',
             flexDirection: 'column',
-            width: '320px'
+            width: '320px',
+            color: '#000'
         }}>
             <div style={{
                 fontSize: '20px',
@@ -62,6 +63,7 @@ function RunningContent({ state, logs, outputFile, onClose, onPrint }: {
                     overflowY: 'auto',
                     backgroundColor: '#f8f8f8',
                     borderRadius: '8px',
+                    colorScheme: 'light',
                 }}
             >
                 {logs.map((log) => (

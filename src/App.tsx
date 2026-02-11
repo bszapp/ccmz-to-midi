@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import FileInput from './ui/FileInput';
-import WarnTip from './ui/WarnTip';
 import Modal from './ui/Modal';
 import ConfigContent from './ui/ConfigContent';
 import RunningContent from './ui/RunningContent';
@@ -12,7 +11,6 @@ import { loadPdf } from './utils/ScorePdf.js';
 import { ccmzToMidi } from './utils/ccmzToMidi.js';
 import formatFileSize from './utils/formatFileSize.js';
 import { ccmzScore } from './utils/ccmzScore.js';
-import HelpContent from './ui/HelpContent.js';
 
 declare global {
     interface Window {

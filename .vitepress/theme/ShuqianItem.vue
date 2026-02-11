@@ -7,11 +7,11 @@ let root = null
 onMounted(async () => {
     const React = (await import('react')).default
     const { createRoot } = await import('react-dom/client')
-    const { default: App } = await import('../../src/App.tsx')
+    const { default: ShuqianItem } = await import('../../src/ui/ShuqianItem.tsx')
 
     if (containerRef.value) {
         root = createRoot(containerRef.value)
-        root.render(React.createElement(App))
+        root.render(React.createElement(ShuqianItem))
         window.rendered = true
     }
 })
