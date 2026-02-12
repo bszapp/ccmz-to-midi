@@ -268,6 +268,7 @@ export function RadioGroup({ options, value, onChange }: { options: string[], va
             }}
         >
             <motion.div
+                initial={false}
                 animate={{
                     x: `calc(${activeIndex * 100}% + ${activeIndex * padding}px)`
                 }}

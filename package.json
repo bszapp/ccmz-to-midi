@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "postbuild": "node prerender.js && vite preview",
+    "===postbuild": "node prerender.js && vite preview",
     "lint": "eslint .",
     "preview": "vite preview",
     "docs:dev": "vitepress dev",

@@ -70,10 +70,10 @@ function FileInput({ onFileSelect }: FileInputProps) {
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
         >
-            <div style={{ fontSize: '20px', fontWeight: 'bold' }}>
+            <div style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '4px' }}>
                 请选择ccmz文件或拖入此处
             </div>
-            <div style={{ fontSize: '14px', color: 'var(--text-secondary-color, #444)', marginBottom: '12px' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-secondary-color, #444)', marginBottom: '16px' }}>
                 解析步骤将在本地运行
             </div>
             <Button onClick={() => fileInputRef.current?.click()}>选择文件</Button>

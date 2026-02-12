@@ -9,12 +9,21 @@ interface ConfigProps {
     setFileType: (t: 'midi' | 'pdf' | 'xml') => void;
     volume: number;
     setVolume: (v: number) => void;
+    pdfType: number;
+    setPdfType: (v: number) => void;
     onClose: () => void;
     onStart: () => void;
 }
 
-function ConfigContent({ file, fileType, setFileType, volume, setVolume, onClose, onStart }: ConfigProps) {
+function ConfigContent({ file,
+    fileType, setFileType,
+    volume, setVolume,
+    pdfType, setPdfType,
+    onClose,
+    onStart
+}: ConfigProps) {
     const volumeMax = 400;
+    const PDF_OPTIONS = ['浏览器打印', 'svg2pdf'];
     return (
         <div style={{ display: 'flex', flexDirection: 'column', color: '#000' }}>
             <div style={{ fontSize: '20px', fontWeight: 500, textAlign: 'center' }}>转换配置</div>
@@ -66,6 +75,30 @@ function ConfigContent({ file, fileType, setFileType, volume, setVolume, onClose
                         {type === 'pdf' && (
                             <div style={{ padding: '4px 4px 0', fontSize: '14px', color: '#666' }}>
                                 特别鸣谢虫虫钢琴官网提供的在线查看器.map文件，由此还原出查看器源码
+                                <Spacer height='16px' />
+                                <div style={{ fontSize: '16px', color: '#222' }}>生成方式</div>
+                                <Spacer height='8px' />
+                                <RadioGroup
+                                    options={PDF_OPTIONS}
+                                    value={PDF_OPTIONS[pdfType]}
+                                    onChange={(val) => setPdfType(PDF_OPTIONS.indexOf(val as any))}
+                                />
+                                <Spacer height='8px' />
+                                <AnimatedContent targetState={pdfType}>
+                                    {(index) => (
+                                        <div style={{ width: '100%' }}>
+                                            {index === 0 ? (
+                                                <div style={{ padding: '4px 4px 0', fontSize: '14px', color: '#666' }}>
+                                                    调用系统打印对话框，排版最精确
+                                                </div>
+                                            ) : (
+                                                <div style={{ padding: '4px 4px 0', fontSize: '14px', color: '#666' }}>
+                                                    实验性功能，浏览器前端渲染，直接生成PDF文件并下载，无法显示中文字符
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </AnimatedContent>
                             </div>
                         )}
                         {type === 'xml' && (

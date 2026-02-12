@@ -72,7 +72,7 @@ function RunningContent({ state, logs, outputFile, onClose, onPrint }: {
                         display: 'flex',
                         padding: '3px',
                         alignItems: 'center',
-                        width: 'calc(100% - 6px)',
+                        width: '100%',
                         whiteSpace: 'pre-wrap',
                         transition: 'all 0.2s',
                         userSelect: 'text',

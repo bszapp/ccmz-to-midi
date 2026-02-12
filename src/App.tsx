@@ -11,6 +11,7 @@ import { loadPdf } from './utils/ScorePdf.js';
 import { ccmzToMidi } from './utils/ccmzToMidi.js';
 import formatFileSize from './utils/formatFileSize.js';
 import { ccmzScore } from './utils/ccmzScore.js';
+import { scorePdfFile } from './utils/scorePdfFile.js';
 
 declare global {
     interface Window {
@@ -29,6 +30,7 @@ function App() {
     const [fileData, setFileData] = useState<File | null>(null);
     const [fileType, setFileType] = useState<FileType>('midi');
     const [volume, setVolume] = useState(100);
+    const [pdfType, setPdfType] = useState(0);
 
     const [logs, setLogs] = useState<{ text: string; type: LogType; btn?: { label: string; action: () => void }; id: string }[]>([]);
     const [runState, setRunState] = useState<'running' | 'success' | 'error' | 'success-pdf'>('running');
@@ -37,6 +39,7 @@ function App() {
     const handleFile = (file: File) => {
         setFileData(file);
         setFileType('midi');
+        setPdfType(0);
         setVolume(100);
         setView('config');
         setIsOpen(true);
@@ -128,17 +131,29 @@ function App() {
 
         try {
             if (fileType === 'pdf') {
-                const scoreData = await ccmzScore(fileData, onLog);
+                if (pdfType === 0) {
+                    const scoreData = await ccmzScore(fileData, onLog);
+                    if (destroyPdfRef.current) destroyPdfRef.current();
 
-                if (destroyPdfRef.current) destroyPdfRef.current();
+                    const { resultInfo, print, destroy } = await loadPdf(scoreData, onLog);
+                    destroyPdfRef.current = destroy;
+                    printPdfRef.current = print;
 
-                const { resultInfo, print, destroy } = await loadPdf(scoreData, onLog);
-                destroyPdfRef.current = destroy;
-                printPdfRef.current = print;
+                    setLogs(prev => [...prev, { text: `${resultInfo.fileName} 页面渲染完成 共${resultInfo.pageCount}页`, type: 'success', id: crypto.randomUUID() }]);
+                    setOutputFile(new File([], resultInfo.fileName, {}));
+                    setRunState('success-pdf');
 
-                setLogs(prev => [...prev, { text: `${resultInfo.fileName} 页面渲染完成 共${resultInfo.pageCount}页`, type: 'success', id: crypto.randomUUID() }]);
-                setOutputFile(new File([], resultInfo.fileName, {}));
-                setRunState('success-pdf');
+                } else if (pdfType === 1) {
+                    const scoreData = await ccmzScore(fileData, onLog);
+                    if (destroyPdfRef.current) destroyPdfRef.current();
+
+                    const resultFile: File = await scorePdfFile(scoreData, onLog);
+                    if (taskId !== currentTaskIdRef.current) return;
+
+                    setOutputFile(resultFile);
+                    setLogs(prev => [...prev, { text: `已生成文件 ${resultFile.name} 大小：${formatFileSize(resultFile.size)}`, type: 'success', id: crypto.randomUUID() }]);
+                    setRunState('success');
+                }
 
             } else if (fileType === 'midi') {
                 const resultFile: File = await ccmzToMidi(fileData, onLog, { volume: volume / 100, fileType });
@@ -156,6 +171,7 @@ function App() {
         }
     };
 
+    //#region 页面布局
     return (
         <div
             className="no-print"
@@ -190,6 +206,8 @@ function App() {
                                     setFileType={setFileType}
                                     volume={volume}
                                     setVolume={setVolume}
+                                    pdfType={pdfType}
+                                    setPdfType={setPdfType}
                                     onClose={() => setIsOpen(false)}
                                     onStart={handleStart}
                                 />
