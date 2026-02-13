@@ -20,6 +20,8 @@ https://bszapp.github.io/ccmz-to-midi/
 - 复制书签链接粘贴下载（部分手机浏览器）
 - 油猴脚本下载
 
+最新源码懒得传了，旧版本的源码在main分支（没有pdf功能，可以看油猴脚本的打印按钮是怎么做的），新版本源码在2分支（下载然后`npm install` `npm run build`或者`npm run docs:dev`）
+
 ---
 应该是平台的灰产吧……
 
