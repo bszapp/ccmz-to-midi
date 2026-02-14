@@ -1,0 +1,2214 @@
+{
+  "ver": "0401",
+  "defaults": {
+    "wordfont": "Times New Roman",
+    "lines": {
+      "stemW": 1,
+      "staffW": 0.5,
+      "lbarW": 0.75
+    }
+  },
+  "footer": {
+    "rights": "虫虫音乐"
+  },
+  "qrcode": {
+    "link": "http://t.lzjoy.com/c/opern/id/1002661",
+    "title": "打开\"虫虫钢琴APP\"\n扫一扫，听音频"
+  },
+  "parts": [
+    {
+      "measures": [
+        {
+          "notes": [
+            {
+              "x": 145,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 1,
+              "tick": 0,
+              "type": 1
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_0_1",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 112,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "arts": [
+                {
+                  "x": 2,
+                  "val": 3,
+                  "y": 60,
+                  "type": "fingering"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "1",
+          "w": 210,
+          "staves": 2,
+          "dirs": [
+            {
+              "notel": 4,
+              "staff": 1,
+              "tick": 0,
+              "type": "metronome",
+              "value": "112",
+              "param": {
+                "x": 68.75,
+                "y": -78,
+                "font-size": 12
+              }
+            }
+          ],
+          "fifths": {
+            "fifths": 1
+          },
+          "time": {
+            "beats": 3,
+            "beatu": 4
+          },
+          "clefs": [
+            {
+              "x": 0,
+              "staff": 1,
+              "tick": 0,
+              "clef": "Treble"
+            },
+            {
+              "x": 0,
+              "staff": 2,
+              "tick": 0,
+              "clef": "Bass"
+            }
+          ]
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "x": 47,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 1,
+              "tick": 0,
+              "type": 1
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 3,
+                  "id": "n_1_1",
+                  "line": 4
+                }
+              ],
+              "dots": 1,
+              "x": 14,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "2",
+          "w": 112
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "x": 48,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 1,
+              "tick": 0,
+              "type": 1
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_2_1",
+                  "line": 3,
+                  "pairs": [
+                    {
+                      "n2": 1,
+                      "m2": 3,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 114,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "dots": 1,
+              "x": 14,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "3",
+          "w": 113
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "x": 48,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 1,
+              "tick": 0,
+              "type": 1
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "tied": "end",
+                  "octave": 3,
+                  "id": "n_3_1",
+                  "line": 3
+                }
+              ],
+              "dots": 1,
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "4",
+          "w": 112
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "x": 48,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 1,
+              "tick": 0,
+              "type": 1
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_4_1",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "5",
+          "w": 113
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "x": 58,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 1,
+              "tick": 0,
+              "type": 1
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 3,
+                  "id": "n_5_1",
+                  "line": 4
+                }
+              ],
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 3,
+                  "id": "n_5_2",
+                  "line": 4
+                }
+              ],
+              "x": 87,
+              "staff": 2,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "6",
+          "w": 133
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "x": 47,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 1,
+              "tick": 0,
+              "type": 1
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_6_1",
+                  "line": 3,
+                  "pairs": [
+                    {
+                      "n2": 1,
+                      "m2": 7,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 112,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "dots": 1,
+              "x": 14,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "7",
+          "w": 112
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "x": 48,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 1,
+              "tick": 0,
+              "type": 1
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "tied": "end",
+                  "octave": 3,
+                  "id": "n_7_1",
+                  "line": 3
+                }
+              ],
+              "dots": 1,
+              "x": 14,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "8",
+          "w": 114
+        },
+        {
+          "staves": 2,
+          "keyw": 48,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 2,
+                  "octave": 4,
+                  "id": "n_8_0",
+                  "line": -5
+                }
+              ],
+              "dots": 1,
+              "x": 79,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "arts": [
+                {
+                  "x": 3,
+                  "val": 3,
+                  "y": -62,
+                  "up": true,
+                  "type": "fingering"
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_8_1",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 79,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "arts": [
+                {
+                  "x": 3,
+                  "val": 3,
+                  "y": -21,
+                  "up": true,
+                  "type": "fingering"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "9",
+          "w": 178
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_9_0",
+                  "line": -6
+                }
+              ],
+              "dots": 1,
+              "x": 16,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 3,
+                  "id": "n_9_1",
+                  "line": 4
+                }
+              ],
+              "dots": 1,
+              "x": 16,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "10",
+          "w": 116
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_10_0",
+                  "line": -7,
+                  "pairs": [
+                    {
+                      "n2": 0,
+                      "m2": 11,
+                      "y1": 8,
+                      "x1": 0,
+                      "y2": 8,
+                      "x2": 116,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "dots": 1,
+              "x": 16,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_10_1",
+                  "line": 3,
+                  "pairs": [
+                    {
+                      "n2": 1,
+                      "m2": 11,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 116,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "dots": 1,
+              "x": 16,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "11",
+          "w": 116
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "tied": "end",
+                  "octave": 3,
+                  "id": "n_11_0",
+                  "line": -7
+                }
+              ],
+              "dots": 1,
+              "x": 16,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "tied": "end",
+                  "octave": 3,
+                  "id": "n_11_1",
+                  "line": 3
+                }
+              ],
+              "dots": 1,
+              "x": 16,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "12",
+          "w": 116
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 2,
+                  "octave": 4,
+                  "id": "n_12_0",
+                  "line": -5
+                }
+              ],
+              "dots": 1,
+              "x": 14,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_12_1",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 14,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "13",
+          "w": 113
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_13_0",
+                  "line": -6
+                }
+              ],
+              "x": 16,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_13_1",
+                  "line": -6
+                }
+              ],
+              "x": 90,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 3,
+                  "id": "n_13_2",
+                  "line": 4
+                }
+              ],
+              "x": 16,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 3,
+                  "id": "n_13_3",
+                  "line": 4
+                }
+              ],
+              "x": 90,
+              "staff": 2,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "14",
+          "w": 137
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_14_0",
+                  "line": -7,
+                  "pairs": [
+                    {
+                      "n2": 0,
+                      "m2": 15,
+                      "y1": 8,
+                      "x1": 0,
+                      "y2": 8,
+                      "x2": 116,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "dots": 1,
+              "x": 16,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_14_1",
+                  "line": 3,
+                  "pairs": [
+                    {
+                      "n2": 2,
+                      "m2": 15,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 116,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "dots": 1,
+              "x": 16,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "15",
+          "w": 116
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "tied": "end",
+                  "octave": 3,
+                  "id": "n_15_0",
+                  "line": -7
+                }
+              ],
+              "x": 16,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 2,
+                  "octave": 4,
+                  "id": "n_15_1",
+                  "line": -5
+                }
+              ],
+              "x": 90,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 3,
+                  "val": 1,
+                  "y": -65,
+                  "up": true,
+                  "type": "fingering"
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "tied": "end",
+                  "octave": 3,
+                  "id": "n_15_2",
+                  "line": 3
+                }
+              ],
+              "x": 16,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "x": 90,
+              "col": 1,
+              "rest": {
+                "nums": 1
+              },
+              "staff": 2,
+              "tick": 960,
+              "type": 4
+            }
+          ],
+          "num": "16",
+          "w": 138
+        },
+        {
+          "staves": 2,
+          "keyw": 48,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_16_0",
+                  "line": -2
+                }
+              ],
+              "x": 79,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "arts": [
+                {
+                  "x": 3,
+                  "val": 4,
+                  "y": -52,
+                  "up": true,
+                  "type": "fingering"
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_16_1",
+                  "line": -2
+                }
+              ],
+              "x": 141,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_16_2",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 79,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "arts": [
+                {
+                  "x": 3,
+                  "val": 3,
+                  "y": 62,
+                  "type": "fingering"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "17",
+          "w": 182
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_17_0",
+                  "line": -3,
+                  "alter": 1
+                }
+              ],
+              "x": 16,
+              "staff": 1,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 3,
+                  "val": 3,
+                  "y": -54,
+                  "up": true,
+                  "type": "fingering"
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_17_1",
+                  "line": -4
+                }
+              ],
+              "x": 54,
+              "staff": 1,
+              "tick": 480,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_17_2",
+                  "line": -3,
+                  "alter": 1
+                }
+              ],
+              "x": 93,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_17_3",
+                  "line": 6
+                }
+              ],
+              "dots": 1,
+              "x": 16,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "arts": [
+                {
+                  "x": 3,
+                  "val": 2,
+                  "y": 70,
+                  "type": "fingering"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "18",
+          "w": 133
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_18_0",
+                  "line": -2
+                }
+              ],
+              "x": 14,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_18_1",
+                  "line": -2
+                }
+              ],
+              "x": 76,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_18_2",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 14,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "19",
+          "w": 116
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 2,
+                  "octave": 4,
+                  "id": "n_19_0",
+                  "line": -5
+                }
+              ],
+              "x": 15,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 2,
+                  "octave": 4,
+                  "id": "n_19_1",
+                  "line": -5
+                }
+              ],
+              "x": 77,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "x": 50,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 2,
+              "tick": 0,
+              "type": 1
+            }
+          ],
+          "num": "20",
+          "w": 117
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_20_0",
+                  "line": -2
+                }
+              ],
+              "x": 14,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_20_1",
+                  "line": -2
+                }
+              ],
+              "x": 76,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_20_2",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 14,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "21",
+          "w": 116
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_21_0",
+                  "line": -3,
+                  "alter": 1
+                }
+              ],
+              "x": 16,
+              "staff": 1,
+              "tick": 0,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_21_1",
+                  "line": -4
+                }
+              ],
+              "x": 55,
+              "staff": 1,
+              "tick": 480,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_21_2",
+                  "line": -3,
+                  "alter": 1
+                }
+              ],
+              "x": 93,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_21_3",
+                  "line": 6
+                }
+              ],
+              "dots": 1,
+              "x": 16,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "22",
+          "w": 133
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_22_0",
+                  "line": -2
+                }
+              ],
+              "x": 14,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_22_1",
+                  "line": -2
+                }
+              ],
+              "x": 76,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_22_2",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 14,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "23",
+          "w": 116
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 2,
+                  "octave": 4,
+                  "id": "n_23_0",
+                  "line": -5
+                }
+              ],
+              "x": 15,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 2,
+                  "octave": 4,
+                  "id": "n_23_1",
+                  "line": -5
+                }
+              ],
+              "x": 76,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "x": 50,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 2,
+              "tick": 0,
+              "type": 1
+            }
+          ],
+          "num": "24",
+          "w": 116
+        },
+        {
+          "staves": 2,
+          "keyw": 48,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_24_0",
+                  "line": -2
+                }
+              ],
+              "x": 79,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_24_1",
+                  "line": -2
+                }
+              ],
+              "x": 147,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_24_2",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 79,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "25",
+          "w": 192
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_25_0",
+                  "line": -3,
+                  "alter": 1
+                }
+              ],
+              "x": 16,
+              "staff": 1,
+              "tick": 0,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_25_1",
+                  "line": -4
+                }
+              ],
+              "x": 59,
+              "staff": 1,
+              "tick": 480,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_25_2",
+                  "line": -3,
+                  "alter": 1
+                }
+              ],
+              "x": 101,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_25_3",
+                  "line": 6
+                }
+              ],
+              "dots": 1,
+              "x": 16,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "26",
+          "w": 145
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_26_0",
+                  "line": -2
+                }
+              ],
+              "x": 14,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_26_1",
+                  "line": -2
+                }
+              ],
+              "x": 82,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_26_2",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 14,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "27",
+          "w": 126
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 2,
+                  "octave": 4,
+                  "id": "n_27_0",
+                  "line": -5
+                }
+              ],
+              "x": 15,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_27_1",
+                  "line": -4
+                }
+              ],
+              "x": 84,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "x": 56,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 2,
+              "tick": 0,
+              "type": 1
+            }
+          ],
+          "num": "28",
+          "w": 128
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "x": 46,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 1,
+              "tick": 0,
+              "type": 1
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_28_1",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "29",
+          "w": 108
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "x": 45,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 1,
+              "tick": 0,
+              "type": 1
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 3,
+                  "id": "n_29_1",
+                  "line": 4
+                }
+              ],
+              "dots": 1,
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "30",
+          "w": 108
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "x": 46,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 1,
+              "tick": 0,
+              "type": 1
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_30_1",
+                  "line": 3,
+                  "pairs": [
+                    {
+                      "n2": 1,
+                      "m2": 31,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 108,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "dots": 1,
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "31",
+          "w": 108
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "x": 46,
+              "col": 0,
+              "rest": {
+                "nums": 3
+              },
+              "staff": 1,
+              "tick": 0,
+              "type": 1
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "tied": "end",
+                  "octave": 3,
+                  "id": "n_31_1",
+                  "line": 3
+                }
+              ],
+              "dots": 1,
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "rbar": {
+            "type": "light-heavy"
+          },
+          "num": "32",
+          "w": 116
+        }
+      ]
+    }
+  ],
+  "groups": [],
+  "fifths": 1,
+  "measInfo": [
+    [
+      112
+    ],
+    [
+      14
+    ],
+    [
+      14
+    ],
+    [
+      15
+    ],
+    [
+      15
+    ],
+    [
+      15,
+      87
+    ],
+    [
+      14
+    ],
+    [
+      14
+    ],
+    [
+      79
+    ],
+    [
+      16
+    ],
+    [
+      16
+    ],
+    [
+      16
+    ],
+    [
+      14
+    ],
+    [
+      16,
+      90
+    ],
+    [
+      16
+    ],
+    [
+      16,
+      90
+    ],
+    [
+      79,
+      141
+    ],
+    [
+      16,
+      54,
+      93
+    ],
+    [
+      14,
+      76
+    ],
+    [
+      15,
+      77
+    ],
+    [
+      14,
+      76
+    ],
+    [
+      16,
+      55,
+      93
+    ],
+    [
+      14,
+      76
+    ],
+    [
+      15,
+      76
+    ],
+    [
+      79,
+      147
+    ],
+    [
+      16,
+      59,
+      101
+    ],
+    [
+      14,
+      82
+    ],
+    [
+      15,
+      84
+    ],
+    [
+      15
+    ],
+    [
+      15
+    ],
+    [
+      15
+    ],
+    [
+      15
+    ]
+  ],
+  "page": {
+    "h": 1823,
+    "x": 115,
+    "y": 78,
+    "w": 1288
+  },
+  "title": {
+    "title": "10.三只瞎老鼠",
+    "composer": "艺术家/歌手：约翰汤普森\n制谱：针织衫",
+    "subtitle": ""
+  },
+  "lines": [
+    {
+      "m1": 0,
+      "distance": 118,
+      "top": 242,
+      "m2": 8,
+      "w": 1019,
+      "x": 76,
+      "h": 170,
+      "y": 320,
+      "lineStaves": [
+        {
+          "distances": [
+            90,
+            90
+          ],
+          "clef": {
+            "1": "Treble",
+            "2": "Bass"
+          },
+          "y": 0,
+          "staves": 2,
+          "fifths": 1,
+          "time": {
+            "beats": 3,
+            "beatu": 4
+          },
+          "parti": 0,
+          "height": 170
+        }
+      ]
+    },
+    {
+      "m1": 8,
+      "distance": 226,
+      "m2": 16,
+      "w": 1030,
+      "x": 64,
+      "h": 170,
+      "y": 716,
+      "lineStaves": [
+        {
+          "distances": [
+            90,
+            90
+          ],
+          "clef": {
+            "1": "Treble",
+            "2": "Bass"
+          },
+          "y": 0,
+          "staves": 2,
+          "fifths": 1,
+          "parti": 0,
+          "height": 170
+        }
+      ]
+    },
+    {
+      "m1": 16,
+      "distance": 227,
+      "m2": 24,
+      "w": 1029,
+      "x": 64,
+      "h": 170,
+      "y": 1113,
+      "lineStaves": [
+        {
+          "distances": [
+            90,
+            90
+          ],
+          "clef": {
+            "1": "Treble",
+            "2": "Bass"
+          },
+          "y": 0,
+          "staves": 2,
+          "fifths": 1,
+          "parti": 0,
+          "height": 170
+        }
+      ]
+    },
+    {
+      "m1": 24,
+      "distance": 226,
+      "m2": 32,
+      "w": 1031,
+      "x": 64,
+      "h": 170,
+      "y": 1509,
+      "lineStaves": [
+        {
+          "distances": [
+            90,
+            90
+          ],
+          "clef": {
+            "1": "Treble",
+            "2": "Bass"
+          },
+          "y": 0,
+          "staves": 2,
+          "fifths": 1,
+          "parti": 0,
+          "height": 170
+        }
+      ]
+    }
+  ]
+}
