@@ -140,7 +140,8 @@ export default function app(input: CCXML) {
             // 属性设置
             if (mIdx === 0 || m.fifths || m.time || m.clefs) {
                 const attr = meas.ele('attributes');
-                attr.ele('divisions').txt("1");
+                //刻度？
+                attr.ele('divisions').txt("4");
                 if (m.fifths) attr.ele('key').ele('fifths').txt(m.fifths.fifths.toString());
                 if (m.time) attr.ele('time').ele('beats').txt(m.time.beats.toString()).up().ele('beat-type').txt(m.time.beatu.toString());
                 if (m.staves) attr.ele('staves').txt(m.staves.toString());
@@ -172,6 +173,8 @@ export default function app(input: CCXML) {
 
             //3:分谱表（高音部、低音部……）
             for (let s = 1; s <= totalStaves; s++) {
+                let staffCounter = 0;
+
                 const staffNotes = m.notes.filter(n => n.staff === s);
 
                 //4:这一小块的每个音符
@@ -181,8 +184,10 @@ export default function app(input: CCXML) {
 
                     //单个音符内容
                     if (n.rest) {
+                        const restDur = n.rest.nums * 4;
+                        staffCounter += restDur;
                         note.ele('rest', n.rest.nums >= measureDuration ? { measure: "yes" } : {}).up()
-                            .ele('duration').txt(n.rest.nums.toString());
+                            .ele('duration').txt(restDur.toString());
                     } else if (n.elems && n.elems.length > 0) {
                         const head = n.elems[0];
                         if (head) {
@@ -196,7 +201,16 @@ export default function app(input: CCXML) {
 
                             pth.ele('octave').txt(head.octave.toString());
                         }
-                        note.ele('duration').txt(measureDuration.toString());
+                        let noteDur = (16 / n.type);
+                        if (n.dots && n.dots > 0) {
+                            let dotVal = noteDur / 2;
+                            for (let i = 0; i < n.dots; i++) {
+                                noteDur += dotVal;
+                                dotVal /= 2;
+                            }
+                        }
+                        note.ele('duration').txt(noteDur.toString());
+                        staffCounter += noteDur;
                     }
 
                     note.ele('voice').txt(s === 1 ? "1" : "5").up()
@@ -260,7 +274,7 @@ export default function app(input: CCXML) {
                 });
 
                 if (s < totalStaves) {
-                    meas.ele('backup').ele('duration').txt(measureDuration.toString());
+                    meas.ele('backup').ele('duration').txt(staffCounter.toString());
                 }
             }
 
