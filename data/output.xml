@@ -270,7 +270,9 @@
         <type>eighth</type>
         <stem>down</stem>
         <beam number="1">begin</beam>
-        <notations/>
+        <notations>
+          <arpeggiate/>
+        </notations>
         <staff>1</staff>
       </note>
       <note>
@@ -284,7 +286,9 @@
         <type>eighth</type>
         <stem>down</stem>
         <beam number="1">begin</beam>
-        <notations/>
+        <notations>
+          <arpeggiate/>
+        </notations>
         <staff>1</staff>
       </note>
       <note>
@@ -298,7 +302,9 @@
         <type>eighth</type>
         <stem>down</stem>
         <beam number="1">begin</beam>
-        <notations/>
+        <notations>
+          <arpeggiate/>
+        </notations>
         <staff>1</staff>
       </note>
       <note>
@@ -515,7 +521,9 @@
         <type>eighth</type>
         <stem>down</stem>
         <beam number="1">begin</beam>
-        <notations/>
+        <notations>
+          <arpeggiate/>
+        </notations>
         <staff>1</staff>
       </note>
       <note>
@@ -529,7 +537,9 @@
         <type>eighth</type>
         <stem>down</stem>
         <beam number="1">begin</beam>
-        <notations/>
+        <notations>
+          <arpeggiate/>
+        </notations>
         <staff>1</staff>
       </note>
       <note>
@@ -543,7 +553,9 @@
         <type>eighth</type>
         <stem>down</stem>
         <beam number="1">begin</beam>
-        <notations/>
+        <notations>
+          <arpeggiate/>
+        </notations>
         <staff>1</staff>
       </note>
       <note>

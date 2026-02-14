@@ -1,4 +1,4 @@
-import type { BeamInfo, Note } from "./ccxml.ts";
+import type { Note, NoteArts } from "./ccxml.ts";
 
 export interface XmlNotes {
     trackId: number;//音轨id，由谱表、声部共同决定
@@ -16,7 +16,7 @@ export interface XmlNote {
     stem?: "up" | "down" | undefined; // 符干方向：向上或向下
     beams?: XmlBeamInfo[]; // 连杠信息列表
     tuplet?: TupletInfo | undefined; // 连音信息
-    notations?: string[] | undefined; // 装饰音、力度等记号列表
+    arts?: NoteArts[] | undefined;
     slur?: "L" | "M" | "R" | undefined; // 连奏线标记：L(Left/开始), M(Middle/中间), R(Right/结束)
 }
 
@@ -69,6 +69,7 @@ export function xmlNodeDuration(note: XmlNote): number {
         extra += current;
     }
 
+    //连音需要重新缩放
     const scale = note.tuplet ? note.tuplet.normal / note.tuplet.actual : 1;
 
     return (base + extra) * scale;
@@ -215,8 +216,8 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
                 stem: note.stem?.type as "up" | "down",
                 slur: note.slur,
                 beams: noteBeams,
-                tuplet: tupletInfo,
-                notations: note.arts
+                arts: note.arts,
+                tuplet: tupletInfo
             }
         };
 

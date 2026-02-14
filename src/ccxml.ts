@@ -48,8 +48,8 @@ export interface Measure {
 }
 
 export interface Note {
-    x: number;               //// 音符在画布/页面上的水平渲染坐标
-    col: number;             //// 布局列索引，用于对齐同一竖轴的音符
+    x: number;
+    col: number;
 
     //音轨
     staff: number;           // 谱表编号，通常 1 为高音谱表，2 为低音谱表
@@ -70,11 +70,20 @@ export interface Note {
         y: number;           // 符干端点的垂直坐标
         up?: boolean;        // 是否向上延长
     };
-    arts?: any[];            // 装饰音/演奏记号，如 staccato (断奏), accent (重音) 等
+    arts?: NoteArts[] | undefined; // 装饰音/演奏记号，如 staccato (断奏), accent (重音) 等
     slur?: "L" | "M" | "R";  // 圆滑线标记：L 代表开始 (Left)，M 代表中间 (Middle)，R 代表结束 (Right)
 
     beams?: BeamInfo[];      // 连杠信息数组，定义多杠连杠的起始、继续或结束
     inbeam?: boolean;        // 标识该音符当前是否处于连杠组合中
+}
+
+export interface NoteArts {
+    type: "arpeggiate" | "staccato" | "tenuto" | "accent" | "strong-accent" | string;
+    x: number;
+    y: number;
+    line1?: number;          // 符号起始跨越的谱线位置（常用于琶音、波浪线）
+    line2?: number;          // 符号结束跨越的谱线位置
+    placement?: "above" | "below"; // 符号在符头上方还是下方
 }
 
 interface NoteElement {

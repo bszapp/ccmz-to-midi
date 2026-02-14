@@ -233,11 +233,13 @@ export default function app(input: CCXML) {
 
             const xmlNotes = notesToXmlNotes(m.notes);
             xmlNotes.forEach((xmlNote, xmlNoteIdx) => {
+                //#region-3:分声部+谱表
                 console.log(`声部${xmlNote.trackId}:${formatXmlNotes(xmlNote.notes)}`);
 
                 let trackTotalDuration = 0;
 
                 xmlNote.notes.forEach((xn) => {
+                    //#region-4:分音符
                     const durRaw = xmlNodeDuration(xn);
                     trackTotalDuration += durRaw;
                     const duration = durRaw / 120;
@@ -262,6 +264,7 @@ export default function app(input: CCXML) {
                         n.ele('staff').txt(staff);
                     } else {
                         (xn.elems as XmlNoteElement[]).forEach((el, elIdx) => {
+                            //#region 5:单个音调
                             const n = meas.ele('note');
                             if (elIdx > 0) n.ele('chord');
 
@@ -290,6 +293,7 @@ export default function app(input: CCXML) {
 
                             const notations = n.ele('notations');
 
+                            //连音
                             if (xn.tuplet) {
                                 const timeMod = n.ele('time-modification');
                                 timeMod.ele('actual-notes').txt(xn.tuplet.actual.toString());
@@ -306,6 +310,7 @@ export default function app(input: CCXML) {
 
                             n.ele('staff').txt(staff);
 
+                            //连杠
                             if (el.tied) {
                                 n.ele('tied', { type: el.tied.isStart ? 'start' : 'stop' });
                                 notations.ele('tied', {
@@ -313,6 +318,13 @@ export default function app(input: CCXML) {
                                     placement: el.tied.isStart ? (el.tied.isUp ? 'above' : 'below') : undefined
                                 });
                             }
+
+                            //琶音
+                            xn.arts?.forEach(art => {
+                                if (art.type == 'arpeggiate') {
+                                    notations.ele('arpeggiate')
+                                }
+                            })
                         });
                     }
                 });
