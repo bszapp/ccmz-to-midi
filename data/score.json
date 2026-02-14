@@ -1,7 +1,6 @@
 {
   "ver": "0401",
   "defaults": {
-    "wordfont": "Times New Roman",
     "lines": {
       "stemW": 1,
       "staffW": 0.5,
@@ -13,7 +12,7 @@
     "rights": "虫虫音乐"
   },
   "qrcode": {
-    "link": "http://t.lzjoy.com/c/opern/id/1002697",
+    "link": "http://t.lzjoy.com/c/opern/id/1002751",
     "title": "打开\"虫虫钢琴APP\"\n扫一扫，听音频"
   },
   "parts": [
@@ -23,54 +22,145 @@
           "notes": [
             {
               "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_0_0",
+                  "line": 1
+                }
+              ],
+              "x": 75,
+              "staff": 1,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 0,
+                  "y": -20,
+                  "up": true,
+                  "type": "accent_staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_0_1",
+                  "line": 1
+                }
+              ],
+              "x": 123,
+              "staff": 1,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -10,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_0_2",
+                  "line": 1
+                }
+              ],
+              "x": 171,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -10,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": -31,
+                  "y2": -27.5,
+                  "i": 0,
+                  "n2": 4
+                }
+              ],
+              "col": 3,
               "slur": "L",
               "elems": [
                 {
-                  "step": 3,
+                  "step": 6,
                   "octave": 4,
-                  "id": "n_0_0",
-                  "line": -4,
+                  "id": "n_0_3",
+                  "line": -1,
                   "pairs": [
                     {
-                      "n2": 0,
-                      "m2": 3,
+                      "n2": 4,
+                      "m2": 0,
                       "y1": 8,
                       "x1": 0,
-                      "y2": 8,
-                      "x2": 593,
+                      "y2": 13,
+                      "x2": 35,
                       "type": "slur"
                     }
                   ]
                 }
               ],
-              "x": 76,
+              "x": 220,
               "staff": 1,
-              "tick": 0,
-              "type": 4,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
               "stem": {
                 "type": "up",
-                "y": -35,
+                "y": -31,
                 "up": true
               }
             },
             {
-              "col": 1,
-              "slur": "M",
+              "col": 4,
+              "slur": "R",
               "elems": [
                 {
-                  "step": 3,
+                  "step": 5,
                   "octave": 4,
-                  "id": "n_0_1",
-                  "line": -4
+                  "id": "n_0_4",
+                  "line": -2
                 }
               ],
-              "x": 161,
+              "x": 255,
               "staff": 1,
-              "tick": 480,
-              "type": 4,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
               "stem": {
                 "type": "up",
-                "y": -35,
+                "y": -32.5,
                 "up": true
               }
             },
@@ -79,35 +169,147 @@
               "elems": [
                 {
                   "step": 1,
-                  "octave": 3,
-                  "id": "n_0_2",
-                  "line": -1
+                  "octave": 4,
+                  "id": "n_0_5",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_0_6",
+                  "line": -4
                 }
               ],
-              "x": 76,
+              "x": 75,
               "staff": 2,
               "tick": 0,
-              "type": 2,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "accent_staccato",
+                  "x": 0,
+                  "y": 23
+                }
+              ],
               "stem": {
                 "type": "up",
-                "y": -35,
+                "y": -45,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_0_7",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_0_8",
+                  "line": -4
+                }
+              ],
+              "x": 123,
+              "staff": 2,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -45,
+                "up": true
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_0_9",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_0_10",
+                  "line": -4
+                }
+              ],
+              "x": 171,
+              "staff": 2,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -45,
+                "up": true
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_0_11",
+                  "line": -6
+                },
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_0_12",
+                  "line": -3
+                }
+              ],
+              "x": 220,
+              "staff": 2,
+              "tick": 1440,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -50,
                 "up": true
               }
             }
           ],
           "num": "1",
-          "w": 246,
+          "w": 289,
           "staves": 2,
           "dirs": [
             {
               "staff": 1,
               "tick": 0,
-              "text": "3",
+              "text": "mf",
+              "type": "dyn",
               "param": {
-                "x": 80,
-                "y": -7,
-                "font-size": 11.25,
-                "font-weight": "bold"
+                "x": 69,
+                "y": 71,
+                "font-size": 19.25
               }
             },
             {
@@ -115,33 +317,11 @@
               "staff": 1,
               "tick": 0,
               "type": "metronome",
-              "value": "46",
+              "value": "108",
               "param": {
                 "x": 20.25,
-                "y": -52,
-                "font-size": 15
-              }
-            },
-            {
-              "staff": 1,
-              "tick": 480,
-              "text": "3",
-              "param": {
-                "x": 165,
-                "y": -7,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 2,
-              "tick": 0,
-              "text": "5",
-              "param": {
-                "x": 80,
-                "y": 54,
-                "font-size": 11.25,
-                "font-weight": "bold"
+                "y": -30,
+                "font-size": 12
               }
             }
           ],
@@ -149,7 +329,8 @@
             "fifths": 0
           },
           "time": {
-            "beats": 2,
+            "beats": 4,
+            "sym": "common",
             "beatu": 4
           },
           "clefs": [
@@ -163,65 +344,515 @@
               "x": 0,
               "staff": 2,
               "tick": 0,
-              "clef": "Bass"
+              "clef": "Treble"
             }
           ]
         },
         {
           "staves": 2,
-          "dirs": [
+          "notes": [
             {
+              "beams": [
+                {
+                  "y1": 31,
+                  "y2": 27.5,
+                  "i": 0,
+                  "n2": 1
+                }
+              ],
+              "col": 0,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 4,
+                  "id": "n_1_0",
+                  "line": -1
+                }
+              ],
+              "x": 15,
               "staff": 1,
               "tick": 0,
-              "text": "5",
-              "param": {
-                "x": 19,
-                "y": -8,
-                "font-size": 11.25,
-                "font-weight": "bold"
+              "type": 8,
+              "inbeam": true,
+              "arts": [
+                {
+                  "x": 0,
+                  "y": -35,
+                  "up": true,
+                  "type": "accent"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 31
               }
             },
             {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_1_1",
+                  "line": 1,
+                  "pairs": [
+                    {
+                      "n2": 2,
+                      "m2": 1,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 34,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "x": 50,
+              "staff": 1,
+              "tick": 240,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 37.5
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 1,
+                  "tied": "end",
+                  "octave": 5,
+                  "id": "n_1_2",
+                  "line": 1
+                }
+              ],
+              "x": 84,
               "staff": 1,
               "tick": 480,
-              "text": "1",
-              "param": {
-                "x": 104,
-                "y": -7,
-                "font-size": 11.25,
-                "font-weight": "bold"
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
               }
             },
             {
+              "beams": [
+                {
+                  "y1": 31,
+                  "y2": 27.5,
+                  "i": 0,
+                  "n2": 4
+                }
+              ],
+              "col": 4,
+              "slur": "L",
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_1_3",
+                  "line": 1,
+                  "pairs": [
+                    {
+                      "n2": 0,
+                      "m2": 2,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -28,
+                      "x2": 84,
+                      "up": true,
+                      "type": "slur"
+                    }
+                  ]
+                }
+              ],
+              "x": 181,
+              "staff": 1,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 31
+              }
+            },
+            {
+              "col": 5,
+              "slur": "M",
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 5,
+                  "id": "n_1_4",
+                  "line": 3
+                }
+              ],
+              "x": 215,
+              "staff": 1,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 37.5
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_1_5",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_1_6",
+                  "line": -4
+                }
+              ],
+              "x": 15,
               "staff": 2,
               "tick": 0,
-              "text": "3",
-              "param": {
-                "x": 19,
-                "y": 54,
-                "font-size": 11.25,
-                "font-weight": "bold"
+              "type": 4,
+              "arts": [
+                {
+                  "type": "accent_staccato",
+                  "x": 0,
+                  "y": 23
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -45,
+                "up": true
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_1_7",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_1_8",
+                  "line": -4
+                }
+              ],
+              "x": 84,
+              "staff": 2,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -45,
+                "up": true
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_1_9",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_1_10",
+                  "line": -4
+                }
+              ],
+              "x": 132,
+              "staff": 2,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -45,
+                "up": true
+              }
+            },
+            {
+              "col": 4,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_1_11",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_1_12",
+                  "line": -4
+                }
+              ],
+              "x": 181,
+              "staff": 2,
+              "tick": 1440,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -45,
+                "up": true
               }
             }
           ],
+          "num": "2",
+          "w": 250,
+          "pdirs": [
+            {
+              "line": "solid",
+              "y1": 71,
+              "crescendo": true,
+              "x1": 181,
+              "y2": 71,
+              "staff": 1,
+              "type": "wedge",
+              "stopx": 265
+            }
+          ]
+        },
+        {
+          "staves": 2,
           "notes": [
             {
               "col": 0,
               "elems": [
                 {
                   "step": 5,
-                  "octave": 4,
-                  "id": "n_1_0",
-                  "line": -2
+                  "octave": 5,
+                  "id": "n_2_0",
+                  "line": 5
                 }
               ],
               "x": 15,
               "staff": 1,
               "tick": 0,
               "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -10,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_2_1",
+                  "line": 5
+                }
+              ],
+              "x": 63,
+              "staff": 1,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -10,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": 32.5,
+                  "y2": 36,
+                  "i": 0,
+                  "n2": 3
+                }
+              ],
+              "col": 2,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 5,
+                  "id": "n_2_2",
+                  "line": 6
+                }
+              ],
+              "x": 111,
+              "staff": 1,
+              "tick": 960,
+              "type": 8,
+              "inbeam": true,
+              "arts": [
+                {
+                  "x": 0,
+                  "y": -15,
+                  "up": true,
+                  "type": "accent"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 32.5
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_2_3",
+                  "line": 5,
+                  "pairs": [
+                    {
+                      "n2": 4,
+                      "m2": 2,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 35,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "x": 145,
+              "staff": 1,
+              "tick": 1200,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 31
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": 37.5,
+                  "y2": 41,
+                  "i": 0,
+                  "n2": 5
+                }
+              ],
+              "col": 4,
+              "elems": [
+                {
+                  "step": 5,
+                  "tied": "end",
+                  "octave": 5,
+                  "id": "n_2_4",
+                  "line": 5
+                }
+              ],
+              "x": 180,
+              "staff": 1,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 37.5
+              }
+            },
+            {
+              "col": 5,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 5,
+                  "id": "n_2_5",
+                  "line": 3
+                }
+              ],
+              "x": 215,
+              "staff": 1,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 31
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_2_6",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_2_7",
+                  "line": -4
+                }
+              ],
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
               "stem": {
                 "type": "up",
-                "y": -35,
+                "y": -45,
                 "up": true
               }
             },
@@ -231,139 +862,30 @@
                 {
                   "step": 1,
                   "octave": 4,
-                  "id": "n_1_1",
+                  "id": "n_2_8",
                   "line": -6
-                }
-              ],
-              "x": 100,
-              "staff": 1,
-              "tick": 480,
-              "type": 4,
-              "stem": {
-                "type": "up",
-                "y": -35,
-                "up": true
-              }
-            },
-            {
-              "col": 0,
-              "elems": [
-                {
-                  "step": 3,
-                  "octave": 3,
-                  "id": "n_1_2",
-                  "line": 1
-                }
-              ],
-              "x": 15,
-              "staff": 2,
-              "tick": 0,
-              "type": 2,
-              "stem": {
-                "type": "down",
-                "y": 35
-              }
-            }
-          ],
-          "num": "2",
-          "w": 185
-        },
-        {
-          "staves": 2,
-          "dirs": [
-            {
-              "staff": 1,
-              "tick": 0,
-              "text": "2",
-              "param": {
-                "x": 19,
-                "y": -7,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 1,
-              "tick": 240,
-              "text": "3",
-              "param": {
-                "x": 80,
-                "y": -7,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 1,
-              "tick": 480,
-              "text": "4",
-              "param": {
-                "x": 142,
-                "y": -7,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 2,
-              "tick": 0,
-              "text": "1",
-              "param": {
-                "x": 19,
-                "y": 54,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            }
-          ],
-          "notes": [
-            {
-              "beams": [
-                {
-                  "y1": -31,
-                  "y2": -36,
-                  "i": 0,
-                  "n2": 1
-                }
-              ],
-              "col": 0,
-              "elems": [
-                {
-                  "step": 2,
-                  "octave": 4,
-                  "id": "n_2_0",
-                  "line": -5
-                }
-              ],
-              "x": 15,
-              "staff": 1,
-              "tick": 0,
-              "type": 8,
-              "inbeam": true,
-              "stem": {
-                "type": "up",
-                "y": -31,
-                "up": true
-              }
-            },
-            {
-              "col": 1,
-              "elems": [
+                },
                 {
                   "step": 3,
                   "octave": 4,
-                  "id": "n_2_1",
+                  "id": "n_2_9",
                   "line": -4
                 }
               ],
-              "x": 76,
-              "staff": 1,
-              "tick": 240,
-              "type": 8,
-              "inbeam": true,
+              "x": 63,
+              "staff": 2,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
               "stem": {
                 "type": "up",
-                "y": -31,
+                "y": -45,
                 "up": true
               }
             },
@@ -371,20 +893,1072 @@
               "col": 2,
               "elems": [
                 {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_2_10",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_2_11",
+                  "line": -4
+                }
+              ],
+              "x": 111,
+              "staff": 2,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -45,
+                "up": true
+              }
+            },
+            {
+              "col": 4,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_2_12",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_2_13",
+                  "line": -4
+                }
+              ],
+              "x": 180,
+              "staff": 2,
+              "tick": 1440,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -45,
+                "up": true
+              }
+            }
+          ],
+          "num": "3",
+          "w": 250
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 2,
+                  "octave": 5,
+                  "id": "n_3_0",
+                  "line": 2
+                }
+              ],
+              "dots": 1,
+              "x": 15,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": -32.5,
+                  "y2": -36,
+                  "i": 0,
+                  "n2": 2
+                }
+              ],
+              "col": 3,
+              "slur": "L",
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_3_1",
+                  "line": -2,
+                  "pairs": [
+                    {
+                      "n2": 0,
+                      "m2": 4,
+                      "y1": -36.5,
+                      "x1": 0,
+                      "y2": -23,
+                      "x2": 127,
+                      "up": true,
+                      "type": "slur"
+                    }
+                  ]
+                }
+              ],
+              "x": 159,
+              "staff": 1,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -32.5,
+                "up": true
+              }
+            },
+            {
+              "col": 4,
+              "slur": "M",
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 4,
+                  "id": "n_3_2",
+                  "line": -1
+                }
+              ],
+              "x": 194,
+              "staff": 1,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -31,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_3_3",
+                  "line": -7
+                },
+                {
                   "step": 4,
                   "octave": 4,
-                  "id": "n_2_2",
+                  "id": "n_3_4",
                   "line": -3
                 }
               ],
-              "x": 138,
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -55,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_3_5",
+                  "line": -7
+                },
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_3_6",
+                  "line": -3
+                }
+              ],
+              "x": 63,
+              "staff": 2,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -55,
+                "up": true
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_3_7",
+                  "line": -7
+                },
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_3_8",
+                  "line": -3
+                }
+              ],
+              "x": 111,
+              "staff": 2,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -55,
+                "up": true
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 7,
+                  "octave": 3,
+                  "id": "n_3_9",
+                  "line": -7
+                },
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_3_10",
+                  "line": -3
+                }
+              ],
+              "x": 159,
+              "staff": 2,
+              "tick": 1440,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -55,
+                "up": true
+              }
+            }
+          ],
+          "num": "4",
+          "w": 229,
+          "pdirs": [
+            {
+              "line": "solid",
+              "y1": 62,
+              "crescendo": false,
+              "x1": 57,
+              "y2": 62,
+              "staff": 1,
+              "type": "wedge",
+              "stopx": 129
+            }
+          ]
+        },
+        {
+          "staves": 2,
+          "keyw": 30,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_4_0",
+                  "line": 1
+                }
+              ],
+              "x": 57,
+              "staff": 1,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 0,
+                  "y": -20,
+                  "up": true,
+                  "type": "accent_staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_4_1",
+                  "line": 1
+                }
+              ],
+              "x": 111,
               "staff": 1,
               "tick": 480,
               "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -10,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_4_2",
+                  "line": 1
+                }
+              ],
+              "x": 166,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -10,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": -31,
+                  "y2": -27,
+                  "i": 0,
+                  "n2": 4
+                }
+              ],
+              "col": 3,
+              "slur": "L",
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 4,
+                  "id": "n_4_3",
+                  "line": -1,
+                  "pairs": [
+                    {
+                      "n2": 4,
+                      "m2": 4,
+                      "y1": 8,
+                      "x1": 0,
+                      "y2": 13,
+                      "x2": 40,
+                      "type": "slur"
+                    }
+                  ]
+                }
+              ],
+              "x": 220,
+              "staff": 1,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
               "stem": {
                 "type": "up",
-                "y": -35,
+                "y": -31,
                 "up": true
+              }
+            },
+            {
+              "col": 4,
+              "slur": "R",
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_4_4",
+                  "line": -2
+                }
+              ],
+              "x": 260,
+              "staff": 1,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -32,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_4_5",
+                  "line": 6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_4_6",
+                  "line": 8
+                }
+              ],
+              "x": 57,
+              "staff": 2,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 0,
+                  "y": -20,
+                  "up": true,
+                  "type": "accent_staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_4_7",
+                  "line": 6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_4_8",
+                  "line": 8
+                }
+              ],
+              "x": 111,
+              "staff": 2,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -20,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_4_9",
+                  "line": 6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_4_10",
+                  "line": 8
+                }
+              ],
+              "x": 166,
+              "staff": 2,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -20,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_4_11",
+                  "line": 6
+                },
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_4_12",
+                  "line": 9
+                }
+              ],
+              "x": 220,
+              "staff": 2,
+              "tick": 1440,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -25,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "clefs": [
+            {
+              "x": 0,
+              "staff": 2,
+              "tick": 0,
+              "clef": "Bass"
+            }
+          ],
+          "num": "5",
+          "w": 299
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "beams": [
+                {
+                  "y1": 31,
+                  "y2": 27,
+                  "i": 0,
+                  "n2": 1
+                }
+              ],
+              "col": 0,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 4,
+                  "id": "n_5_0",
+                  "line": -1
+                }
+              ],
+              "x": 15,
+              "staff": 1,
+              "tick": 0,
+              "type": 8,
+              "inbeam": true,
+              "arts": [
+                {
+                  "x": 0,
+                  "y": -35,
+                  "up": true,
+                  "type": "accent"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 31
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_5_1",
+                  "line": 1,
+                  "pairs": [
+                    {
+                      "n2": 2,
+                      "m2": 5,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 39,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "x": 54,
+              "staff": 1,
+              "tick": 240,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 37
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 1,
+                  "tied": "end",
+                  "octave": 5,
+                  "id": "n_5_2",
+                  "line": 1
+                }
+              ],
+              "x": 93,
+              "staff": 1,
+              "tick": 480,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": 31,
+                  "y2": 27,
+                  "i": 0,
+                  "n2": 4
+                }
+              ],
+              "col": 4,
+              "slur": "L",
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_5_3",
+                  "line": 1,
+                  "pairs": [
+                    {
+                      "n2": 0,
+                      "m2": 6,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -28,
+                      "x2": 94,
+                      "up": true,
+                      "type": "slur"
+                    }
+                  ]
+                }
+              ],
+              "x": 202,
+              "staff": 1,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 31
+              }
+            },
+            {
+              "col": 5,
+              "slur": "M",
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 5,
+                  "id": "n_5_4",
+                  "line": 3
+                }
+              ],
+              "x": 242,
+              "staff": 1,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 37
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_5_5",
+                  "line": 6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_5_6",
+                  "line": 8
+                }
+              ],
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 0,
+                  "y": -20,
+                  "up": true,
+                  "type": "accent_staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_5_7",
+                  "line": 6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_5_8",
+                  "line": 8
+                }
+              ],
+              "x": 93,
+              "staff": 2,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -20,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_5_9",
+                  "line": 6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_5_10",
+                  "line": 8
+                }
+              ],
+              "x": 148,
+              "staff": 2,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -20,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 4,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_5_11",
+                  "line": 6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_5_12",
+                  "line": 8
+                }
+              ],
+              "x": 202,
+              "staff": 2,
+              "tick": 1440,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -20,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "6",
+          "w": 281,
+          "pdirs": [
+            {
+              "line": "solid",
+              "y1": 50,
+              "crescendo": true,
+              "x1": 212,
+              "y2": 50,
+              "staff": 1,
+              "type": "wedge",
+              "stopx": 310
+            }
+          ]
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_6_0",
+                  "line": 5
+                }
+              ],
+              "x": 15,
+              "staff": 1,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -10,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_6_1",
+                  "line": 5
+                }
+              ],
+              "x": 69,
+              "staff": 1,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -10,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": 32,
+                  "y2": 36,
+                  "i": 0,
+                  "n2": 3
+                }
+              ],
+              "col": 2,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 5,
+                  "id": "n_6_2",
+                  "line": 6
+                }
+              ],
+              "x": 124,
+              "staff": 1,
+              "tick": 960,
+              "type": 8,
+              "inbeam": true,
+              "arts": [
+                {
+                  "x": 0,
+                  "y": -15,
+                  "up": true,
+                  "type": "accent"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 32
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_6_3",
+                  "line": 5,
+                  "pairs": [
+                    {
+                      "n2": 4,
+                      "m2": 6,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 39,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "x": 163,
+              "staff": 1,
+              "tick": 1200,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 31
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": 37,
+                  "y2": 41,
+                  "i": 0,
+                  "n2": 5
+                }
+              ],
+              "col": 4,
+              "elems": [
+                {
+                  "step": 5,
+                  "tied": "end",
+                  "octave": 5,
+                  "id": "n_6_4",
+                  "line": 5
+                }
+              ],
+              "x": 202,
+              "staff": 1,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 37
+              }
+            },
+            {
+              "col": 5,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 5,
+                  "id": "n_6_5",
+                  "line": 3
+                }
+              ],
+              "x": 242,
+              "staff": 1,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 31
               }
             },
             {
@@ -393,242 +1967,313 @@
                 {
                   "step": 5,
                   "octave": 3,
-                  "id": "n_2_3",
+                  "id": "n_6_6",
+                  "line": 3
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_6_7",
+                  "line": 8
+                }
+              ],
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -35,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_6_8",
+                  "line": 3
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_6_9",
+                  "line": 8
+                }
+              ],
+              "x": 69,
+              "staff": 2,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -35,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_6_10",
+                  "line": 3
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_6_11",
+                  "line": 8
+                }
+              ],
+              "x": 124,
+              "staff": 2,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -35,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 4,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_6_12",
+                  "line": 3
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_6_13",
+                  "line": 8
+                }
+              ],
+              "x": 202,
+              "staff": 2,
+              "tick": 1440,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -35,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            }
+          ],
+          "num": "7",
+          "w": 281
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "slur": "L",
+              "elems": [
+                {
+                  "step": 2,
+                  "octave": 5,
+                  "id": "n_7_0",
+                  "line": 2,
+                  "pairs": [
+                    {
+                      "n2": 1,
+                      "m2": 7,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -3,
+                      "x2": 108,
+                      "up": true,
+                      "type": "slur"
+                    }
+                  ]
+                }
+              ],
+              "x": 15,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 2,
+              "slur": "R",
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_7_1",
+                  "line": 1
+                }
+              ],
+              "x": 123,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "x": 178,
+              "col": 3,
+              "rest": {
+                "nums": 1
+              },
+              "staff": 1,
+              "tick": 1440,
+              "type": 4
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_7_3",
                   "line": 3
                 }
               ],
               "x": 15,
               "staff": 2,
               "tick": 0,
-              "type": 2,
+              "type": 4,
               "stem": {
                 "type": "down",
                 "y": 35
               }
-            }
-          ],
-          "num": "3",
-          "w": 223
-        },
-        {
-          "staves": 2,
-          "dirs": [
-            {
-              "staff": 1,
-              "tick": 0,
-              "text": "3",
-              "param": {
-                "x": 19,
-                "y": -7,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
             },
             {
-              "staff": 2,
-              "tick": 0,
-              "text": "5",
-              "param": {
-                "x": 19,
-                "y": 54,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            }
-          ],
-          "notes": [
-            {
-              "col": 0,
+              "col": 1,
               "elems": [
                 {
-                  "step": 3,
+                  "step": 4,
                   "octave": 4,
-                  "id": "n_3_0",
-                  "line": -4
+                  "id": "n_7_4",
+                  "line": 9
                 }
               ],
-              "x": 15,
-              "staff": 1,
-              "tick": 0,
-              "type": 2,
+              "x": 69,
+              "staff": 2,
+              "tick": 480,
+              "type": 4,
               "stem": {
-                "type": "up",
-                "y": -35,
-                "up": true
+                "type": "down",
+                "y": 45
               }
             },
             {
-              "col": 0,
+              "col": 2,
               "elems": [
                 {
                   "step": 1,
-                  "octave": 3,
-                  "id": "n_3_1",
-                  "line": -1
+                  "octave": 4,
+                  "id": "n_7_5",
+                  "line": 6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_7_6",
+                  "line": 8
                 }
               ],
-              "x": 15,
+              "x": 123,
               "staff": 2,
-              "tick": 0,
-              "type": 2,
+              "tick": 960,
+              "type": 4,
               "stem": {
-                "type": "up",
-                "y": -35,
-                "up": true
+                "type": "down",
+                "y": 35
               }
+            },
+            {
+              "x": 178,
+              "col": 3,
+              "rest": {
+                "nums": 1
+              },
+              "staff": 2,
+              "tick": 1440,
+              "type": 4
             }
           ],
-          "num": "4",
-          "w": 160
+          "num": "8",
+          "w": 232
         },
         {
           "staves": 2,
-          "dirs": [
-            {
-              "staff": 1,
-              "tick": 0,
-              "text": "3",
-              "param": {
-                "x": 61,
-                "y": -5,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 1,
-              "tick": 240,
-              "text": "4",
-              "param": {
-                "x": 118,
-                "y": -5,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 1,
-              "tick": 480,
-              "text": "3",
-              "param": {
-                "x": 174,
-                "y": -5,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 1,
-              "tick": 720,
-              "text": "4",
-              "param": {
-                "x": 230,
-                "y": -5,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 2,
-              "tick": 0,
-              "text": "5",
-              "param": {
-                "x": 61,
-                "y": 54,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            }
-          ],
           "keyw": 30,
           "notes": [
             {
               "beams": [
                 {
                   "y1": -31,
-                  "y2": -36,
+                  "y2": -26.75,
                   "i": 0,
                   "n2": 1
                 }
               ],
-              "col": 0,
-              "slur": "L",
-              "elems": [
-                {
-                  "step": 3,
-                  "octave": 4,
-                  "id": "n_4_0",
-                  "line": -4,
-                  "pairs": [
-                    {
-                      "n2": 0,
-                      "m2": 7,
-                      "y1": 8,
-                      "x1": 0,
-                      "y2": 18,
-                      "x2": 618,
-                      "type": "slur"
-                    }
-                  ]
-                }
-              ],
-              "x": 57,
-              "staff": 1,
-              "tick": 0,
-              "type": 8,
-              "inbeam": true,
-              "stem": {
-                "type": "up",
-                "y": -31,
-                "up": true
-              }
-            },
-            {
-              "col": 1,
-              "slur": "M",
-              "elems": [
-                {
-                  "step": 4,
-                  "octave": 4,
-                  "id": "n_4_1",
-                  "line": -3
-                }
-              ],
-              "x": 114,
-              "staff": 1,
-              "tick": 240,
-              "type": 8,
-              "inbeam": true,
-              "stem": {
-                "type": "up",
-                "y": -31,
-                "up": true
-              }
-            },
-            {
-              "beams": [
-                {
-                  "y1": -31,
-                  "y2": -36,
-                  "i": 0,
-                  "n2": 3
-                }
-              ],
               "col": 2,
-              "slur": "M",
               "elems": [
                 {
-                  "step": 3,
-                  "octave": 4,
-                  "id": "n_4_2",
-                  "line": -4
+                  "step": 6,
+                  "octave": 5,
+                  "id": "n_8_0",
+                  "line": 6
                 }
               ],
-              "x": 170,
+              "v": 0,
+              "x": 176,
               "staff": 1,
-              "tick": 480,
+              "tick": 960,
               "type": 8,
               "inbeam": true,
+              "arts": [
+                {
+                  "type": "accent",
+                  "x": 0,
+                  "y": 72
+                }
+              ],
               "stem": {
                 "type": "up",
                 "y": -31,
@@ -637,18 +2282,970 @@
             },
             {
               "col": 3,
-              "slur": "M",
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_8_1",
+                  "line": 5,
+                  "pairs": [
+                    {
+                      "n2": 2,
+                      "m2": 8,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 43,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "v": 0,
+              "x": 219,
+              "staff": 1,
+              "tick": 1200,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -31.75,
+                "up": true
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": -31,
+                  "y2": -26.75,
+                  "i": 0,
+                  "n2": 3
+                }
+              ],
+              "col": 4,
+              "elems": [
+                {
+                  "step": 5,
+                  "tied": "end",
+                  "octave": 5,
+                  "id": "n_8_2",
+                  "line": 5
+                }
+              ],
+              "v": 0,
+              "x": 262,
+              "staff": 1,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -31,
+                "up": true
+              }
+            },
+            {
+              "col": 5,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 5,
+                  "id": "n_8_3",
+                  "line": 3
+                }
+              ],
+              "v": 0,
+              "x": 305,
+              "staff": 1,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -36.75,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_8_4",
+                  "line": 1
+                },
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_8_5",
+                  "line": 5
+                }
+              ],
+              "x": 57,
+              "staff": 1,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 43
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_8_6",
+                  "line": 1
+                },
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_8_7",
+                  "line": 5
+                }
+              ],
+              "x": 116,
+              "staff": 1,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 43
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_8_8",
+                  "line": 1
+                }
+              ],
+              "v": 1,
+              "x": 176,
+              "staff": 1,
+              "tick": 960,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_8_9",
+                  "line": -4
+                }
+              ],
+              "x": 57,
+              "staff": 2,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_8_10",
+                  "line": -4
+                }
+              ],
+              "x": 116,
+              "staff": 2,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": -31,
+                  "y2": -26.75,
+                  "i": 0,
+                  "n2": 10
+                }
+              ],
+              "col": 2,
               "elems": [
                 {
                   "step": 4,
                   "octave": 4,
-                  "id": "n_4_3",
+                  "id": "n_8_11",
                   "line": -3
                 }
               ],
-              "x": 226,
+              "x": 176,
+              "staff": 2,
+              "tick": 960,
+              "type": 8,
+              "inbeam": true,
+              "arts": [
+                {
+                  "type": "accent",
+                  "x": 0,
+                  "y": 27
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -31,
+                "up": true
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_8_12",
+                  "line": -4,
+                  "pairs": [
+                    {
+                      "n2": 11,
+                      "m2": 8,
+                      "y1": 8,
+                      "x1": 0,
+                      "y2": 8,
+                      "x2": 43,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "x": 219,
+              "staff": 2,
+              "tick": 1200,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -31.75,
+                "up": true
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": -31,
+                  "y2": -26.75,
+                  "i": 0,
+                  "n2": 12
+                }
+              ],
+              "col": 4,
+              "elems": [
+                {
+                  "step": 3,
+                  "tied": "end",
+                  "octave": 4,
+                  "id": "n_8_13",
+                  "line": -4
+                }
+              ],
+              "x": 262,
+              "staff": 2,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -31,
+                "up": true
+              }
+            },
+            {
+              "col": 5,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_8_14",
+                  "line": -6
+                }
+              ],
+              "x": 305,
+              "staff": 2,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -36.75,
+                "up": true
+              }
+            }
+          ],
+          "clefs": [
+            {
+              "x": 0,
+              "staff": 2,
+              "tick": 0,
+              "clef": "Treble"
+            }
+          ],
+          "num": "9",
+          "w": 348
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_9_0",
+                  "line": 1
+                },
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_9_1",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 15,
               "staff": 1,
-              "tick": 720,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": 31,
+                  "y2": 26.75,
+                  "i": 0,
+                  "n2": 2
+                }
+              ],
+              "col": 1,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 5,
+                  "id": "n_9_2",
+                  "line": 3
+                }
+              ],
+              "x": 134,
+              "staff": 1,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 31
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 4,
+                  "octave": 5,
+                  "id": "n_9_3",
+                  "line": 4
+                }
+              ],
+              "x": 177,
+              "staff": 1,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 31.75
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_9_4",
+                  "line": -4
+                }
+              ],
+              "dots": 1,
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "x": 134,
+              "col": 1,
+              "rest": {
+                "nums": 1
+              },
+              "staff": 2,
+              "tick": 1440,
+              "type": 4
+            }
+          ],
+          "num": "10",
+          "w": 220,
+          "pdirs": [
+            {
+              "line": "solid",
+              "y1": 55,
+              "crescendo": true,
+              "x1": 129,
+              "y2": 55,
+              "staff": 1,
+              "type": "wedge",
+              "stopx": 202
+            }
+          ]
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "beams": [
+                {
+                  "y1": -31,
+                  "y2": -26.75,
+                  "i": 0,
+                  "n2": 1
+                }
+              ],
+              "col": 2,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 5,
+                  "id": "n_10_0",
+                  "line": 6
+                }
+              ],
+              "v": 0,
+              "x": 133,
+              "staff": 1,
+              "tick": 960,
+              "type": 8,
+              "inbeam": true,
+              "arts": [
+                {
+                  "type": "accent",
+                  "x": 0,
+                  "y": 72
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -31,
+                "up": true
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_10_1",
+                  "line": 5,
+                  "pairs": [
+                    {
+                      "n2": 2,
+                      "m2": 10,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 43,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "v": 0,
+              "x": 176,
+              "staff": 1,
+              "tick": 1200,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -31.75,
+                "up": true
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": -31,
+                  "y2": -26.75,
+                  "i": 0,
+                  "n2": 3
+                }
+              ],
+              "col": 4,
+              "elems": [
+                {
+                  "step": 5,
+                  "tied": "end",
+                  "octave": 5,
+                  "id": "n_10_2",
+                  "line": 5
+                }
+              ],
+              "v": 0,
+              "x": 219,
+              "staff": 1,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -31,
+                "up": true
+              }
+            },
+            {
+              "col": 5,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 5,
+                  "id": "n_10_3",
+                  "line": 3
+                }
+              ],
+              "v": 0,
+              "x": 262,
+              "staff": 1,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -36.75,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_10_4",
+                  "line": 1
+                },
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_10_5",
+                  "line": 5
+                }
+              ],
+              "x": 15,
+              "staff": 1,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 43
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_10_6",
+                  "line": 1
+                },
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_10_7",
+                  "line": 5
+                }
+              ],
+              "x": 74,
+              "staff": 1,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 43
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_10_8",
+                  "line": 1
+                }
+              ],
+              "v": 1,
+              "x": 133,
+              "staff": 1,
+              "tick": 960,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_10_9",
+                  "line": -4
+                }
+              ],
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_10_10",
+                  "line": -4
+                }
+              ],
+              "x": 74,
+              "staff": 2,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -35,
+                "up": true
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": -31,
+                  "y2": -26.75,
+                  "i": 0,
+                  "n2": 10
+                }
+              ],
+              "col": 2,
+              "elems": [
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_10_11",
+                  "line": -3
+                }
+              ],
+              "x": 133,
+              "staff": 2,
+              "tick": 960,
+              "type": 8,
+              "inbeam": true,
+              "arts": [
+                {
+                  "type": "accent",
+                  "x": 0,
+                  "y": 27
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -31,
+                "up": true
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_10_12",
+                  "line": -4,
+                  "pairs": [
+                    {
+                      "n2": 11,
+                      "m2": 10,
+                      "y1": 8,
+                      "x1": 0,
+                      "y2": 8,
+                      "x2": 43,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "x": 176,
+              "staff": 2,
+              "tick": 1200,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -31.75,
+                "up": true
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": -31,
+                  "y2": -26.75,
+                  "i": 0,
+                  "n2": 12
+                }
+              ],
+              "col": 4,
+              "elems": [
+                {
+                  "step": 3,
+                  "tied": "end",
+                  "octave": 4,
+                  "id": "n_10_13",
+                  "line": -4
+                }
+              ],
+              "x": 219,
+              "staff": 2,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -31,
+                "up": true
+              }
+            },
+            {
+              "col": 5,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_10_14",
+                  "line": -6
+                }
+              ],
+              "x": 262,
+              "staff": 2,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -36.75,
+                "up": true
+              }
+            }
+          ],
+          "num": "11",
+          "w": 305
+        },
+        {
+          "staves": 2,
+          "dirs": [
+            {
+              "staff": 1,
+              "tick": 1440,
+              "text": "mf",
+              "type": "dyn",
+              "param": {
+                "x": 129,
+                "y": 75,
+                "font-size": 19.25
+              }
+            }
+          ],
+          "notes": [
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_11_0",
+                  "line": 1
+                },
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_11_1",
+                  "line": 5
+                }
+              ],
+              "dots": 1,
+              "x": 15,
+              "staff": 1,
+              "tick": 0,
+              "type": 2,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": -31.75,
+                  "y2": -36,
+                  "i": 0,
+                  "n2": 2
+                }
+              ],
+              "col": 1,
+              "slur": "L",
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_11_2",
+                  "line": -2,
+                  "pairs": [
+                    {
+                      "n2": 0,
+                      "m2": 12,
+                      "y1": -35.75,
+                      "x1": 0,
+                      "y2": -23,
+                      "x2": 142,
+                      "up": true,
+                      "type": "slur"
+                    }
+                  ]
+                }
+              ],
+              "x": 135,
+              "staff": 1,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -31.75,
+                "up": true
+              }
+            },
+            {
+              "col": 2,
+              "slur": "M",
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 4,
+                  "id": "n_11_3",
+                  "line": -1
+                }
+              ],
+              "x": 177,
+              "staff": 1,
+              "tick": 1680,
               "type": 8,
               "inbeam": true,
               "stem": {
@@ -661,13 +3258,14 @@
               "col": 0,
               "elems": [
                 {
-                  "step": 1,
-                  "octave": 3,
-                  "id": "n_4_4",
-                  "line": -1
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_11_4",
+                  "line": -4
                 }
               ],
-              "x": 57,
+              "dots": 1,
+              "x": 15,
               "staff": 2,
               "tick": 0,
               "type": 2,
@@ -676,66 +3274,183 @@
                 "y": -35,
                 "up": true
               }
+            },
+            {
+              "x": 135,
+              "col": 1,
+              "rest": {
+                "nums": 1
+              },
+              "staff": 2,
+              "tick": 1440,
+              "type": 4
             }
           ],
-          "num": "5",
-          "w": 283
+          "num": "12",
+          "w": 220
         },
         {
           "staves": 2,
-          "dirs": [
-            {
-              "staff": 1,
-              "tick": 0,
-              "text": "5",
-              "param": {
-                "x": 18,
-                "y": -5,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 1,
-              "tick": 480,
-              "text": "1",
-              "param": {
-                "x": 97,
-                "y": -5,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 2,
-              "tick": 0,
-              "text": "3",
-              "param": {
-                "x": 19,
-                "y": 54,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            }
-          ],
+          "keyw": 30,
           "notes": [
             {
               "col": 0,
               "elems": [
                 {
-                  "step": 5,
-                  "octave": 4,
-                  "id": "n_5_0",
-                  "line": -2
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_12_0",
+                  "line": 1
                 }
               ],
-              "x": 15,
+              "x": 57,
               "staff": 1,
               "tick": 0,
               "type": 4,
+              "arts": [
+                {
+                  "x": 0,
+                  "y": -20,
+                  "up": true,
+                  "type": "accent_staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_12_1",
+                  "line": 1
+                }
+              ],
+              "x": 111,
+              "staff": 1,
+              "tick": 480,
+              "type": 4,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_12_2",
+                  "line": 1
+                }
+              ],
+              "x": 164,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": -31,
+                  "y2": -27,
+                  "i": 0,
+                  "n2": 4
+                }
+              ],
+              "col": 3,
+              "slur": "L",
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 4,
+                  "id": "n_12_3",
+                  "line": -1,
+                  "pairs": [
+                    {
+                      "n2": 4,
+                      "m2": 12,
+                      "y1": 8,
+                      "x1": 0,
+                      "y2": 13,
+                      "x2": 39,
+                      "type": "slur"
+                    }
+                  ]
+                }
+              ],
+              "x": 218,
+              "staff": 1,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
               "stem": {
                 "type": "up",
-                "y": -35,
+                "y": -31,
+                "up": true
+              }
+            },
+            {
+              "col": 4,
+              "slur": "R",
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 4,
+                  "id": "n_12_4",
+                  "line": -2
+                }
+              ],
+              "x": 257,
+              "staff": 1,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "up",
+                "y": -32,
+                "up": true
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_12_5",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_12_6",
+                  "line": -4
+                }
+              ],
+              "x": 57,
+              "staff": 2,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "accent_staccato",
+                  "x": 0,
+                  "y": 23
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -45,
                 "up": true
               }
             },
@@ -745,119 +3460,111 @@
                 {
                   "step": 1,
                   "octave": 4,
-                  "id": "n_5_1",
+                  "id": "n_12_7",
                   "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_12_8",
+                  "line": -4
                 }
               ],
-              "x": 93,
-              "staff": 1,
+              "x": 111,
+              "staff": 2,
               "tick": 480,
               "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
               "stem": {
                 "type": "up",
-                "y": -35,
+                "y": -45,
                 "up": true
               }
             },
             {
-              "col": 0,
+              "col": 2,
               "elems": [
                 {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_12_9",
+                  "line": -6
+                },
+                {
                   "step": 3,
-                  "octave": 3,
-                  "id": "n_5_2",
-                  "line": 1
+                  "octave": 4,
+                  "id": "n_12_10",
+                  "line": -4
                 }
               ],
-              "x": 15,
+              "x": 164,
               "staff": 2,
-              "tick": 0,
-              "type": 2,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
               "stem": {
-                "type": "down",
-                "y": 35
+                "type": "up",
+                "y": -45,
+                "up": true
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_12_11",
+                  "line": -6
+                },
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_12_12",
+                  "line": -3
+                }
+              ],
+              "x": 218,
+              "staff": 2,
+              "tick": 1440,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -50,
+                "up": true
               }
             }
           ],
-          "num": "6",
-          "w": 171
+          "num": "13",
+          "w": 295
         },
         {
           "staves": 2,
-          "dirs": [
-            {
-              "staff": 1,
-              "tick": 0,
-              "text": "2",
-              "param": {
-                "x": 19,
-                "y": -5,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 1,
-              "tick": 240,
-              "text": "3",
-              "param": {
-                "x": 75,
-                "y": -5,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 1,
-              "tick": 480,
-              "text": "2",
-              "param": {
-                "x": 132,
-                "y": -5,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 2,
-              "tick": 0,
-              "text": "2",
-              "param": {
-                "x": 19,
-                "y": 55,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 2,
-              "tick": 240,
-              "text": "1",
-              "param": {
-                "x": 75,
-                "y": 54,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 2,
-              "tick": 480,
-              "text": "2",
-              "param": {
-                "x": 132,
-                "y": 54,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            }
-          ],
           "notes": [
             {
               "beams": [
                 {
-                  "y1": -31,
-                  "y2": -36,
+                  "y1": 31,
+                  "y2": 27.25,
                   "i": 0,
                   "n2": 1
                 }
@@ -865,10 +3572,10 @@
               "col": 0,
               "elems": [
                 {
-                  "step": 2,
+                  "step": 6,
                   "octave": 4,
-                  "id": "n_6_0",
-                  "line": -5
+                  "id": "n_13_0",
+                  "line": -1
                 }
               ],
               "x": 15,
@@ -876,74 +3583,105 @@
               "tick": 0,
               "type": 8,
               "inbeam": true,
+              "arts": [
+                {
+                  "x": 0,
+                  "y": -35,
+                  "up": true,
+                  "type": "accent"
+                }
+              ],
               "stem": {
-                "type": "up",
-                "y": -31,
-                "up": true
+                "type": "down",
+                "y": 31
               }
             },
             {
               "col": 1,
               "elems": [
                 {
-                  "step": 3,
-                  "octave": 4,
-                  "id": "n_6_1",
-                  "line": -4
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_13_1",
+                  "line": 1,
+                  "pairs": [
+                    {
+                      "n2": 2,
+                      "m2": 13,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 39,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
                 }
               ],
-              "x": 71,
+              "x": 53,
               "staff": 1,
               "tick": 240,
               "type": 8,
               "inbeam": true,
               "stem": {
-                "type": "up",
-                "y": -31,
-                "up": true
+                "type": "down",
+                "y": 37.25
               }
             },
             {
               "col": 2,
               "elems": [
                 {
-                  "step": 2,
-                  "octave": 4,
-                  "id": "n_6_2",
-                  "line": -5
+                  "step": 1,
+                  "tied": "end",
+                  "octave": 5,
+                  "id": "n_13_2",
+                  "line": 1
                 }
               ],
-              "x": 128,
+              "x": 92,
               "staff": 1,
               "tick": 480,
-              "type": 4,
+              "type": 2,
               "stem": {
-                "type": "up",
-                "y": -35,
-                "up": true
+                "type": "down",
+                "y": 35
               }
             },
             {
               "beams": [
                 {
                   "y1": 31,
-                  "y2": 26,
+                  "y2": 27.25,
                   "i": 0,
                   "n2": 4
                 }
               ],
-              "col": 0,
+              "col": 4,
+              "slur": "L",
               "elems": [
                 {
-                  "step": 4,
-                  "octave": 3,
-                  "id": "n_6_3",
-                  "line": 2
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_13_3",
+                  "line": 1,
+                  "pairs": [
+                    {
+                      "n2": 0,
+                      "m2": 14,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -28,
+                      "x2": 92,
+                      "up": true,
+                      "type": "slur"
+                    }
+                  ]
                 }
               ],
-              "x": 15,
-              "staff": 2,
-              "tick": 0,
+              "x": 200,
+              "staff": 1,
+              "tick": 1440,
               "type": 8,
               "inbeam": true,
               "stem": {
@@ -952,71 +3690,186 @@
               }
             },
             {
-              "col": 1,
+              "col": 5,
+              "slur": "M",
               "elems": [
                 {
-                  "step": 5,
-                  "octave": 3,
-                  "id": "n_6_4",
+                  "step": 3,
+                  "octave": 5,
+                  "id": "n_13_4",
                   "line": 3
                 }
               ],
-              "x": 71,
-              "staff": 2,
-              "tick": 240,
+              "x": 238,
+              "staff": 1,
+              "tick": 1680,
               "type": 8,
               "inbeam": true,
               "stem": {
                 "type": "down",
-                "y": 31
+                "y": 37.25
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_13_5",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_13_6",
+                  "line": -4
+                }
+              ],
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "accent_staccato",
+                  "x": 0,
+                  "y": 23
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -45,
+                "up": true
               }
             },
             {
               "col": 2,
               "elems": [
                 {
-                  "step": 4,
-                  "octave": 3,
-                  "id": "n_6_5",
-                  "line": 2
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_13_7",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_13_8",
+                  "line": -4
                 }
               ],
-              "x": 128,
+              "x": 92,
               "staff": 2,
               "tick": 480,
               "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
               "stem": {
-                "type": "down",
-                "y": 35
+                "type": "up",
+                "y": -45,
+                "up": true
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_13_9",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_13_10",
+                  "line": -4
+                }
+              ],
+              "x": 146,
+              "staff": 2,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -45,
+                "up": true
+              }
+            },
+            {
+              "col": 4,
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_13_11",
+                  "line": -6
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_13_12",
+                  "line": -4
+                }
+              ],
+              "x": 200,
+              "staff": 2,
+              "tick": 1440,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -45,
+                "up": true
               }
             }
           ],
-          "num": "7",
-          "w": 206
+          "num": "14",
+          "w": 277,
+          "pdirs": [
+            {
+              "line": "solid",
+              "y1": 70,
+              "crescendo": true,
+              "x1": 200,
+              "y2": 70,
+              "staff": 1,
+              "type": "wedge",
+              "stopx": 292
+            }
+          ]
         },
         {
           "staves": 2,
           "dirs": [
             {
               "staff": 1,
-              "tick": 0,
-              "text": "1",
+              "tick": 960,
+              "text": "f",
+              "type": "dyn",
               "param": {
-                "x": 19,
-                "y": -5,
-                "font-size": 11.25,
-                "font-weight": "bold"
-              }
-            },
-            {
-              "staff": 2,
-              "tick": 0,
-              "text": "3",
-              "param": {
-                "x": 19,
-                "y": 54,
-                "font-size": 11.25,
-                "font-weight": "bold"
+                "x": 116,
+                "y": 76,
+                "font-size": 19.25
               }
             }
           ],
@@ -1025,10 +3878,333 @@
               "col": 0,
               "elems": [
                 {
-                  "step": 1,
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_14_0",
+                  "line": 5
+                }
+              ],
+              "x": 15,
+              "staff": 1,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -10,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_14_1",
+                  "line": 5
+                }
+              ],
+              "x": 68,
+              "staff": 1,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -10,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": 32,
+                  "y2": 36,
+                  "i": 0,
+                  "n2": 3
+                }
+              ],
+              "col": 2,
+              "elems": [
+                {
+                  "step": 6,
+                  "octave": 5,
+                  "id": "n_14_2",
+                  "line": 6
+                }
+              ],
+              "x": 122,
+              "staff": 1,
+              "tick": 960,
+              "type": 8,
+              "inbeam": true,
+              "arts": [
+                {
+                  "x": 0,
+                  "y": -15,
+                  "up": true,
+                  "type": "accent"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 32
+              }
+            },
+            {
+              "col": 3,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 5,
+                  "id": "n_14_3",
+                  "line": 5,
+                  "pairs": [
+                    {
+                      "n2": 4,
+                      "m2": 14,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -8,
+                      "x2": 39,
+                      "up": true,
+                      "type": "tied"
+                    }
+                  ]
+                }
+              ],
+              "x": 161,
+              "staff": 1,
+              "tick": 1200,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 31
+              }
+            },
+            {
+              "beams": [
+                {
+                  "y1": 37.25,
+                  "y2": 41,
+                  "i": 0,
+                  "n2": 5
+                }
+              ],
+              "col": 4,
+              "elems": [
+                {
+                  "step": 5,
+                  "tied": "end",
+                  "octave": 5,
+                  "id": "n_14_4",
+                  "line": 5
+                }
+              ],
+              "x": 200,
+              "staff": 1,
+              "tick": 1440,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 37.25
+              }
+            },
+            {
+              "col": 5,
+              "elems": [
+                {
+                  "step": 3,
+                  "octave": 5,
+                  "id": "n_14_5",
+                  "line": 3
+                }
+              ],
+              "x": 238,
+              "staff": 1,
+              "tick": 1680,
+              "type": 8,
+              "inbeam": true,
+              "stem": {
+                "type": "down",
+                "y": 31
+              }
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_14_6",
+                  "line": -9
+                },
+                {
+                  "step": 3,
                   "octave": 4,
-                  "id": "n_7_0",
-                  "line": -6
+                  "id": "n_14_7",
+                  "line": -4
+                }
+              ],
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -60,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_14_8",
+                  "line": -9
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_14_9",
+                  "line": -4
+                }
+              ],
+              "x": 68,
+              "staff": 2,
+              "tick": 480,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -60,
+                "up": true
+              }
+            },
+            {
+              "col": 2,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_14_10",
+                  "line": -9
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_14_11",
+                  "line": -4
+                }
+              ],
+              "x": 122,
+              "staff": 2,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -60,
+                "up": true
+              }
+            },
+            {
+              "col": 4,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_14_12",
+                  "line": -9
+                },
+                {
+                  "step": 3,
+                  "octave": 4,
+                  "id": "n_14_13",
+                  "line": -4
+                }
+              ],
+              "x": 200,
+              "staff": 2,
+              "tick": 1440,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
+              "stem": {
+                "type": "up",
+                "y": -60,
+                "up": true
+              }
+            }
+          ],
+          "num": "15",
+          "w": 277
+        },
+        {
+          "staves": 2,
+          "notes": [
+            {
+              "col": 0,
+              "slur": "L",
+              "elems": [
+                {
+                  "step": 2,
+                  "octave": 5,
+                  "id": "n_15_0",
+                  "line": 2,
+                  "pairs": [
+                    {
+                      "n2": 1,
+                      "m2": 15,
+                      "y1": -8,
+                      "x1": 0,
+                      "y2": -3,
+                      "x2": 107,
+                      "up": true,
+                      "type": "slur"
+                    }
+                  ]
                 }
               ],
               "x": 15,
@@ -1036,36 +4212,137 @@
               "tick": 0,
               "type": 2,
               "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "col": 2,
+              "slur": "R",
+              "elems": [
+                {
+                  "step": 1,
+                  "octave": 5,
+                  "id": "n_15_1",
+                  "line": 1
+                }
+              ],
+              "x": 122,
+              "staff": 1,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "x": 4,
+                  "y": -10,
+                  "up": true,
+                  "type": "staccato"
+                }
+              ],
+              "stem": {
+                "type": "down",
+                "y": 35
+              }
+            },
+            {
+              "x": 175,
+              "col": 3,
+              "rest": {
+                "nums": 1
+              },
+              "staff": 1,
+              "tick": 1440,
+              "type": 4
+            },
+            {
+              "col": 0,
+              "elems": [
+                {
+                  "step": 5,
+                  "octave": 3,
+                  "id": "n_15_3",
+                  "line": -9
+                }
+              ],
+              "x": 15,
+              "staff": 2,
+              "tick": 0,
+              "type": 4,
+              "stem": {
+                "type": "up",
+                "y": -45,
+                "up": true
+              }
+            },
+            {
+              "col": 1,
+              "elems": [
+                {
+                  "step": 4,
+                  "octave": 4,
+                  "id": "n_15_4",
+                  "line": -3
+                }
+              ],
+              "x": 68,
+              "staff": 2,
+              "tick": 480,
+              "type": 4,
+              "stem": {
                 "type": "up",
                 "y": -35,
                 "up": true
               }
             },
             {
-              "col": 0,
+              "col": 2,
               "elems": [
                 {
+                  "step": 1,
+                  "octave": 4,
+                  "id": "n_15_5",
+                  "line": -6
+                },
+                {
                   "step": 3,
-                  "octave": 3,
-                  "id": "n_7_1",
-                  "line": 1
+                  "octave": 4,
+                  "id": "n_15_6",
+                  "line": -4
                 }
               ],
-              "x": 15,
+              "x": 122,
               "staff": 2,
-              "tick": 0,
-              "type": 2,
+              "tick": 960,
+              "type": 4,
+              "arts": [
+                {
+                  "type": "staccato",
+                  "x": 4,
+                  "y": 13
+                }
+              ],
               "stem": {
-                "type": "down",
-                "y": 35
+                "type": "up",
+                "y": -45,
+                "up": true
               }
+            },
+            {
+              "x": 175,
+              "col": 3,
+              "rest": {
+                "nums": 1
+              },
+              "staff": 2,
+              "tick": 1440,
+              "type": 4
             }
           ],
           "rbar": {
             "type": "light-heavy"
           },
-          "num": "8",
-          "w": 162
+          "num": "16",
+          "w": 245
         }
       ]
     }
@@ -1074,97 +4351,174 @@
   "fifths": 0,
   "measInfo": [
     [
-      76,
-      161
+      75,
+      123,
+      171,
+      220,
+      255
     ],
     [
       15,
-      100
+      50,
+      84,
+      132,
+      181,
+      215
     ],
     [
       15,
-      76,
-      138
+      63,
+      111,
+      145,
+      180,
+      215
     ],
     [
-      15
+      15,
+      63,
+      111,
+      159,
+      194
     ],
     [
       57,
-      114,
-      170,
-      226
+      111,
+      166,
+      220,
+      260
     ],
     [
       15,
-      93
+      54,
+      93,
+      148,
+      202,
+      242
     ],
     [
       15,
-      71,
-      128
+      69,
+      124,
+      163,
+      202,
+      242
     ],
     [
-      15
+      15,
+      69,
+      123
+    ],
+    [
+      57,
+      116,
+      176,
+      219,
+      305
+    ],
+    [
+      15,
+      134,
+      177
+    ],
+    [
+      15,
+      74,
+      133,
+      176,
+      262
+    ],
+    [
+      15,
+      135,
+      177
+    ],
+    [
+      57,
+      111,
+      164,
+      218,
+      257
+    ],
+    [
+      15,
+      53,
+      92,
+      146,
+      200,
+      238
+    ],
+    [
+      15,
+      68,
+      122,
+      161,
+      200,
+      238
+    ],
+    [
+      15,
+      68,
+      122
     ]
   ],
   "page": {
-    "h": 1485,
-    "x": 94,
-    "y": 63,
-    "w": 1050
+    "h": 1824,
+    "x": 115,
+    "y": 78,
+    "w": 1290
   },
   "title": {
-    "title": "1.旋律",
-    "composer": "艺术家/歌手：约翰汤普森\n制谱：乒乓球",
+    "title": "2.嗬，西进",
+    "composer": "艺术家/歌手：约翰汤普森\n制谱：兴贤",
     "subtitle": ""
   },
   "lines": [
     {
       "m1": 0,
-      "distance": 120,
-      "top": 243,
+      "distance": 92,
+      "top": 228,
       "m2": 4,
-      "w": 814,
+      "w": 1018,
       "newpage": true,
       "x": 76,
-      "h": 170,
+      "h": 135,
       "y": 306,
       "lineStaves": [
         {
           "distances": [
-            90,
-            90
+            95,
+            55
           ],
           "clef": {
             "1": "Treble",
-            "2": "Bass"
+            "2": "Treble"
           },
           "y": 0,
           "staves": 2,
           "fifths": 0,
           "time": {
-            "beats": 2,
+            "beats": 4,
+            "sym": "common",
             "beatu": 4
           },
           "parti": 0,
-          "height": 170
+          "height": 135
         }
       ]
     },
     {
       "m1": 4,
-      "distance": 252,
+      "distance": 276,
       "m2": 8,
-      "w": 822,
-      "x": 68,
-      "h": 170,
-      "y": 728,
+      "w": 1093,
+      "x": 0,
+      "h": 135,
+      "y": 717,
       "lineStaves": [
         {
           "distances": [
-            90,
-            90
+            60,
+            55
           ],
           "clef": {
             "1": "Treble",
@@ -1174,7 +4528,59 @@
           "staves": 2,
           "fifths": 0,
           "parti": 0,
-          "height": 170
+          "height": 135
+        }
+      ]
+    },
+    {
+      "m1": 8,
+      "distance": 276,
+      "m2": 12,
+      "w": 1093,
+      "x": 0,
+      "h": 135,
+      "y": 1128,
+      "lineStaves": [
+        {
+          "distances": [
+            90,
+            55
+          ],
+          "clef": {
+            "1": "Treble",
+            "2": "Treble"
+          },
+          "y": 0,
+          "staves": 2,
+          "fifths": 0,
+          "parti": 0,
+          "height": 135
+        }
+      ]
+    },
+    {
+      "m1": 12,
+      "distance": 276,
+      "m2": 16,
+      "w": 1094,
+      "x": 0,
+      "h": 135,
+      "y": 1539,
+      "lineStaves": [
+        {
+          "distances": [
+            105,
+            55
+          ],
+          "clef": {
+            "1": "Treble",
+            "2": "Treble"
+          },
+          "y": 0,
+          "staves": 2,
+          "fifths": 0,
+          "parti": 0,
+          "height": 135
         }
       ]
     }

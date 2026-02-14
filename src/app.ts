@@ -1,4 +1,4 @@
-import type { CCXML } from "./types/ccxml.ts";
+import type { CCXML } from "./ccxml.ts";
 import { create } from 'xmlbuilder2';
 
 export default function app(input: CCXML) {
@@ -11,7 +11,7 @@ export default function app(input: CCXML) {
 
 
     const scoreTitle = input.title.title; //标题
-    //#region-废话：
+    //#region-以下全是废话：
     // Work
     root.ele('work').ele('work-title').txt(scoreTitle);
 
@@ -85,7 +85,6 @@ export default function app(input: CCXML) {
 
     const stepMap: Record<number, string> = { 1: 'C', 2: 'D', 3: 'E', 4: 'F', 5: 'G', 6: 'A', 7: 'B' };
     const typeMap: Record<number, string> = { 1: 'whole', 2: 'half', 4: 'quarter', 8: 'eighth', 16: '16th', 32: '32nd' };
-    const lineTypeMap: Record<string, string> = { 'tied': 'tied', 'slur': 'slur' };
 
     const partList = root.ele('part-list');
     input.parts.forEach((p, i) => {
@@ -103,16 +102,19 @@ export default function app(input: CCXML) {
             .ele('pan').txt("0");
     });
 
-
-    //1:分每个乐器（钢琴？小提琴？……）
     input.parts.forEach((p, pIdx) => {
+        //#region-1:分每个乐器
+        //（钢琴？小提琴？……）
+
         const part = root.ele('part', { id: `P${pIdx + 1}` });
 
         //圆滑线记录
         const slurStatus = new Map<number, number>();
 
-        //2:分小节（第一小节、第二小节……）
         p.measures.forEach((m, mIdx) => {
+            //#region-2:分小节
+            //（第一小节、第二小节……）
+
             console.log("mIdx", mIdx);
             const meas = part.ele('measure', { number: m.num, width: m.w.toString() });
 
@@ -171,14 +173,17 @@ export default function app(input: CCXML) {
             const totalStaves = m.staves || 1;
             const measureDuration = m.time ? m.time.beats : 4;
 
-            //3:分谱表（高音部、低音部……）
             for (let s = 1; s <= totalStaves; s++) {
+                //#region-3:分谱表
+                //（高音部、低音部……）
+
                 let staffCounter = 0;
 
                 const staffNotes = m.notes.filter(n => n.staff === s);
 
-                //4:这一小块的每个音符
                 staffNotes.forEach((n, nIdx) => {
+                    //#region-4:分音符
+
                     const note = meas.ele('note');
                     note.att('default-x', n.x.toString());
 
@@ -258,21 +263,23 @@ export default function app(input: CCXML) {
                                 });
                             }
 
-                            // 3. 闭合逻辑 (包含跨小节自动停止)
-                            const isTargetMeasure = slurStatus.has(s) && p.measures.indexOf(m) === slurStatus.get(s);
-                            const isLastInStaff = nIdx === m.notes.reduce((last, curr, idx) => curr.staff === s ? idx : last, -1);
+                            // 3. 闭合逻辑
+                            const currentMIdx = p.measures.indexOf(m);
+                            const isTargetMeasure = slurStatus.has(s) && currentMIdx === slurStatus.get(s);
 
-                            if (n.slur === 'R' || (el.tied === 'end') || (isTargetMeasure && isLastInStaff)) {
+                            if (n.slur === 'R' || (el.tied === 'end') || (isTargetMeasure && nIdx === 0)) {
                                 hasAction = true;
-                                notations.ele('slur', { type: 'stop', number: '1' });
-                                if (isTargetMeasure && isLastInStaff) slurStatus.delete(s);
+                                const isStopTied = el.tied === 'end';
+                                notations.ele(isStopTied ? 'tied' : 'slur', { type: 'stop', number: '1' });
+                                if (!isStopTied) slurStatus.delete(s);
                             }
                         });
 
                         if (!hasAction) notations.remove();
                     }
+                    //#endregion 4
                 });
-
+                //#endregion 3
                 if (s < totalStaves) {
                     meas.ele('backup').ele('duration').txt(staffCounter.toString());
                 }
@@ -281,7 +288,9 @@ export default function app(input: CCXML) {
             if (m.rbar) {
                 meas.ele('barline', { location: "right" }).ele('bar-style').txt(m.rbar.type);
             }
+            //#endregion 2
         });
+        //#endregion 1
     });
 
     return root.end({ prettyPrint: true });
