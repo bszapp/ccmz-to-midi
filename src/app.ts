@@ -282,25 +282,29 @@ export default function app(input: CCXML) {
 
                             if (xn.stem) n.ele('stem').txt(xn.stem);
 
-                            //xn.beams可能为：
-                            // [ { type: 'begin', level: 0 } ]
-                            // [ { type: 'continue', level: 0 }, { type: 'continue', level: 1 } ]
-                            // [ { type: 'end', level: 0 } ]
-                            // []
                             if (xn.beams) {
                                 xn.beams.forEach((beam) => {
                                     n.ele('beam', { number: beam.level + 1 }).txt(beam.type);
                                 });
                             }
 
-                            n.ele('staff').txt(staff);
-
-                            //   <tied type="start"/>
-                            //   <notations>
-                            //     <tied type="start"/>
-                            //   </notations>
-
                             const notations = n.ele('notations');
+
+                            if (xn.tuplet) {
+                                const timeMod = n.ele('time-modification');
+                                timeMod.ele('actual-notes').txt(xn.tuplet.actual.toString());
+                                timeMod.ele('normal-notes').txt(xn.tuplet.normal.toString());
+
+                                if (xn.tuplet.type === 'start' || xn.tuplet.type === 'end') {
+                                    const tType = xn.tuplet.type === 'start' ? 'start' : 'stop';
+                                    notations.ele('tuplet', {
+                                        type: tType,
+                                        bracket: 'yes'
+                                    });
+                                }
+                            }
+
+                            n.ele('staff').txt(staff);
 
                             if (el.tied) {
                                 n.ele('tied', { type: el.tied.isStart ? 'start' : 'stop' });

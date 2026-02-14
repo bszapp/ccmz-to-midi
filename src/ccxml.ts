@@ -88,14 +88,15 @@ interface NoteElement {
 }
 
 export interface TiePair {
-    n2: number;      // 目标音符在 elems 中的索引
-    m2: number;      // 目标小节的序号（通常是相对于当前小节的索引或编号）
-    type: "tied" | "slur"; // 连线类型：tied（延音线）或 slur（圆滑线）
-    x1: number;      // 曲线起点 X 相对位移
-    y1: number;      // 曲线起点 Y 相对位移
-    x2: number;      // 曲线终点 X 相对位移
-    y2: number;      // 曲线终点 Y 相对位移
+    m2: number;      // 目标小节索引
+    n2: number;      // 目标音符索引
+    type: "tied" | "slur" | "tuplet"; // tied延音线(这里不处理了) slur圆滑线(跨小节) tuplet连音(单个小节内)
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
     up?: boolean;    // 曲线是否向上弯曲
+    value?: number;  // 连音的数值
 }
 
 export interface BeamInfo {

@@ -15,6 +15,7 @@ export interface XmlNote {
     };
     stem?: "up" | "down" | undefined; // 符干方向：向上或向下
     beams?: XmlBeamInfo[]; // 连杠信息列表
+    tuplet?: TupletInfo | undefined; // 连音信息
     notations?: string[] | undefined; // 装饰音、力度等记号列表
     slur?: "L" | "M" | "R" | undefined; // 连奏线标记：L(Left/开始), M(Middle/中间), R(Right/结束)
 }
@@ -29,12 +30,17 @@ interface XmlBeamInfo {
     level: number;
 }
 
+interface TupletInfo {
+    type: 'start' | 'continue' | 'end';
+    actual: number;
+    normal: number;
+}
+
 export interface XmlNoteElement {
     step: string;   // "C", "D", "E" ...
     octave: number;
     alter?: number;
     accidental?: string; // 临时记号类型
-
     tied?: TiedInfo;
 }
 
@@ -63,19 +69,36 @@ export function xmlNodeDuration(note: XmlNote): number {
         extra += current;
     }
 
-    return base + extra;
+    const scale = note.tuplet ? note.tuplet.normal / note.tuplet.actual : 1;
+
+    return (base + extra) * scale;
 }
 
+function getTupletNotes(n: number) {
+    if (n <= 1) return { actual: 1, normal: 1 };
+    const normal = Math.pow(2, Math.floor(Math.log2(n - 0.1)));
+    return {
+        actual: n,
+        normal: normal
+    };
+}
 
 function noteTrackId(note: Note) {
     return (note.staff - 1) * 4 + (note.v || 0);
 }
 const getStepStr = (s: number) => ["C", "D", "E", "F", "G", "A", "B"][s - 1] || "";
 
+//#region 主入口
+//把ccNotes（基于对象）转换为XmlNotes（基于文档）
 export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
     const trackMap = new Map<number, AbsXmlNote[]>();
 
-    const beams: { level: number; startI: number; endI: number }[] = [];
+    //连杠信息
+    const beams: {
+        startI: number;
+        endI: number
+        level: number;
+    }[] = [];
     notes.forEach((note, noteI) => {
         note.beams?.forEach(beam => {
             beams.push({
@@ -86,8 +109,27 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
         });
     });
 
-    console.log(beams);
+    //连音信息
+    const tuplets: {
+        startI: number;
+        endI: number;
+        value: number;
+    }[] = [];
+    notes.forEach((note, noteI) => {
+        note.elems?.forEach(el => {
+            el.pairs?.forEach(pair => {
+                if (pair.type === "tuplet") {
+                    tuplets.push({
+                        startI: noteI,
+                        endI: pair.n2,
+                        value: pair.value || 0
+                    });
+                }
+            });
+        });
+    });
 
+    console.log("连音：", tuplets)
 
     notes.forEach((note, noteI) => {
         const trackId = noteTrackId(note);
@@ -113,6 +155,30 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
             }
         });
 
+        var tupletInfo: TupletInfo | undefined;
+        tuplets.forEach(tuplet => {
+            const { actual, normal } = getTupletNotes(tuplet.value);
+            if (noteI > tuplet.startI && noteI < tuplet.endI) {
+                tupletInfo = {
+                    type: 'continue',
+                    actual: actual,
+                    normal: normal
+                };
+            } else if (noteI === tuplet.startI) {
+                tupletInfo = {
+                    type: 'start',
+                    actual: actual,
+                    normal: normal
+                };
+            } else if (noteI === tuplet.endI) {
+                tupletInfo = {
+                    type: 'end',
+                    actual: actual,
+                    normal: normal
+                };
+            }
+        });
+
         const isRest = !!note.rest;
 
         const xmlNote: AbsXmlNote = {
@@ -127,10 +193,14 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
                         octave: el.octave
                     };
                     if (el.alter !== undefined) elem.alter = el.alter;
+
+                    //延音
                     el.pairs?.forEach(pair => {
-                        if (pair.type === "tied") elem.tied = {
-                            isStart: true,
-                            isUp: pair.up
+                        if (pair.type === "tied") {
+                            elem.tied = {
+                                isStart: true,
+                                isUp: pair.up
+                            }
                         }
                     })
                     if (el.tied) {
@@ -145,6 +215,7 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
                 stem: note.stem?.type as "up" | "down",
                 slur: note.slur,
                 beams: noteBeams,
+                tuplet: tupletInfo,
                 notations: note.arts
             }
         };
@@ -175,6 +246,8 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
 
     return rawResult;
 }
+//#region ========
+
 function createRestNotes(duration: number): XmlNote[] {
     const rests: XmlNote[] = [];
     let remaining = duration;
