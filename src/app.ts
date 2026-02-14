@@ -1,5 +1,6 @@
 import type { CCXML } from "./ccxml.ts";
 import { create } from 'xmlbuilder2';
+import { formatXmlNotes, notesToXmlNotes, xmlNodeDuration, type XmlNoteElement } from "./xmltype.ts";
 
 export default function app(input: CCXML) {
     const root = create({ version: '1.0', encoding: 'UTF-8' })
@@ -230,145 +231,92 @@ export default function app(input: CCXML) {
                 });
             }
 
-            const totalStaves = m.staves;
-            const measureDuration = m.time ? m.time.beats : 4;
+            const xmlNotes = notesToXmlNotes(m.notes);
+            xmlNotes.forEach((xmlNote, xmlNoteIdx) => {
+                console.log(`声部${xmlNote.trackId}:${formatXmlNotes(xmlNote.notes)}`);
 
-            console.log('notesLength', m.notes.length)
-            for (let s = 1; s <= totalStaves; s++) {
-                //#region-3:分谱表+声部
-                //（高音部声部1、低音部声部2……）
+                let trackTotalDuration = 0;
 
-                //s表示谱表编号（高音部/低音部）
-                console.log('s', s)
+                xmlNote.notes.forEach((xn) => {
+                    const durRaw = xmlNodeDuration(xn);
+                    trackTotalDuration += durRaw;
+                    const duration = durRaw / 120;
+                    const voice = (xmlNote.trackId % 4 + 1).toString();
+                    const staff = (Math.floor(xmlNote.trackId / 4) + 1).toString();
 
-                let staffCounter = 0;
+                    const isRest = xn.isRest;
 
-                const staffNotes = m.notes.filter(n => n.staff === s);
+                    if (isRest) {
+                        const restInfo = xn.elems as { nums: number; show: boolean };
+                        const n = restInfo.show ? meas.ele('note') : meas.ele('note', { 'print-object': 'no' });
 
-                staffNotes.forEach((n, nIdx) => {
-                    //#region-4:分和弦音符
-                    //（和弦/单音/休止符）
+                        n.ele('rest');
+                        n.ele('duration').txt(duration.toString());
+                        n.ele('voice').txt(voice);
+                        n.ele('type').txt(typeMap[xn.lenType] || 'quarter');
 
-
-                    //v表示谱表中的声部
-                    console.log(n.v, n.tick)
-
-                    const note = meas.ele('note');
-                    note.att('default-x', n.x.toString());
-
-
-                    if (n.rest) {
-                        const restDur = n.rest.nums * 4;
-                        staffCounter += restDur;
-                        note.ele('rest', n.rest.nums >= measureDuration ? { measure: "yes" } : {}).up()
-                            .ele('duration').txt(restDur.toString());
-                    } else if (n.elems && n.elems.length > 0) {
-                        let noteDur = (16 / n.type);
-                        if (n.dots && n.dots > 0) {
-                            let dotVal = noteDur / 2;
-                            for (let i = 0; i < n.dots; i++) {
-                                noteDur += dotVal;
-                                dotVal /= 2;
-                            }
+                        if (xn.dots > 0) {
+                            for (let i = 0; i < xn.dots; i++) n.ele('dot');
                         }
 
+                        n.ele('staff').txt(staff);
+                    } else {
+                        (xn.elems as XmlNoteElement[]).forEach((el, elIdx) => {
+                            const n = meas.ele('note');
+                            if (elIdx > 0) n.ele('chord');
 
-                        n.elems.forEach((el, elIdx) => {
-                            //#region-5:单个音
-                            //（C4 D4 E5 ……）
+                            const p = n.ele('pitch');
+                            p.ele('step').txt(el.step);
+                            if (el.alter !== undefined && el.alter !== 0) p.ele('alter').txt(el.alter.toString());
+                            p.ele('octave').txt(el.octave.toString());
 
-                            const currentNote = (elIdx === 0) ? note : meas.ele('note');
+                            n.ele('duration').txt(duration.toString());
+                            if (el.accidental) n.ele('accidental').txt(el.accidental);
 
-                            if (elIdx > 0) {
-                                currentNote.ele('chord'); //和弦标记
+                            n.ele('voice').txt(voice);
+                            n.ele('type').txt(typeMap[xn.lenType] || 'quarter');
+
+                            if (xn.dots > 0) {
+                                for (let i = 0; i < xn.dots; i++) n.ele('dot');
                             }
 
-                            const pth = currentNote.ele('pitch');
-                            pth.ele('step').txt(stepMap[el.step] || 'C').up();
+                            if (xn.stem) n.ele('stem').txt(xn.stem);
 
-                            if (el.alter !== undefined && el.alter !== 0) {
-                                pth.ele('alter').txt(el.alter.toString()).up();
-                            }
-                            pth.ele('octave').txt(el.octave.toString());
-
-                            currentNote.ele('duration').txt(noteDur.toString());
-                            //众所周知musicXML同一个最多4个声部
-                            currentNote.ele('voice').txt(`${(s === 1 ? 1 : 5) + (n.v || 0)}`).up()
-                                .ele('type').txt(typeMap[n.type] || "whole").up();
-
-                            if (n.dots && n.dots > 0) {
-                                for (let i = 0; i < n.dots; i++) {
-                                    currentNote.ele('dot');
-                                }
-                            }
-                            currentNote.ele('staff').txt(s.toString());
-
-                            // 处理连杠 (只在第一个音处理)
-                            if (n.inbeam && elIdx === 0) {
-                                const beamValue = (n.beams && n.beams.length > 0) ? 'begin' : 'end';
-                                currentNote.ele('beam', { number: '1' }).txt(beamValue);
-                            }
-
-                            const notations = currentNote.ele('notations');
-                            let hasAction = false;
-
-                            // 1. 处理连接线 (Tied) - 精确到具体的音 el
-                            if (el.tied) {
-                                hasAction = true;
-                                const tieType = el.tied === 'start' ? 'start' : 'stop';
-                                currentNote.ele('tied', { type: tieType });
-                                notations.ele('tied', { type: tieType });
-                            }
-
-                            // 2. 处理开始标记 (Slur 或 Tied)
-                            if (el.pairs && el.pairs.length > 0) {
-                                el.pairs.forEach(pair => {
-                                    hasAction = true;
-                                    const tag = pair.type === 'slur' ? 'slur' : 'tied';
-                                    if (tag === 'slur' && pair.m2 !== undefined) {
-                                        slurStatus.set(s, pair.m2);
-                                    }
-                                    notations.ele(tag, {
-                                        type: 'start',
-                                        number: '1',
-                                        placement: pair.up ? 'above' : 'below'
-                                    });
+                            //xn.beams可能为：
+                            // [ { type: 'begin', level: 0 } ]
+                            // [ { type: 'continue', level: 0 }, { type: 'continue', level: 1 } ]
+                            // [ { type: 'end', level: 0 } ]
+                            // []
+                            if (xn.beams) {
+                                xn.beams.forEach((beam) => {
+                                    n.ele('beam', { number: beam.level + 1 }).txt(beam.type);
                                 });
                             }
 
-                            // 3. 闭合逻辑 (精确区分连音线和圆滑线)
-                            const currentMIdx = p.measures.indexOf(m);
-                            const isTargetMeasure = slurStatus.has(s) && currentMIdx === slurStatus.get(s);
+                            n.ele('staff').txt(staff);
 
-                            // 圆滑线在目标小节第一个音停止
-                            const isSlurEnd = n.slur === 'R' || (isTargetMeasure && nIdx === 0);
-                            // 连音线在标记了 end 的具体音符停止
-                            const isTiedEnd = el.tied === 'end';
+                            //   <tied type="start"/>
+                            //   <notations>
+                            //     <tied type="start"/>
+                            //   </notations>
 
-                            if (isSlurEnd) {
-                                hasAction = true;
-                                notations.ele('slur', { type: 'stop', number: '1' });
-                                slurStatus.delete(s);
+                            const notations = n.ele('notations');
+
+                            if (el.tied) {
+                                n.ele('tied', { type: el.tied.isStart ? 'start' : 'stop' });
+                                notations.ele('tied', {
+                                    type: el.tied.isStart ? 'start' : 'stop',
+                                    placement: el.tied.isStart ? (el.tied.isUp ? 'above' : 'below') : undefined
+                                });
                             }
-                            if (isTiedEnd) {
-                                hasAction = true;
-                                // notations里已经有tied处理逻辑，这里确保结束
-                            }
-
-                            if (!hasAction) notations.remove();
-
-                            //#endregion 5
                         });
-
-                        staffCounter += noteDur;
                     }
-                    //#endregion 4
                 });
-                if (s < totalStaves) {
-                    meas.ele('backup').ele('duration').txt(staffCounter.toString());
+
+                if (xmlNoteIdx < xmlNotes.length - 1) {
+                    meas.ele('backup').ele('duration').txt((trackTotalDuration / 120).toString());
                 }
-                //#endregion 3
-            }
+            });
 
             if (m.rbar) {
                 meas.ele('barline', { location: "right" }).ele('bar-style').txt(m.rbar.type);
@@ -380,3 +328,4 @@ export default function app(input: CCXML) {
 
     return root.end({ prettyPrint: true });
 }
+
