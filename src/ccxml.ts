@@ -53,12 +53,13 @@ interface Note {
     staff: number;
     tick: number;
     type: number;
+    v?: number; //声部ID
     dots?: number;
     elems?: NoteElement[];
     rest?: {
         nums: number;
     };
-    // ？？？？
+    //？？？
     stem?: {
         type: string;
         y: number;

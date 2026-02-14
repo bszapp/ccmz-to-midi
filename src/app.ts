@@ -81,7 +81,67 @@ export default function app(input: CCXML) {
         justify: "right",
         valign: "bottom"
     }).txt(input.title.composer);
-    //#region=========
+    //#region =========
+
+    // const partList = root.ele('part-list');
+    // partList.ele('score-part', { id: 'P1' }).ele('part-name').txt('Piano');
+
+    // const part = root.ele('part', { id: 'P1' });
+
+    // const meas = part.ele('measure', { number: "1" });
+    // const attr = meas.ele('attributes');
+    // attr.ele('divisions').txt("4");
+    // attr.ele('staves').txt("2");
+
+    // for (let s = 1; s <= 2; s++) {
+    //     let staffCounter = 0;
+
+    //     if (s === 1) {
+    //         const n1 = meas.ele('note');
+    //         n1.ele('pitch').ele('step').txt('C').up().ele('octave').txt('5');
+    //         n1.ele('duration').txt('16');
+    //         n1.ele('voice').txt('1');
+    //         n1.ele('type').txt('whole');
+    //         n1.ele('staff').txt('1');
+    //         staffCounter += 16;
+
+    //         meas.ele('backup').ele('duration').txt('16');
+
+    //         const r = meas.ele('note');
+    //         r.ele('rest');
+    //         r.ele('duration').txt('8');
+    //         r.ele('voice').txt('2');
+    //         r.ele('type').txt('half');
+    //         r.ele('staff').txt('1');
+    //         staffCounter = 8;
+
+    //         const n2 = meas.ele('note');
+    //         n2.ele('pitch').ele('step').txt('C').up().ele('octave').txt('4');
+    //         n2.ele('duration').txt('8');
+    //         n2.ele('voice').txt('2');
+    //         n2.ele('type').txt('half');
+    //         n2.ele('staff').txt('1');
+    //         staffCounter += 8;
+    //     }
+    //     else {
+    //         for (let i = 0; i < 4; i++) {
+    //             const ln = meas.ele('note');
+    //             ln.ele('pitch').ele('step').txt('C').up().ele('octave').txt('3');
+    //             ln.ele('duration').txt('4');
+    //             ln.ele('voice').txt('5');
+    //             ln.ele('type').txt('quarter');
+    //             ln.ele('staff').txt('2');
+    //             staffCounter += 4;
+    //         }
+    //     }
+
+    //     if (s === 1) {
+    //         meas.ele('backup').ele('duration').txt('16');
+    //     }
+    // }
+
+
+    // return root.end({ prettyPrint: true });
 
     const stepMap: Record<number, string> = { 1: 'C', 2: 'D', 3: 'E', 4: 'F', 5: 'G', 6: 'A', 7: 'B' };
     const typeMap: Record<number, string> = { 1: 'whole', 2: 'half', 4: 'quarter', 8: 'eighth', 16: '16th', 32: '32nd' };
@@ -115,7 +175,7 @@ export default function app(input: CCXML) {
             //#region-2:分小节
             //（第一小节、第二小节……）
 
-            console.log("mIdx", mIdx);
+            console.log(`===========\n第${mIdx + 1}小节`);
             const meas = part.ele('measure', { number: m.num, width: m.w.toString() });
 
             // 换行
@@ -170,12 +230,14 @@ export default function app(input: CCXML) {
                 });
             }
 
-            const totalStaves = m.staves || 1;
+            const totalStaves = m.staves;
             const measureDuration = m.time ? m.time.beats : 4;
 
+            console.log('notesLength', m.notes.length)
             for (let s = 1; s <= totalStaves; s++) {
                 //#region-3:分谱表+声部
                 //（高音部声部1、低音部声部2……）
+                console.log('s', s)
 
                 let staffCounter = 0;
 
@@ -187,6 +249,12 @@ export default function app(input: CCXML) {
 
                     const note = meas.ele('note');
                     note.att('default-x', n.x.toString());
+
+                    if (n.v !== undefined) {
+                        console.log(`多声部音符${n.v}`)
+                    } else {
+                        console.log(`单声部音符`)
+                    }
 
                     if (n.rest) {
                         const restDur = n.rest.nums * 4;
