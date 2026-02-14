@@ -174,20 +174,20 @@ export default function app(input: CCXML) {
             const measureDuration = m.time ? m.time.beats : 4;
 
             for (let s = 1; s <= totalStaves; s++) {
-                //#region-3:分谱表
-                //（高音部、低音部……）
+                //#region-3:分谱表+声部
+                //（高音部声部1、低音部声部2……）
 
                 let staffCounter = 0;
 
                 const staffNotes = m.notes.filter(n => n.staff === s);
 
                 staffNotes.forEach((n, nIdx) => {
-                    //#region-4:分音符
+                    //#region-4:分和弦音符
+                    //（和弦/单音/休止符）
 
                     const note = meas.ele('note');
                     note.att('default-x', n.x.toString());
 
-                    //单个音符内容
                     if (n.rest) {
                         const restDur = n.rest.nums * 4;
                         staffCounter += restDur;
@@ -203,13 +203,15 @@ export default function app(input: CCXML) {
                             }
                         }
 
-                        // 遍历和弦里的每一个音
+
                         n.elems.forEach((el, elIdx) => {
-                            // 第一个音用原来的note，后续的音新建note
+                            //#region-5:单个音
+                            //（C4 D4 E5 ……）
+
                             const currentNote = (elIdx === 0) ? note : meas.ele('note');
 
                             if (elIdx > 0) {
-                                currentNote.ele('chord'); // 核心：标记这是个和弦音
+                                currentNote.ele('chord'); //和弦标记
                             }
 
                             const pth = currentNote.ele('pitch');
@@ -284,16 +286,18 @@ export default function app(input: CCXML) {
                             }
 
                             if (!hasAction) notations.remove();
+
+                            //#endregion 5
                         });
 
                         staffCounter += noteDur;
                     }
                     //#endregion 4
                 });
-                //#endregion 3
                 if (s < totalStaves) {
                     meas.ele('backup').ele('duration').txt(staffCounter.toString());
                 }
+                //#endregion 3
             }
 
             if (m.rbar) {
