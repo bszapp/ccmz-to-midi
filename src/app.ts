@@ -194,18 +194,6 @@ export default function app(input: CCXML) {
                         note.ele('rest', n.rest.nums >= measureDuration ? { measure: "yes" } : {}).up()
                             .ele('duration').txt(restDur.toString());
                     } else if (n.elems && n.elems.length > 0) {
-                        const head = n.elems[0];
-                        if (head) {
-                            const pth = note.ele('pitch');
-                            pth.ele('step').txt(stepMap[head.step] || 'C').up();
-
-                            // 音高偏移
-                            if (head.alter !== undefined && head.alter !== 0) {
-                                pth.ele('alter').txt(head.alter.toString()).up();
-                            }
-
-                            pth.ele('octave').txt(head.octave.toString());
-                        }
                         let noteDur = (16 / n.type);
                         if (n.dots && n.dots > 0) {
                             let dotVal = noteDur / 2;
@@ -214,36 +202,49 @@ export default function app(input: CCXML) {
                                 dotVal /= 2;
                             }
                         }
-                        note.ele('duration').txt(noteDur.toString());
-                        staffCounter += noteDur;
-                    }
 
-                    note.ele('voice').txt(s === 1 ? "1" : "5").up()
-                        .ele('type').txt(typeMap[n.type] || "whole").up();
-                    if (n.dots && n.dots > 0) {
-                        for (let i = 0; i < n.dots; i++) {
-                            note.ele('dot');
-                        }
-                    }
-                    note.ele('staff').txt(s.toString());
+                        // 遍历和弦里的每一个音
+                        n.elems.forEach((el, elIdx) => {
+                            // 第一个音用原来的note，后续的音新建note
+                            const currentNote = (elIdx === 0) ? note : meas.ele('note');
 
-                    // 1. 处理 Beam (连杠)
-                    if (n.inbeam) {
-                        // 逻辑：如果有 beams 数组则是起始(begin)，否则是结束(end)
-                        const beamValue = (n.beams && n.beams.length > 0) ? 'begin' : 'end';
-                        note.ele('beam', { number: '1' }).txt(beamValue);
-                    }
+                            if (elIdx > 0) {
+                                currentNote.ele('chord'); // 核心：标记这是个和弦音
+                            }
 
-                    if (n.elems && n.elems.length > 0) {
-                        const notations = note.ele('notations');
-                        let hasAction = false;
+                            const pth = currentNote.ele('pitch');
+                            pth.ele('step').txt(stepMap[el.step] || 'C').up();
 
-                        n.elems.forEach(el => {
-                            // 1. 处理连接线 (Tied)
+                            if (el.alter !== undefined && el.alter !== 0) {
+                                pth.ele('alter').txt(el.alter.toString()).up();
+                            }
+                            pth.ele('octave').txt(el.octave.toString());
+
+                            currentNote.ele('duration').txt(noteDur.toString());
+                            currentNote.ele('voice').txt(s === 1 ? "1" : "5").up()
+                                .ele('type').txt(typeMap[n.type] || "whole").up();
+
+                            if (n.dots && n.dots > 0) {
+                                for (let i = 0; i < n.dots; i++) {
+                                    currentNote.ele('dot');
+                                }
+                            }
+                            currentNote.ele('staff').txt(s.toString());
+
+                            // 处理连杠 (只在第一个音处理)
+                            if (n.inbeam && elIdx === 0) {
+                                const beamValue = (n.beams && n.beams.length > 0) ? 'begin' : 'end';
+                                currentNote.ele('beam', { number: '1' }).txt(beamValue);
+                            }
+
+                            const notations = currentNote.ele('notations');
+                            let hasAction = false;
+
+                            // 1. 处理连接线 (Tied) - 精确到具体的音 el
                             if (el.tied) {
                                 hasAction = true;
                                 const tieType = el.tied === 'start' ? 'start' : 'stop';
-                                note.ele('tied', { type: tieType });
+                                currentNote.ele('tied', { type: tieType });
                                 notations.ele('tied', { type: tieType });
                             }
 
@@ -263,19 +264,29 @@ export default function app(input: CCXML) {
                                 });
                             }
 
-                            // 3. 闭合逻辑
+                            // 3. 闭合逻辑 (精确区分连音线和圆滑线)
                             const currentMIdx = p.measures.indexOf(m);
                             const isTargetMeasure = slurStatus.has(s) && currentMIdx === slurStatus.get(s);
 
-                            if (n.slur === 'R' || (el.tied === 'end') || (isTargetMeasure && nIdx === 0)) {
+                            // 圆滑线在目标小节第一个音停止
+                            const isSlurEnd = n.slur === 'R' || (isTargetMeasure && nIdx === 0);
+                            // 连音线在标记了 end 的具体音符停止
+                            const isTiedEnd = el.tied === 'end';
+
+                            if (isSlurEnd) {
                                 hasAction = true;
-                                const isStopTied = el.tied === 'end';
-                                notations.ele(isStopTied ? 'tied' : 'slur', { type: 'stop', number: '1' });
-                                if (!isStopTied) slurStatus.delete(s);
+                                notations.ele('slur', { type: 'stop', number: '1' });
+                                slurStatus.delete(s);
                             }
+                            if (isTiedEnd) {
+                                hasAction = true;
+                                // notations里已经有tied处理逻辑，这里确保结束
+                            }
+
+                            if (!hasAction) notations.remove();
                         });
 
-                        if (!hasAction) notations.remove();
+                        staffCounter += noteDur;
                     }
                     //#endregion 4
                 });
