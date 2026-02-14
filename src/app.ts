@@ -237,6 +237,8 @@ export default function app(input: CCXML) {
             for (let s = 1; s <= totalStaves; s++) {
                 //#region-3:分谱表+声部
                 //（高音部声部1、低音部声部2……）
+
+                //s表示谱表编号（高音部/低音部）
                 console.log('s', s)
 
                 let staffCounter = 0;
@@ -247,14 +249,13 @@ export default function app(input: CCXML) {
                     //#region-4:分和弦音符
                     //（和弦/单音/休止符）
 
+
+                    //v表示谱表中的声部
+                    console.log(n.v, n.tick)
+
                     const note = meas.ele('note');
                     note.att('default-x', n.x.toString());
 
-                    if (n.v !== undefined) {
-                        console.log(`多声部音符${n.v}`)
-                    } else {
-                        console.log(`单声部音符`)
-                    }
 
                     if (n.rest) {
                         const restDur = n.rest.nums * 4;
@@ -291,7 +292,8 @@ export default function app(input: CCXML) {
                             pth.ele('octave').txt(el.octave.toString());
 
                             currentNote.ele('duration').txt(noteDur.toString());
-                            currentNote.ele('voice').txt(s === 1 ? "1" : "5").up()
+                            //众所周知musicXML同一个最多4个声部
+                            currentNote.ele('voice').txt(`${(s === 1 ? 1 : 5) + (n.v || 0)}`).up()
                                 .ele('type').txt(typeMap[n.type] || "whole").up();
 
                             if (n.dots && n.dots > 0) {
