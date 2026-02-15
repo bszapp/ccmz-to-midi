@@ -1,4 +1,4 @@
-import type { Direction, Measure, Note, NoteArts, TiePair } from "./ccxml.ts";
+import type { Clef, Direction, Measure, Note, NoteArts, TiePair } from "./ccxml.ts";
 
 export type XmlItem = XmlNote | Directions;
 
@@ -10,7 +10,7 @@ export interface XmlNotes {
 export interface Directions {
     staff: number;
     tick: number;
-    items: Direction[];
+    items: (Direction | Clef)[];
 }
 
 export interface XmlNote {
@@ -25,10 +25,11 @@ export interface XmlNote {
         show: boolean; // 是否显示
     };
     stem?: "up" | "down" | undefined; // 符干方向：向上或向下
+    cue?: boolean | undefined;
     beams?: XmlBeamInfo[]; // 连杠信息列表
     tuplet?: TupletInfo | undefined; // 连音信息
     arts?: NoteArts[] | undefined;
-    slur?: SlurInfo | undefined;
+    pairs?: PairInfo[] | undefined;
 }
 
 interface AbsXmlNote {
@@ -55,16 +56,15 @@ export interface XmlNoteElement {
     tied?: TiedInfo;
 }
 
+//延音
 interface TiedInfo {
     type: 'start' | 'continue' | 'stop';
     isUp?: boolean | undefined;
 }
 
-interface SlurInfo {
-    type: 'start' | 'continue' | 'stop';
-    id?: number | undefined;
-    oldId?: number | undefined;
-    isUp?: boolean | undefined;
+interface PairInfo {
+    type: 'start' | 'stop';
+    data: TiePair,
 }
 
 //#region 计算音符长度
@@ -98,6 +98,11 @@ export function xmlNodeDuration(note: XmlNote | Directions): number {
     return (base + extra) * scale;
 }
 
+function remapTick(tick: number) {
+    const step = 60;//480*4/32
+    return Math.round(tick / step) * step;
+}
+
 function getTupletNotes(n: number) {
     if (n <= 1) return { actual: 1, normal: 1 };
     const normal = Math.pow(2, Math.floor(Math.log2(n - 0.1)));
@@ -114,7 +119,7 @@ const getStepStr = (s: number) => ["C", "D", "E", "F", "G", "A", "B"][s - 1] || 
 
 //#region 主入口
 //把ccNotes（基于对象）转换为XmlNotes（基于文档）
-export function notesToXmlNotes(mIdx: number, measure: Measure, tieList: TiePair[]): XmlNotes[] {
+export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePair[]): XmlNotes[] {
     const trackMap = new Map<number, AbsXmlNote[]>();
     const notes = measure.notes;
 
@@ -142,6 +147,7 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, tieList: TiePair
         value: number;
     }[] = [];
     notes.forEach((note, noteI) => {
+        const trackId = noteTrackId(note);
         note.elems?.forEach(el => {
             el.pairs?.forEach(pair => {
                 if (pair.type === "tuplet") {
@@ -150,13 +156,14 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, tieList: TiePair
                         endI: pair.n2 !== undefined ? pair.n2 : (noteI + (pair.value || 1) - 1),
                         value: pair.value || 0
                     });
-                } else if (pair.type === "slur") {
+                } else if (pair.type == "slur" || pair.type == "glissando") {
                     //先写入标记数据
                     pair.m1 = mIdx;
-                    pair.n1 = noteI
-                    pair.id = tieList.length + 1;
+                    pair.n1 = noteI;
+                    pair.trackId = trackId;
+                    pair.id = pairList.filter(p => p.type == pair.type).length + 1;
 
-                    tieList.push(pair);
+                    pairList.push(pair);
                 }
             });
         });
@@ -216,42 +223,32 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, tieList: TiePair
             }
         });
 
-        // 圆滑线处理
-        var slurInfo: SlurInfo | undefined;
-        const idsToDelete: number[] = [];
+        // 圆滑线、滑音处理
+        var pairInfo: PairInfo[] = [];
+        const idsToDelete: TiePair[] = [];
 
-        tieList.forEach(e => {
+        pairList.forEach(e => {
             if (mIdx === e.m1 && noteI === e.n1) {
-                if (!slurInfo) {
-                    slurInfo = {
-                        type: 'start',
-                        id: e.id,
-                        isUp: e.up
-                    };
-                } else {
-                    slurInfo.oldId = slurInfo.id;
-                    slurInfo.id = e.id;
-                    slurInfo.isUp = e.up;
-                    slurInfo.type = 'continue';
-                }
-            } else if (mIdx === e.m2 && noteI === e.n2) {
-                if (!slurInfo) {
-                    slurInfo = {
-                        type: 'stop',
-                        id: e.id,
-                    };
-                } else {
-                    slurInfo.type = 'stop';
-                    slurInfo.id = e.id;
-                }
+                pairInfo.push({
+                    type: 'start',
+                    data: e
+                });
+            } else if (mIdx === e.m2 && noteI === e.n2
+                || e.m2 === undefined && e.n2 === undefined && e.trackId === trackId //有始无终？
+            ) {
+                pairInfo.push({
+                    type: 'stop',
+                    data: e
+                });
                 // 记录需要删除的 id
-                if (e.id !== undefined) idsToDelete.push(e.id);
+                idsToDelete.push(e);
             }
         });
         if (idsToDelete.length > 0) {
-            const remaining = tieList.filter(item => !idsToDelete.includes(item.id!));
-            tieList.length = 0;
-            tieList.push(...remaining);
+            idsToDelete.forEach(e => {
+                const idx = pairList.indexOf(e);
+                if (idx !== -1) pairList.splice(idx, 1);
+            });
         }
 
         //处理正常音符信息
@@ -296,8 +293,9 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, tieList: TiePair
                 stem: note.stem?.type as "up" | "down",
                 beams: noteBeams,
                 arts: note.arts,
-                slur: slurInfo,
+                cue: note.cue,
                 tuplet: tupletInfo,
+                pairs: pairInfo,
                 grace: note.grace
             }
         };
@@ -330,10 +328,23 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, tieList: TiePair
         return res;
     });
 
-    //#region 合并并插入Directions
+    //#region 合并并插入Direction和Clef
     const dirMap = new Map<string, Directions>();
 
+    //控制符号（踏板/变速）
     measure.dirs?.forEach(dir => {
+        const key = `${dir.staff}-${dir.tick}`;
+        if (!dirMap.has(key)) {
+            dirMap.set(key, {
+                staff: dir.staff,
+                tick: dir.tick,
+                items: []
+            });
+        }
+        dirMap.get(key)!.items.push(dir);
+    });
+    //高低音变化
+    measure.clefs?.forEach(dir => {
         const key = `${dir.staff}-${dir.tick}`;
         if (!dirMap.has(key)) {
             dirMap.set(key, {
@@ -347,6 +358,7 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, tieList: TiePair
 
     const mergedDirs = Array.from(dirMap.values());
 
+    //#region 插入控制信息
     mergedDirs.forEach(dirGroup => {
         const staffBaseTrack = (dirGroup.staff - 1) * 4;
         const potentialTracks = result
@@ -357,7 +369,7 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, tieList: TiePair
         for (const track of potentialTracks) {
             let currentTick = 0;
             for (let i = 0; i <= track.notes.length; i++) {
-                if (currentTick === dirGroup.tick) {
+                if (currentTick === remapTick(dirGroup.tick)) {
                     track.notes.splice(i, 0, dirGroup);
                     inserted = true;
                     break;
@@ -408,7 +420,8 @@ function createRestNotes(duration: number): XmlNote[] {
 export function formatXmlNotes(notes: (XmlNote | Directions)[]): string {
     return notes.map(note => {
         if ("items" in note) {
-            return `[(${note.items.map(e => {
+            return `[(${note.items.map((e: Clef | Direction) => {
+                if ('clef' in e) return `高低音${e.clef}`
                 if (e.type == 'metronome') return `变速${e.value}`
                 if (e.type == 'pedal') return `踏板${e.text}`
                 return `${e.type}`
@@ -420,7 +433,7 @@ export function formatXmlNotes(notes: (XmlNote | Directions)[]): string {
         if (note.isRest) {
             const restInfo = note.elems as { nums: number; show: boolean };
             const label = restInfo.show ? "休止" : "空白";
-            return `[${label}-${duration}]`;
+            return `[${label} -${duration}]`;
         }
 
         // 处理常规音符

@@ -74,6 +74,8 @@ export interface Note {
     arts?: NoteArts[] | undefined; // 装饰音/演奏记号，如 staccato (断奏), accent (重音) 等
     //slur?: "L" | "M" | "R";  // 圆滑线标记：L 代表开始 (Left)，M 代表中间 (Middle)，R 代表结束 (Right)
 
+    cue?: boolean | undefined;
+
     beams?: BeamInfo[];      // 连杠信息数组，定义多杠连杠的起始、继续或结束
     inbeam?: boolean;        // 标识该音符当前是否处于连杠组合中
 
@@ -104,9 +106,9 @@ interface NoteElement {
 }
 
 export interface TiePair {
-    m2: number;      // 目标小节索引
-    n2: number;      // 目标音符索引
-    type: "tied" | "slur" | "tuplet"; // tied延音线(这里不处理了) slur圆滑线(跨小节) tuplet连音(单个小节内)
+    m2?: number | undefined;      // 目标小节索引
+    n2?: number | undefined;      // 目标音符索引
+    type: "tied" | "slur" | "tuplet" | "glissando"; // tied延音线(这里不处理了) slur圆滑线(跨小节) tuplet连音(单个小节内) glissando滑音(跨小节)
     x1: number;
     y1: number;
     x2: number;
@@ -118,6 +120,7 @@ export interface TiePair {
     m1?: number;
     n1?: number;
     id?: number;
+    trackId?: number;
 }
 
 export interface BeamInfo {
@@ -158,7 +161,7 @@ interface Time {
     beatu: number;
 }
 
-interface Clef {
+export interface Clef {
     x: number;
     staff: number;
     tick: number;

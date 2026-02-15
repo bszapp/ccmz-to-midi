@@ -82,6 +82,18 @@ export default function app(input: CCXML) {
         justify: "right",
         valign: "bottom"
     }).txt(input.title.composer);
+
+    if (input.title.subtitle.length > 0) {
+        const c3 = root.ele('credit', { page: "1" });
+        c3.ele('credit-type').txt("subtitle");
+        c3.ele('credit-words', {
+            'default-x': "600.241935",
+            'default-y': "1554.374677",
+            justify: "center",
+            valign: "top",
+            'font-size': "14"
+        }).txt(input.title.subtitle);
+    }
     //#region =========
 
     const typeMap: Record<number, string> = { 1: 'whole', 2: 'half', 4: 'quarter', 8: 'eighth', 16: '16th', 32: '32nd' };
@@ -117,7 +129,7 @@ export default function app(input: CCXML) {
 
             console.log(`===========\n第${mIdx + 1}小节`);
 
-            if ([121, 122].includes(mIdx + 1)) {
+            if ([1].includes(mIdx + 1)) {
                 console.log('TEST', JSON.stringify(m))
             }
 
@@ -193,37 +205,45 @@ export default function app(input: CCXML) {
 
                     if ("items" in xn) {
                         xn.items.forEach(dir => {
-                            const direction = meas.ele('direction', { placement: dir.param.y > 0 ? 'below' : 'above' });
+                            if ('clef' in dir) {
+                                //console.log('高低音', JSON.stringify(dir))
+                                const attributes = meas.ele('attributes');
+                                const clef = attributes.ele('clef', { number: staff });
+                                clef.ele('sign').txt(dir.clef === 'Treble' ? 'G' : 'F');
+                                clef.ele('line').txt(dir.clef === 'Treble' ? '2' : '4');
+                            } else {
+                                const direction = meas.ele('direction', { placement: dir.param.y > 0 ? 'below' : 'above' });
 
-                            // 1. 处理节拍器 (Metronome)
-                            if (dir.type === 'metronome') {
-                                const typep = direction.ele('direction-type');
-                                const metro = typep.ele('metronome');
-                                if (dir.items) {
-                                    const beatUnit = dir.items.find(i => i.note)?.note;
-                                    const textVal = dir.items.find(i => i.text === '=') ? dir.value : null;
+                                // 1. 处理节拍器 (Metronome)
+                                if (dir.type === 'metronome') {
+                                    //console.log("变速", JSON.stringify(dir))
+                                    const typep = direction.ele('direction-type');
+                                    const metro = typep.ele('metronome');
 
-                                    metro.ele('beat-unit').txt(typeMap[beatUnit || 4] || 'quarter');
+                                    const beatUnit = dir.notel || 4;
+                                    const textVal = dir.value;
+
+                                    metro.ele('beat-unit').txt(typeMap[beatUnit] || 'quarter');
                                     if (textVal) metro.ele('per-minute').txt(textVal);
                                 }
-                            }
-                            // 2. 处理踏板 (Pedal)
-                            else if (dir.type === 'pedal') {
-                                const typep = direction.ele('direction-type');
-                                const pedalAttr: any = {
-                                    type: dir.text === 'start' ? 'start' : 'stop',
-                                    line: 'yes',
-                                    sign: 'no'
-                                };
-                                typep.ele('pedal', pedalAttr);
-                            }
-                            // 3. 处理普通文本 (Words)
-                            else if (dir.text) {
-                                const typep = direction.ele('direction-type');
-                                typep.ele('words').txt(dir.text);
-                            }
+                                // 2. 处理踏板 (Pedal)
+                                else if (dir.type === 'pedal') {
+                                    const typep = direction.ele('direction-type');
+                                    const pedalAttr: any = {
+                                        type: dir.text === 'start' ? 'start' : 'stop',
+                                        line: 'yes',
+                                        sign: 'no'
+                                    };
+                                    typep.ele('pedal', pedalAttr);
+                                }
+                                // 3. 处理普通文本 (Words)
+                                else if (dir.text) {
+                                    const typep = direction.ele('direction-type');
+                                    typep.ele('words').txt(dir.text);
+                                }
 
-                            direction.ele('staff').txt(staff);
+                                direction.ele('staff').txt(staff);
+                            }
                             return;
                         })
                         return;
@@ -264,7 +284,9 @@ export default function app(input: CCXML) {
                                 if (xn.grace.slash) graceAttr.slash = 'yes';
                                 n.ele('grace', graceAttr);
                             }
+
                             if (elIdx > 0) n.ele('chord');
+                            if (xn.cue) n.ele('cue');
 
                             // 2. [pitch]
                             const p = n.ele('pitch');
@@ -339,31 +361,40 @@ export default function app(input: CCXML) {
                                 }
                             }
 
-                            //圆滑线
-                            if (xn.slur) {
-                                if (xn.slur.type === 'stop') {
-                                    notations.ele('slur', {
-                                        type: 'stop',
-                                        number: xn.slur.id
-                                    });
-                                } else if (xn.slur.type === 'start') {
-                                    notations.ele('slur', {
+                            //圆滑线、滑音
+                            xn.pairs?.forEach(pairInfo => {
+                                const { type, data } = pairInfo;
+                                const xmlTagName = data.type;
+                                // 将 data 断言为 any 以获取动态属性
+                                const d = data as any;
+
+                                if (type === 'start') {
+                                    // 使用 Record<string, any> 允许添加任意属性
+                                    const attributes: Record<string, any> = {
                                         type: 'start',
-                                        number: xn.slur.id,
-                                        placement: xn.slur.isUp ? 'above' : 'below'
-                                    });
-                                } else if (xn.slur.type === 'continue') {
-                                    notations.ele('slur', {
+                                        number: d.id
+                                    };
+
+                                    if (xmlTagName === 'slur' && d.isUp !== undefined) {
+                                        attributes.placement = d.isUp ? 'above' : 'below';
+                                    }
+
+                                    if (xmlTagName === 'glissando' && d.line) {
+                                        attributes['line-type'] = d.line;
+                                    }
+
+                                    const ele = notations.ele(xmlTagName, attributes);
+
+                                    if (xmlTagName === 'glissando' && d.text) {
+                                        ele.txt(d.text);
+                                    }
+                                } else if (type === 'stop') {
+                                    notations.ele(xmlTagName, {
                                         type: 'stop',
-                                        number: xn.slur.oldId
-                                    });
-                                    notations.ele('slur', {
-                                        type: 'start',
-                                        number: xn.slur.id,
-                                        placement: xn.slur.isUp ? 'above' : 'below'
+                                        number: d.id
                                     });
                                 }
-                            }
+                            });
 
                             // 琶音 (arpeggiate)
                             xn.arts?.forEach(art => {
