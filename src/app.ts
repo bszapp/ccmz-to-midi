@@ -117,6 +117,10 @@ export default function app(input: CCXML) {
 
             console.log(`===========\n第${mIdx + 1}小节`);
 
+            if ([9].includes(mIdx + 1)) {
+                console.log('TEST', JSON.stringify(m))
+            }
+
             const meas = part.ele('measure', { number: m.num, width: m.w.toString() });
 
             // 换行
@@ -161,7 +165,7 @@ export default function app(input: CCXML) {
             if (m.dirs) {
                 m.dirs.forEach(d => {
                     if (d.type === 'metronome') {
-                        const dir = meas.ele('direction', { placement: "above", system: "only-top" });
+                        const dir = meas.ele('direction', { placement: "above" });
                         const met = dir.ele('direction-type').ele('metronome', { parentheses: "no" });
                         met.att('default-x', d.param.x.toString()).att('relative-y', "20");
                         met.ele('beat-unit').txt("quarter").up().ele('per-minute').txt(d.value || "60");
@@ -171,7 +175,7 @@ export default function app(input: CCXML) {
                 });
             }
 
-            const xmlNotes = notesToXmlNotes(m.notes);
+            const xmlNotes = notesToXmlNotes(m);
             xmlNotes.forEach((xmlNote, xmlNoteIdx) => {
                 //#region-3:分声部+谱表
                 console.log(`声部${xmlNote.trackId}:${formatXmlNotes(xmlNote.notes)}`);
@@ -180,11 +184,47 @@ export default function app(input: CCXML) {
 
                 xmlNote.notes.forEach((xn) => {
                     //#region-4:分音符
+
                     const durRaw = xmlNodeDuration(xn);
                     trackTotalDuration += durRaw;
                     const duration = durRaw / 120;
                     const voice = (xmlNote.trackId % 4 + 1).toString();
                     const staff = (Math.floor(xmlNote.trackId / 4) + 1).toString();
+
+                    if ("items" in xn) {
+                        xn.items.forEach(dir => {
+                            const direction = meas.ele('direction', { placement: dir.param.y > 0 ? 'below' : 'above' });
+
+                            // 1. 处理节拍器 (Metronome)
+                            if (dir.type === 'metronome') {
+                                const typep = direction.ele('direction-type');
+                                const metro = typep.ele('metronome');
+                                if (dir.items) {
+                                    const beatUnit = dir.items.find(i => i.note)?.note;
+                                    const textVal = dir.items.find(i => i.text === '=') ? dir.value : null;
+
+                                    metro.ele('beat-unit').txt(typeMap[beatUnit || 4] || 'quarter');
+                                    if (textVal) metro.ele('per-minute').txt(textVal);
+                                }
+                            }
+                            // 2. 处理踏板 (Pedal)
+                            else if (dir.type === 'pedal') {
+                                const typep = direction.ele('direction-type');
+                                const pedalAttr: any = { type: dir.text === 'start' ? 'start' : 'stop' };
+                                if (dir.line) pedalAttr.line = 'yes';
+                                typep.ele('pedal', pedalAttr);
+                            }
+                            // 3. 处理普通文本 (Words)
+                            else if (dir.text) {
+                                const typep = direction.ele('direction-type');
+                                typep.ele('words').txt(dir.text);
+                            }
+
+                            direction.ele('staff').txt(staff);
+                            return;
+                        })
+                        return;
+                    }
 
                     const isRest = xn.isRest;
 
@@ -204,75 +244,86 @@ export default function app(input: CCXML) {
                         n.ele('staff').txt(staff);
                     } else {
                         (xn.elems as XmlNoteElement[]).forEach((el, elIdx) => {
-                            //#region 5:单个音调
                             const n = meas.ele('note');
 
-                            //装饰音
+                            // 1. [grace / chord]
                             if (xn.grace) {
                                 const graceAttr: any = {};
                                 if (xn.grace.slash) graceAttr.slash = 'yes';
                                 n.ele('grace', graceAttr);
                             }
-
                             if (elIdx > 0) n.ele('chord');
 
+                            // 2. [pitch]
                             const p = n.ele('pitch');
                             p.ele('step').txt(el.step);
                             if (el.alter !== undefined && el.alter !== 0) p.ele('alter').txt(el.alter.toString());
                             p.ele('octave').txt(el.octave.toString());
 
-                            n.ele('duration').txt(duration.toString());
-                            if (el.accidental) n.ele('accidental').txt(el.accidental);
+                            // 3. [duration] (装饰音不写 duration)
+                            if (!xn.grace) {
+                                n.ele('duration').txt(duration.toString());
+                            }
 
+                            // 4. [tie]
+                            if (el.tied) {
+                                n.ele('tie', { type: el.tied.isStart ? 'start' : 'stop' });
+                            }
+
+                            // 5. [voice]
                             n.ele('voice').txt(voice);
+
+                            // 6. [type]
                             n.ele('type').txt(typeMap[xn.lenType] || 'quarter');
 
+                            // 7. [dot]
                             if (xn.dots > 0) {
                                 for (let i = 0; i < xn.dots; i++) n.ele('dot');
                             }
 
+                            // 8. [time-modification] (极其重要：必须在 type 之后，stem 之前)
+                            if (xn.tuplet) {
+                                const timeMod = n.ele('time-modification');
+                                timeMod.ele('actual-notes').txt(xn.tuplet.actual.toString());
+                                timeMod.ele('normal-notes').txt(xn.tuplet.normal.toString());
+                            }
+
+                            // 9. [stem]
                             if (xn.stem) n.ele('stem').txt(xn.stem);
 
+                            // 10. [staff]
+                            n.ele('staff').txt(staff);
+
+                            // 11. [beam] (必须在 staff 之后)
                             if (xn.beams) {
                                 xn.beams.forEach((beam) => {
                                     n.ele('beam', { number: beam.level + 1 }).txt(beam.type);
                                 });
                             }
 
+                            // 12. [notations] (最后处理)
                             const notations = n.ele('notations');
 
-                            //连音
-                            if (xn.tuplet) {
-                                const timeMod = n.ele('time-modification');
-                                timeMod.ele('actual-notes').txt(xn.tuplet.actual.toString());
-                                timeMod.ele('normal-notes').txt(xn.tuplet.normal.toString());
-
-                                if (xn.tuplet.type === 'start' || xn.tuplet.type === 'end') {
-                                    const tType = xn.tuplet.type === 'start' ? 'start' : 'stop';
-                                    notations.ele('tuplet', {
-                                        type: tType,
-                                        bracket: 'yes'
-                                    });
-                                }
+                            // 连音标记 (tuplet bracket)
+                            if (xn.tuplet && (xn.tuplet.type === 'start' || xn.tuplet.type === 'end')) {
+                                const tType = xn.tuplet.type === 'start' ? 'start' : 'stop';
+                                notations.ele('tuplet', { type: tType, bracket: 'yes' });
                             }
 
-                            n.ele('staff').txt(staff);
-
-                            //连杠
+                            // 连音线 (tied)
                             if (el.tied) {
-                                n.ele('tied', { type: el.tied.isStart ? 'start' : 'stop' });
                                 notations.ele('tied', {
                                     type: el.tied.isStart ? 'start' : 'stop',
                                     placement: el.tied.isStart ? (el.tied.isUp ? 'above' : 'below') : undefined
                                 });
                             }
 
-                            //琶音
+                            // 琶音 (arpeggiate)
                             xn.arts?.forEach(art => {
                                 if (art.type == 'arpeggiate') {
-                                    notations.ele('arpeggiate')
+                                    notations.ele('arpeggiate');
                                 }
-                            })
+                            });
                         });
                     }
                 });

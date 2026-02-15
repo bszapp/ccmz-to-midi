@@ -122,19 +122,29 @@ export interface BeamInfo {
     n2: number; // 连接到的目标音符索引
 }
 
-interface Direction {
+export interface Direction {
     staff: number;
     tick: number;
+    type: "metronome" | "pedal" | string;
     text?: string;
-    type?: string;
     value?: string;
     notel?: number;
+    line?: boolean;
+    stopx?: number;
+    stopy?: number;
+    items?: DirectionItem[];
     param: {
         x: number;
         y: number;
-        'font-size': number;
+        y2?: number;
+        'font-size'?: number;
         'font-weight'?: string;
     };
+}
+
+interface DirectionItem {
+    note?: number;
+    text?: string;
 }
 
 interface Time {

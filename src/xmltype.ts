@@ -1,8 +1,16 @@
-import type { Note, NoteArts } from "./ccxml.ts";
+import type { Direction, Measure, Note, NoteArts } from "./ccxml.ts";
+
+export type XmlItem = XmlNote | Directions;
 
 export interface XmlNotes {
-    trackId: number;//音轨id，由谱表、声部共同决定
-    notes: XmlNote[];
+    trackId: number;
+    notes: XmlItem[];
+}
+
+export interface Directions {
+    staff: number;
+    tick: number;
+    items: Direction[];
 }
 
 export interface XmlNote {
@@ -54,8 +62,12 @@ interface TiedInfo {
 
 
 //#region 计算音符长度
-export function xmlNodeDuration(note: XmlNote): number {
+export function xmlNodeDuration(note: XmlNote | Directions): number {
     const divisions = 480;
+
+    if ('items' in note) {
+        return 0;
+    }
 
     if (note.grace) return 0;
 
@@ -96,8 +108,9 @@ const getStepStr = (s: number) => ["C", "D", "E", "F", "G", "A", "B"][s - 1] || 
 
 //#region 主入口
 //把ccNotes（基于对象）转换为XmlNotes（基于文档）
-export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
+export function notesToXmlNotes(measure: Measure): XmlNotes[] {
     const trackMap = new Map<number, AbsXmlNote[]>();
+    const notes = measure.notes;
 
     //#region 先处理一下小节的全局信息
     //连杠信息
@@ -135,8 +148,6 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
             });
         });
     });
-
-    console.log("连音：", tuplets)
 
     //#region 主循环，映射到AbsXmlNote[]
     notes.forEach((note, noteI) => {
@@ -263,6 +274,50 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
         return res;
     });
 
+    //#region 合并并插入Directions
+    const dirMap = new Map<string, Directions>();
+
+    measure.dirs?.forEach(dir => {
+        const key = `${dir.staff}-${dir.tick}`;
+        if (!dirMap.has(key)) {
+            dirMap.set(key, {
+                staff: dir.staff,
+                tick: dir.tick,
+                items: []
+            });
+        }
+        dirMap.get(key)!.items.push(dir);
+    });
+
+    const mergedDirs = Array.from(dirMap.values());
+
+    mergedDirs.forEach(dirGroup => {
+        const staffBaseTrack = (dirGroup.staff - 1) * 4;
+        const potentialTracks = result
+            .filter(r => r.trackId >= staffBaseTrack && r.trackId < staffBaseTrack + 4)
+            .sort((a, b) => a.trackId - b.trackId);
+
+        let inserted = false;
+        for (const track of potentialTracks) {
+            let currentTick = 0;
+            for (let i = 0; i <= track.notes.length; i++) {
+                if (currentTick === dirGroup.tick) {
+                    track.notes.splice(i, 0, dirGroup);
+                    inserted = true;
+                    break;
+                }
+                if (i < track.notes.length) {
+                    currentTick += xmlNodeDuration(track.notes[i]!);
+                }
+            }
+            if (inserted) break;
+        }
+
+        if (!inserted) {
+            console.warn("W: 无法插入", JSON.stringify(dirGroup));
+        }
+    });
+
     return result;
 }
 //#region ========
@@ -294,23 +349,31 @@ function createRestNotes(duration: number): XmlNote[] {
     return rests;
 }
 
-
-export function formatXmlNotes(notes: XmlNote[]): string {
+export function formatXmlNotes(notes: (XmlNote | Directions)[]): string {
     return notes.map(note => {
+        if ("items" in note) {
+            return `[(${note.items.map(e => {
+                if (e.type == 'metronome') return `变速${e.value}`
+                if (e.type == 'pedal') return `踏板${e.text}`
+                return `${e.type}`
+            }).join(",")})-D]`;
+        }
+
         const duration = xmlNodeDuration(note);
 
         if (note.isRest) {
             const restInfo = note.elems as { nums: number; show: boolean };
-
             const label = restInfo.show ? "休止" : "空白";
             return `[${label}-${duration}]`;
         }
 
         // 处理常规音符
         const elements = note.elems as XmlNoteElement[];
+        if (!elements || elements.length === 0) return "";
+
         const pitchStr = elements.length > 1
             ? `(${elements.map(e => `${e.step}${e.octave}`).join(",")})`
-            : `${elements[0]?.step || ""}${elements[0]?.octave || ""}`;
+            : elements.length > 0 ? `${elements[0]!.step}${elements[0]!.octave}` : '()';
 
         return `[${pitchStr}-${duration}]`;
     }).join("");
