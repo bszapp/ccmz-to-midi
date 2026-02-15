@@ -117,7 +117,7 @@ export default function app(input: CCXML) {
 
             console.log(`===========\n第${mIdx + 1}小节`);
 
-            if ([9].includes(mIdx + 1)) {
+            if ([121, 122].includes(mIdx + 1)) {
                 console.log('TEST', JSON.stringify(m))
             }
 
@@ -162,18 +162,18 @@ export default function app(input: CCXML) {
             }
 
             // 速度标记
-            if (m.dirs) {
-                m.dirs.forEach(d => {
-                    if (d.type === 'metronome') {
-                        const dir = meas.ele('direction', { placement: "above" });
-                        const met = dir.ele('direction-type').ele('metronome', { parentheses: "no" });
-                        met.att('default-x', d.param.x.toString()).att('relative-y', "20");
-                        met.ele('beat-unit').txt("quarter").up().ele('per-minute').txt(d.value || "60");
-                        dir.ele('staff').txt(d.staff.toString());
-                        dir.ele('sound', { tempo: d.value || "60" });
-                    }
-                });
-            }
+            // if (m.dirs) {
+            //     m.dirs.forEach(d => {
+            //         if (d.type === 'metronome') {
+            //             const dir = meas.ele('direction', { placement: "above" });
+            //             const met = dir.ele('direction-type').ele('metronome', { parentheses: "no" });
+            //             met.att('default-x', d.param.x.toString()).att('relative-y', "20");
+            //             met.ele('beat-unit').txt("quarter").up().ele('per-minute').txt(d.value || "60");
+            //             dir.ele('staff').txt(d.staff.toString());
+            //             dir.ele('sound', { tempo: d.value || "60" });
+            //         }
+            //     });
+            // }
 
             const xmlNotes = notesToXmlNotes(m);
             xmlNotes.forEach((xmlNote, xmlNoteIdx) => {
@@ -269,7 +269,12 @@ export default function app(input: CCXML) {
 
                             // 4. [tie]
                             if (el.tied) {
-                                n.ele('tie', { type: el.tied.isStart ? 'start' : 'stop' });
+                                if (el.tied.type === 'stop') n.ele('tie', { type: 'stop' });
+                                else if (el.tied.type === 'start') n.ele('tie', { type: 'start' });
+                                else if (el.tied.type === 'continue') {
+                                    n.ele('tie', { type: 'stop' });
+                                    n.ele('tie', { type: 'start' });
+                                }
                             }
 
                             // 5. [voice]
@@ -314,10 +319,14 @@ export default function app(input: CCXML) {
 
                             // 连音线 (tied)
                             if (el.tied) {
-                                notations.ele('tied', {
-                                    type: el.tied.isStart ? 'start' : 'stop',
-                                    placement: el.tied.isStart ? (el.tied.isUp ? 'above' : 'below') : undefined
-                                });
+                                if (el.tied.type === 'stop') {
+                                    notations.ele('tied', { type: 'stop' });
+                                } else if (el.tied.type === 'start') {
+                                    notations.ele('tied', { type: 'start', placement: el.tied.isUp ? 'above' : 'below' });
+                                } else if (el.tied.type === 'continue') {
+                                    notations.ele('tied', { type: 'stop' });
+                                    notations.ele('tied', { type: 'start', placement: el.tied.isUp ? 'above' : 'below' });
+                                }
                             }
 
                             // 琶音 (arpeggiate)

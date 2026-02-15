@@ -36,6 +36,7 @@ export interface Measure {
     num: string;
     w: number;
     staves: number;
+    ticks: number;
     dirs?: Direction[];
     fifths?: {
         fifths: number;

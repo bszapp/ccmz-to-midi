@@ -56,7 +56,7 @@ export interface XmlNoteElement {
 }
 
 interface TiedInfo {
-    isStart: boolean;
+    type: 'start' | 'continue' | 'stop';
     isUp?: boolean | undefined;
 }
 
@@ -220,19 +220,24 @@ export function notesToXmlNotes(measure: Measure): XmlNotes[] {
                     if (el.alter !== undefined) elem.alter = el.alter;
 
                     //延音
-                    el.pairs?.forEach(pair => {
-                        if (pair.type === "tied") {
-                            elem.tied = {
-                                isStart: true,
-                                isUp: pair.up
-                            }
+                    const hasTiedPair = el.pairs?.some(p => p.type === "tied");
+                    const isTiedEnd = el.tied === 'end';
+
+                    if (hasTiedPair || isTiedEnd) {
+                        let tiedType: 'start' | 'continue' | 'stop' = 'start';
+
+                        if (hasTiedPair && isTiedEnd) {
+                            tiedType = 'continue';
+                        } else if (isTiedEnd) {
+                            tiedType = 'stop';
+                        } else {
+                            tiedType = 'start';
                         }
-                    })
-                    if (el.tied) {
+
                         elem.tied = {
-                            isStart: el.tied == 'start',
-                            isUp: el.tied === "start"
-                        }
+                            type: tiedType,
+                            isUp: el.pairs?.find(p => p.type === "tied")?.up ?? false
+                        };
                     }
 
                     return elem;

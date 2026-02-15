@@ -132,16 +132,6 @@
       </attributes>
       <direction placement="above">
         <direction-type>
-          <metronome parentheses="no" default-x="103.25" relative-y="20">
-            <beat-unit>quarter</beat-unit>
-            <per-minute>75</per-minute>
-          </metronome>
-        </direction-type>
-        <staff>1</staff>
-        <sound tempo="75"/>
-      </direction>
-      <direction placement="above">
-        <direction-type>
           <metronome>
             <beat-unit>quarter</beat-unit>
             <per-minute>75</per-minute>
@@ -1706,16 +1696,6 @@
           <staff-distance>65</staff-distance>
         </staff-layout>
       </print>
-      <direction placement="above">
-        <direction-type>
-          <metronome parentheses="no" default-x="271.25" relative-y="20">
-            <beat-unit>quarter</beat-unit>
-            <per-minute>100</per-minute>
-          </metronome>
-        </direction-type>
-        <staff>1</staff>
-        <sound tempo="100"/>
-      </direction>
       <note>
         <pitch>
           <step>A</step>
@@ -1786,6 +1766,7 @@
         </pitch>
         <duration>6</duration>
         <tie type="stop"/>
+        <tie type="start"/>
         <voice>1</voice>
         <type>quarter</type>
         <dot/>
@@ -1793,6 +1774,7 @@
         <staff>1</staff>
         <notations>
           <tied type="stop"/>
+          <tied type="start" placement="below"/>
         </notations>
       </note>
       <note>
@@ -11667,12 +11649,14 @@
         </pitch>
         <duration>1</duration>
         <tie type="stop"/>
+        <tie type="start"/>
         <voice>2</voice>
         <type>16th</type>
         <stem>down</stem>
         <staff>1</staff>
         <notations>
           <tied type="stop"/>
+          <tied type="start" placement="below"/>
         </notations>
       </note>
       <note>
@@ -11684,12 +11668,14 @@
         </pitch>
         <duration>1</duration>
         <tie type="stop"/>
+        <tie type="start"/>
         <voice>2</voice>
         <type>16th</type>
         <stem>down</stem>
         <staff>1</staff>
         <notations>
           <tied type="stop"/>
+          <tied type="start" placement="above"/>
         </notations>
       </note>
       <note>
@@ -17860,6 +17846,7 @@
         </pitch>
         <duration>3</duration>
         <tie type="stop"/>
+        <tie type="start"/>
         <voice>2</voice>
         <type>eighth</type>
         <dot/>
@@ -17867,6 +17854,7 @@
         <staff>1</staff>
         <notations>
           <tied type="stop"/>
+          <tied type="start" placement="below"/>
         </notations>
       </note>
       <backup>
@@ -21868,6 +21856,7 @@
         </pitch>
         <duration>1</duration>
         <tie type="stop"/>
+        <tie type="start"/>
         <voice>1</voice>
         <type>16th</type>
         <stem>up</stem>
@@ -21876,6 +21865,7 @@
         <beam number="2">end</beam>
         <notations>
           <tied type="stop"/>
+          <tied type="start" placement="below"/>
         </notations>
       </note>
       <note>
@@ -21887,6 +21877,7 @@
         </pitch>
         <duration>1</duration>
         <tie type="stop"/>
+        <tie type="start"/>
         <voice>1</voice>
         <type>16th</type>
         <stem>up</stem>
@@ -21895,6 +21886,7 @@
         <beam number="2">end</beam>
         <notations>
           <tied type="stop"/>
+          <tied type="start" placement="above"/>
         </notations>
       </note>
       <note>
@@ -27854,6 +27846,7 @@
         </pitch>
         <duration>1</duration>
         <tie type="stop"/>
+        <tie type="start"/>
         <voice>1</voice>
         <type>16th</type>
         <stem>up</stem>
@@ -27862,6 +27855,7 @@
         <beam number="2">end</beam>
         <notations>
           <tied type="stop"/>
+          <tied type="start" placement="below"/>
         </notations>
       </note>
       <note>
@@ -27872,6 +27866,7 @@
         </pitch>
         <duration>1</duration>
         <tie type="stop"/>
+        <tie type="start"/>
         <voice>1</voice>
         <type>16th</type>
         <stem>up</stem>
@@ -27880,6 +27875,7 @@
         <beam number="2">end</beam>
         <notations>
           <tied type="stop"/>
+          <tied type="start" placement="above"/>
         </notations>
       </note>
       <note>
@@ -62790,12 +62786,14 @@
         </pitch>
         <duration>8</duration>
         <tie type="stop"/>
+        <tie type="start"/>
         <voice>1</voice>
         <type>half</type>
         <stem>down</stem>
         <staff>1</staff>
         <notations>
           <tied type="stop"/>
+          <tied type="start" placement="above"/>
         </notations>
       </note>
       <backup>
@@ -62913,12 +62911,14 @@
         </pitch>
         <duration>8</duration>
         <tie type="stop"/>
+        <tie type="start"/>
         <voice>1</voice>
         <type>half</type>
         <stem>down</stem>
         <staff>2</staff>
         <notations>
           <tied type="stop"/>
+          <tied type="start" placement="above"/>
         </notations>
       </note>
     </measure>
