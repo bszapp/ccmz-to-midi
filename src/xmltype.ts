@@ -9,6 +9,9 @@ export interface XmlNote {
     lenType: number; // 音符的基本时值类型（如4代表四分音符，8代表八分音符）
     dots: number; // 附点数量
     isRest: boolean; // 是否为休止符
+    grace?: {                //装饰音不计时长
+        slash?: boolean;     // 是否带有斜线 (碎音/Acciaccatura)
+    } | undefined;
     elems: XmlNoteElement[] | {
         nums: number; // 休止符占据的单位长度
         show: boolean; // 是否显示
@@ -50,9 +53,11 @@ interface TiedInfo {
 }
 
 
-
+//#region 计算音符长度
 export function xmlNodeDuration(note: XmlNote): number {
     const divisions = 480;
+
+    if (note.grace) return 0;
 
     // 如果是休止符且 elems 中包含 nums 逻辑长度，优先使用
     if (note.lenType == 1 && note.isRest && note.elems && "nums" in note.elems) {
@@ -94,6 +99,7 @@ const getStepStr = (s: number) => ["C", "D", "E", "F", "G", "A", "B"][s - 1] || 
 export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
     const trackMap = new Map<number, AbsXmlNote[]>();
 
+    //#region 先处理一下小节的全局信息
     //连杠信息
     const beams: {
         startI: number;
@@ -122,7 +128,7 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
                 if (pair.type === "tuplet") {
                     tuplets.push({
                         startI: noteI,
-                        endI: pair.n2,
+                        endI: pair.n2 !== undefined ? pair.n2 : (noteI + (pair.value || 1) - 1),
                         value: pair.value || 0
                     });
                 }
@@ -132,10 +138,15 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
 
     console.log("连音：", tuplets)
 
+    //#region 主循环，映射到AbsXmlNote[]
     notes.forEach((note, noteI) => {
+
+        if (note.hide) return;
+
         const trackId = noteTrackId(note);
         if (!trackMap.has(trackId)) trackMap.set(trackId, []);
 
+        //根据之前的记录添加连杠
         const noteBeams: XmlBeamInfo[] = [];
         beams.forEach(beam => {
             if (noteI > beam.startI && noteI < beam.endI) {
@@ -156,6 +167,7 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
             }
         });
 
+        //添加连音，顺便音符长度缩放
         var tupletInfo: TupletInfo | undefined;
         tuplets.forEach(tuplet => {
             const { actual, normal } = getTupletNotes(tuplet.value);
@@ -180,6 +192,7 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
             }
         });
 
+        //处理正常音符信息
         const isRest = !!note.rest;
 
         const xmlNote: AbsXmlNote = {
@@ -217,14 +230,16 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
                 slur: note.slur,
                 beams: noteBeams,
                 arts: note.arts,
-                tuplet: tupletInfo
+                tuplet: tupletInfo,
+                grace: note.grace
             }
         };
 
         trackMap.get(trackId)!.push(xmlNote);
     });
 
-    const rawResult: XmlNotes[] = Array.from(trackMap.entries()).map(([trackId, absNotes]) => {
+    //#region 最后处理数据，填充真空区域
+    const result: XmlNotes[] = Array.from(trackMap.entries()).map(([trackId, absNotes]) => {
         // 1. 排序
         const sorted = absNotes.sort((a, b) => a.tick - b.tick);
         const filled: XmlNote[] = [];
@@ -238,14 +253,17 @@ export function notesToXmlNotes(notes: Note[]): XmlNotes[] {
             filled.push(item.note);
             cursor = item.tick + xmlNodeDuration(item.note);
         }
-
-        return {
+        const res = {
             trackId,
             notes: filled
         };
+        if (xmlNotesLen(res) > 480 * 4) {
+            console.log('W: 时长超出4小节', JSON.stringify(notes));
+        }
+        return res;
     });
 
-    return rawResult;
+    return result;
 }
 //#region ========
 
@@ -296,4 +314,10 @@ export function formatXmlNotes(notes: XmlNote[]): string {
 
         return `[${pitchStr}-${duration}]`;
     }).join("");
+}
+
+function xmlNotesLen(xmlNotes: XmlNotes): number {
+    return xmlNotes.notes.reduce((total, note) => {
+        return total + xmlNodeDuration(note);
+    }, 0);
 }

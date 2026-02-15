@@ -75,6 +75,12 @@ export interface Note {
 
     beams?: BeamInfo[];      // 连杠信息数组，定义多杠连杠的起始、继续或结束
     inbeam?: boolean;        // 标识该音符当前是否处于连杠组合中
+
+    grace?: {                //装饰音不计时长
+        slash?: boolean;     // 是否带有斜线 (碎音/Acciaccatura)
+    } | undefined;
+
+    hide?: boolean | undefined;
 }
 
 export interface NoteArts {

@@ -38,8 +38,8 @@ export default function app(input: CCXML) {
     const pgLayout = defs.ele('page-layout');
 
     //页面尺寸
-    pgLayout.ele('page-height').txt(input.page.h.toString());
-    pgLayout.ele('page-width').txt(input.page.w.toString());
+    pgLayout.ele('page-height').txt((input.page.h || 1700).toString());
+    pgLayout.ele('page-width').txt((input.page.w || 1200).toString());
 
     pgLayout.ele('page-margins', { type: "even" }).ele('left-margin').txt("85.7252").up().ele('right-margin').txt("85.7252").up().ele('top-margin').txt("85.7252").up().ele('bottom-margin').txt("85.7252");
     pgLayout.ele('page-margins', { type: "odd" }).ele('left-margin').txt("85.7252").up().ele('right-margin').txt("85.7252").up().ele('top-margin').txt("85.7252").up().ele('bottom-margin').txt("85.7252");
@@ -84,67 +84,6 @@ export default function app(input: CCXML) {
     }).txt(input.title.composer);
     //#region =========
 
-    // const partList = root.ele('part-list');
-    // partList.ele('score-part', { id: 'P1' }).ele('part-name').txt('Piano');
-
-    // const part = root.ele('part', { id: 'P1' });
-
-    // const meas = part.ele('measure', { number: "1" });
-    // const attr = meas.ele('attributes');
-    // attr.ele('divisions').txt("4");
-    // attr.ele('staves').txt("2");
-
-    // for (let s = 1; s <= 2; s++) {
-    //     let staffCounter = 0;
-
-    //     if (s === 1) {
-    //         const n1 = meas.ele('note');
-    //         n1.ele('pitch').ele('step').txt('C').up().ele('octave').txt('5');
-    //         n1.ele('duration').txt('16');
-    //         n1.ele('voice').txt('1');
-    //         n1.ele('type').txt('whole');
-    //         n1.ele('staff').txt('1');
-    //         staffCounter += 16;
-
-    //         meas.ele('backup').ele('duration').txt('16');
-
-    //         const r = meas.ele('note');
-    //         r.ele('rest');
-    //         r.ele('duration').txt('8');
-    //         r.ele('voice').txt('2');
-    //         r.ele('type').txt('half');
-    //         r.ele('staff').txt('1');
-    //         staffCounter = 8;
-
-    //         const n2 = meas.ele('note');
-    //         n2.ele('pitch').ele('step').txt('C').up().ele('octave').txt('4');
-    //         n2.ele('duration').txt('8');
-    //         n2.ele('voice').txt('2');
-    //         n2.ele('type').txt('half');
-    //         n2.ele('staff').txt('1');
-    //         staffCounter += 8;
-    //     }
-    //     else {
-    //         for (let i = 0; i < 4; i++) {
-    //             const ln = meas.ele('note');
-    //             ln.ele('pitch').ele('step').txt('C').up().ele('octave').txt('3');
-    //             ln.ele('duration').txt('4');
-    //             ln.ele('voice').txt('5');
-    //             ln.ele('type').txt('quarter');
-    //             ln.ele('staff').txt('2');
-    //             staffCounter += 4;
-    //         }
-    //     }
-
-    //     if (s === 1) {
-    //         meas.ele('backup').ele('duration').txt('16');
-    //     }
-    // }
-
-
-    // return root.end({ prettyPrint: true });
-
-    const stepMap: Record<number, string> = { 1: 'C', 2: 'D', 3: 'E', 4: 'F', 5: 'G', 6: 'A', 7: 'B' };
     const typeMap: Record<number, string> = { 1: 'whole', 2: 'half', 4: 'quarter', 8: 'eighth', 16: '16th', 32: '32nd' };
 
     const partList = root.ele('part-list');
@@ -177,6 +116,7 @@ export default function app(input: CCXML) {
             //（第一小节、第二小节……）
 
             console.log(`===========\n第${mIdx + 1}小节`);
+
             const meas = part.ele('measure', { number: m.num, width: m.w.toString() });
 
             // 换行
@@ -266,6 +206,14 @@ export default function app(input: CCXML) {
                         (xn.elems as XmlNoteElement[]).forEach((el, elIdx) => {
                             //#region 5:单个音调
                             const n = meas.ele('note');
+
+                            //装饰音
+                            if (xn.grace) {
+                                const graceAttr: any = {};
+                                if (xn.grace.slash) graceAttr.slash = 'yes';
+                                n.ele('grace', graceAttr);
+                            }
+
                             if (elIdx > 0) n.ele('chord');
 
                             const p = n.ele('pitch');
