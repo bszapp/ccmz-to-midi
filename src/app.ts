@@ -188,7 +188,7 @@ export default function app(input: CCXML) {
                     const durRaw = xmlNodeDuration(xn);
                     trackTotalDuration += durRaw;
                     const duration = durRaw / 120;
-                    const voice = (xmlNote.trackId % 4 + 1).toString();
+                    const voice = (xmlNote.trackId + 1).toString();
                     const staff = (Math.floor(xmlNote.trackId / 4) + 1).toString();
 
                     if ("items" in xn) {
@@ -210,8 +210,11 @@ export default function app(input: CCXML) {
                             // 2. 处理踏板 (Pedal)
                             else if (dir.type === 'pedal') {
                                 const typep = direction.ele('direction-type');
-                                const pedalAttr: any = { type: dir.text === 'start' ? 'start' : 'stop' };
-                                if (dir.line) pedalAttr.line = 'yes';
+                                const pedalAttr: any = {
+                                    type: dir.text === 'start' ? 'start' : 'stop',
+                                    line: 'yes',
+                                    sign: 'no'
+                                };
                                 typep.ele('pedal', pedalAttr);
                             }
                             // 3. 处理普通文本 (Words)
@@ -230,18 +233,25 @@ export default function app(input: CCXML) {
 
                     if (isRest) {
                         const restInfo = xn.elems as { nums: number; show: boolean };
-                        const n = restInfo.show ? meas.ele('note') : meas.ele('note', { 'print-object': 'no' });
 
-                        n.ele('rest');
-                        n.ele('duration').txt(duration.toString());
-                        n.ele('voice').txt(voice);
-                        n.ele('type').txt(typeMap[xn.lenType] || 'quarter');
+                        if (restInfo.show) {
+                            const n = meas.ele('note');
+                            n.ele('rest');
+                            n.ele('duration').txt(duration.toString());
+                            n.ele('voice').txt(voice);
+                            n.ele('type').txt(typeMap[xn.lenType] || 'quarter');
 
-                        if (xn.dots > 0) {
-                            for (let i = 0; i < xn.dots; i++) n.ele('dot');
+                            if (xn.dots > 0) {
+                                for (let i = 0; i < xn.dots; i++) n.ele('dot');
+                            }
+
+                            n.ele('staff').txt(staff);
+                        } else {
+                            const f = meas.ele('forward');
+                            f.ele('duration').txt(duration.toString());
+                            f.ele('voice').txt(voice);
+                            f.ele('staff').txt(staff);
                         }
-
-                        n.ele('staff').txt(staff);
                     } else {
                         (xn.elems as XmlNoteElement[]).forEach((el, elIdx) => {
                             //#region 5:分音调
