@@ -132,6 +132,16 @@
       </attributes>
       <direction placement="above">
         <direction-type>
+          <metronome parentheses="no" default-x="103.25" relative-y="20">
+            <beat-unit>quarter</beat-unit>
+            <per-minute>75</per-minute>
+          </metronome>
+        </direction-type>
+        <staff>1</staff>
+        <sound tempo="75"/>
+      </direction>
+      <direction placement="above">
+        <direction-type>
           <metronome>
             <beat-unit>quarter</beat-unit>
             <per-minute>75</per-minute>

@@ -1,4 +1,4 @@
-import type { Direction, Measure, Note, NoteArts } from "./ccxml.ts";
+import type { Direction, Measure, Note, NoteArts, TiePair } from "./ccxml.ts";
 
 export type XmlItem = XmlNote | Directions;
 
@@ -28,7 +28,7 @@ export interface XmlNote {
     beams?: XmlBeamInfo[]; // 连杠信息列表
     tuplet?: TupletInfo | undefined; // 连音信息
     arts?: NoteArts[] | undefined;
-    slur?: "L" | "M" | "R" | undefined; // 连奏线标记：L(Left/开始), M(Middle/中间), R(Right/结束)
+    slur?: SlurInfo | undefined;
 }
 
 interface AbsXmlNote {
@@ -60,6 +60,12 @@ interface TiedInfo {
     isUp?: boolean | undefined;
 }
 
+interface SlurInfo {
+    type: 'start' | 'continue' | 'stop';
+    id?: number | undefined;
+    oldId?: number | undefined;
+    isUp?: boolean | undefined;
+}
 
 //#region 计算音符长度
 export function xmlNodeDuration(note: XmlNote | Directions): number {
@@ -108,7 +114,7 @@ const getStepStr = (s: number) => ["C", "D", "E", "F", "G", "A", "B"][s - 1] || 
 
 //#region 主入口
 //把ccNotes（基于对象）转换为XmlNotes（基于文档）
-export function notesToXmlNotes(measure: Measure): XmlNotes[] {
+export function notesToXmlNotes(mIdx: number, measure: Measure, tieList: TiePair[]): XmlNotes[] {
     const trackMap = new Map<number, AbsXmlNote[]>();
     const notes = measure.notes;
 
@@ -129,7 +135,7 @@ export function notesToXmlNotes(measure: Measure): XmlNotes[] {
         });
     });
 
-    //连音信息
+    //连音信息、圆滑线信息
     const tuplets: {
         startI: number;
         endI: number;
@@ -144,6 +150,13 @@ export function notesToXmlNotes(measure: Measure): XmlNotes[] {
                         endI: pair.n2 !== undefined ? pair.n2 : (noteI + (pair.value || 1) - 1),
                         value: pair.value || 0
                     });
+                } else if (pair.type === "slur") {
+                    //先写入标记数据
+                    pair.m1 = mIdx;
+                    pair.n1 = noteI
+                    pair.id = tieList.length + 1;
+
+                    tieList.push(pair);
                 }
             });
         });
@@ -203,6 +216,44 @@ export function notesToXmlNotes(measure: Measure): XmlNotes[] {
             }
         });
 
+        // 圆滑线处理
+        var slurInfo: SlurInfo | undefined;
+        const idsToDelete: number[] = [];
+
+        tieList.forEach(e => {
+            if (mIdx === e.m1 && noteI === e.n1) {
+                if (!slurInfo) {
+                    slurInfo = {
+                        type: 'start',
+                        id: e.id,
+                        isUp: e.up
+                    };
+                } else {
+                    slurInfo.oldId = slurInfo.id;
+                    slurInfo.id = e.id;
+                    slurInfo.isUp = e.up;
+                    slurInfo.type = 'continue';
+                }
+            } else if (mIdx === e.m2 && noteI === e.n2) {
+                if (!slurInfo) {
+                    slurInfo = {
+                        type: 'stop',
+                        id: e.id,
+                    };
+                } else {
+                    slurInfo.type = 'stop';
+                    slurInfo.id = e.id;
+                }
+                // 记录需要删除的 id
+                if (e.id !== undefined) idsToDelete.push(e.id);
+            }
+        });
+        if (idsToDelete.length > 0) {
+            const remaining = tieList.filter(item => !idsToDelete.includes(item.id!));
+            tieList.length = 0;
+            tieList.push(...remaining);
+        }
+
         //处理正常音符信息
         const isRest = !!note.rest;
 
@@ -243,9 +294,9 @@ export function notesToXmlNotes(measure: Measure): XmlNotes[] {
                     return elem;
                 }),
                 stem: note.stem?.type as "up" | "down",
-                slur: note.slur,
                 beams: noteBeams,
                 arts: note.arts,
+                slur: slurInfo,
                 tuplet: tupletInfo,
                 grace: note.grace
             }

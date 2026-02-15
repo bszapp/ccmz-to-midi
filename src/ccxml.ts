@@ -72,7 +72,7 @@ export interface Note {
         up?: boolean;        // 是否向上延长
     };
     arts?: NoteArts[] | undefined; // 装饰音/演奏记号，如 staccato (断奏), accent (重音) 等
-    slur?: "L" | "M" | "R";  // 圆滑线标记：L 代表开始 (Left)，M 代表中间 (Middle)，R 代表结束 (Right)
+    //slur?: "L" | "M" | "R";  // 圆滑线标记：L 代表开始 (Left)，M 代表中间 (Middle)，R 代表结束 (Right)
 
     beams?: BeamInfo[];      // 连杠信息数组，定义多杠连杠的起始、继续或结束
     inbeam?: boolean;        // 标识该音符当前是否处于连杠组合中
@@ -113,6 +113,11 @@ export interface TiePair {
     y2: number;
     up?: boolean;    // 曲线是否向上弯曲
     value?: number;  // 连音的数值
+
+    //以下为手动添加的
+    m1?: number;
+    n1?: number;
+    id?: number;
 }
 
 export interface BeamInfo {

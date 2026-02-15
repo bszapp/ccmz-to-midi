@@ -1,4 +1,4 @@
-import type { CCXML } from "./ccxml.ts";
+import type { CCXML, TiePair } from "./ccxml.ts";
 import { create } from 'xmlbuilder2';
 import { formatXmlNotes, notesToXmlNotes, xmlNodeDuration, type XmlNoteElement } from "./xmltype.ts";
 
@@ -109,7 +109,7 @@ export default function app(input: CCXML) {
         const part = root.ele('part', { id: `P${pIdx + 1}` });
 
         //圆滑线记录
-        const slurStatus = new Map<number, number>();
+        const tieList: TiePair[] = []
 
         p.measures.forEach((m, mIdx) => {
             //#region-2:分小节
@@ -162,20 +162,20 @@ export default function app(input: CCXML) {
             }
 
             // 速度标记
-            // if (m.dirs) {
-            //     m.dirs.forEach(d => {
-            //         if (d.type === 'metronome') {
-            //             const dir = meas.ele('direction', { placement: "above" });
-            //             const met = dir.ele('direction-type').ele('metronome', { parentheses: "no" });
-            //             met.att('default-x', d.param.x.toString()).att('relative-y', "20");
-            //             met.ele('beat-unit').txt("quarter").up().ele('per-minute').txt(d.value || "60");
-            //             dir.ele('staff').txt(d.staff.toString());
-            //             dir.ele('sound', { tempo: d.value || "60" });
-            //         }
-            //     });
-            // }
+            if (mIdx == 0 && m.dirs) {
+                m.dirs.forEach(d => {
+                    if (d.type === 'metronome') {
+                        const dir = meas.ele('direction', { placement: "above" });
+                        const met = dir.ele('direction-type').ele('metronome', { parentheses: "no" });
+                        met.att('default-x', d.param.x.toString()).att('relative-y', "20");
+                        met.ele('beat-unit').txt("quarter").up().ele('per-minute').txt(d.value || "60");
+                        dir.ele('staff').txt(d.staff.toString());
+                        dir.ele('sound', { tempo: d.value || "60" });
+                    }
+                });
+            }
 
-            const xmlNotes = notesToXmlNotes(m);
+            const xmlNotes = notesToXmlNotes(mIdx, m, tieList);
             xmlNotes.forEach((xmlNote, xmlNoteIdx) => {
                 //#region-3:分声部+谱表
                 console.log(`声部${xmlNote.trackId}:${formatXmlNotes(xmlNote.notes)}`);
@@ -336,6 +336,32 @@ export default function app(input: CCXML) {
                                 } else if (el.tied.type === 'continue') {
                                     notations.ele('tied', { type: 'stop' });
                                     notations.ele('tied', { type: 'start', placement: el.tied.isUp ? 'above' : 'below' });
+                                }
+                            }
+
+                            //圆滑线
+                            if (xn.slur) {
+                                if (xn.slur.type === 'stop') {
+                                    notations.ele('slur', {
+                                        type: 'stop',
+                                        number: xn.slur.id
+                                    });
+                                } else if (xn.slur.type === 'start') {
+                                    notations.ele('slur', {
+                                        type: 'start',
+                                        number: xn.slur.id,
+                                        placement: xn.slur.isUp ? 'above' : 'below'
+                                    });
+                                } else if (xn.slur.type === 'continue') {
+                                    notations.ele('slur', {
+                                        type: 'stop',
+                                        number: xn.slur.oldId
+                                    });
+                                    notations.ele('slur', {
+                                        type: 'start',
+                                        number: xn.slur.id,
+                                        placement: xn.slur.isUp ? 'above' : 'below'
+                                    });
                                 }
                             }
 
