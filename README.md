@@ -22,6 +22,8 @@ https://bszapp.github.io/ccmz-to-midi/
 
 最新源码懒得传了，旧版本的源码在main分支（没有pdf功能，可以看油猴脚本的打印按钮是怎么做的），新版本源码在2分支（下载然后`npm install` `npm run build`或者`npm run docs:dev`）
 
+另外最近在研究ccmz转成musicxml，源码可以在ccxml-to-musicxml分支查看，`npm install`然后`npm run dev`即可使用
+
 ---
 应该是平台的灰产吧……
 
