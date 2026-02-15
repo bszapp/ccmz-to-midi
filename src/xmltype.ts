@@ -268,7 +268,7 @@ export function notesToXmlNotes(measure: Measure): XmlNotes[] {
             trackId,
             notes: filled
         };
-        if (xmlNotesLen(res) > 480 * 4) {
+        if (xmlNotesLen(res) > measure.ticks) {
             console.log('W: 时长超出4小节', JSON.stringify(notes));
         }
         return res;

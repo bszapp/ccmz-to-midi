@@ -244,6 +244,8 @@ export default function app(input: CCXML) {
                         n.ele('staff').txt(staff);
                     } else {
                         (xn.elems as XmlNoteElement[]).forEach((el, elIdx) => {
+                            //#region 5:分音调
+
                             const n = meas.ele('note');
 
                             // 1. [grace / chord]
@@ -281,7 +283,7 @@ export default function app(input: CCXML) {
                                 for (let i = 0; i < xn.dots; i++) n.ele('dot');
                             }
 
-                            // 8. [time-modification] (极其重要：必须在 type 之后，stem 之前)
+                            // 8. [time-modification]
                             if (xn.tuplet) {
                                 const timeMod = n.ele('time-modification');
                                 timeMod.ele('actual-notes').txt(xn.tuplet.actual.toString());
@@ -294,14 +296,14 @@ export default function app(input: CCXML) {
                             // 10. [staff]
                             n.ele('staff').txt(staff);
 
-                            // 11. [beam] (必须在 staff 之后)
+                            // 11. [beam]
                             if (xn.beams) {
                                 xn.beams.forEach((beam) => {
                                     n.ele('beam', { number: beam.level + 1 }).txt(beam.type);
                                 });
                             }
 
-                            // 12. [notations] (最后处理)
+                            // 12. [notations]
                             const notations = n.ele('notations');
 
                             // 连音标记 (tuplet bracket)
