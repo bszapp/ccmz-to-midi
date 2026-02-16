@@ -1,4 +1,4 @@
-import type { Clef, Direction, Measure, Note, NoteArts, TiePair } from "./ccxml.ts";
+import type { Clef, Direction, Measure, Note, NoteArts, Pdir, TiePair } from "./ccxml.ts";
 
 export type XmlItem = XmlNote | Directions;
 
@@ -10,7 +10,7 @@ export interface XmlNotes {
 export interface Directions {
     staff: number;
     tick: number;
-    items: (Direction | Clef)[];
+    items: (Direction | Clef | PdirInfo)[];
 }
 
 export interface XmlNote {
@@ -30,6 +30,8 @@ export interface XmlNote {
     tuplet?: TupletInfo | undefined; // 连音信息
     arts?: NoteArts[] | undefined;
     pairs?: PairInfo[] | undefined;
+
+    x?: number | undefined;
 }
 
 interface AbsXmlNote {
@@ -64,7 +66,12 @@ interface TiedInfo {
 
 interface PairInfo {
     type: 'start' | 'stop';
-    data: TiePair,
+    pair: TiePair,
+}
+
+interface PdirInfo {
+    type: 'start' | 'stop';
+    pdir: Pdir,
 }
 
 //#region 计算音符长度
@@ -117,9 +124,9 @@ function noteTrackId(note: Note) {
 }
 const getStepStr = (s: number) => ["C", "D", "E", "F", "G", "A", "B"][s - 1] || "";
 
-//#region 主入口
+//#region-主入口
 //把ccNotes（基于对象）转换为XmlNotes（基于文档）
-export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePair[]): XmlNotes[] {
+export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePair[], pdirList: Pdir[]): XmlNotes[] {
     const trackMap = new Map<number, AbsXmlNote[]>();
     const notes = measure.notes;
 
@@ -156,13 +163,12 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
                         endI: pair.n2 !== undefined ? pair.n2 : (noteI + (pair.value || 1) - 1),
                         value: pair.value || 0
                     });
-                } else if (pair.type == "slur" || pair.type == "glissando") {
+                } else {
                     //先写入标记数据
                     pair.m1 = mIdx;
                     pair.n1 = noteI;
                     pair.trackId = trackId;
                     pair.id = pairList.filter(p => p.type == pair.type).length + 1;
-
                     pairList.push(pair);
                 }
             });
@@ -231,14 +237,14 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
             if (mIdx === e.m1 && noteI === e.n1) {
                 pairInfo.push({
                     type: 'start',
-                    data: e
+                    pair: e
                 });
             } else if (mIdx === e.m2 && noteI === e.n2
                 || e.m2 === undefined && e.n2 === undefined && e.trackId === trackId //有始无终？
             ) {
                 pairInfo.push({
                     type: 'stop',
-                    data: e
+                    pair: e
                 });
                 // 记录需要删除的 id
                 idsToDelete.push(e);
@@ -296,7 +302,8 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
                 cue: note.cue,
                 tuplet: tupletInfo,
                 pairs: pairInfo,
-                grace: note.grace
+                grace: note.grace,
+                x: note.x
             }
         };
 
@@ -328,7 +335,7 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
         return res;
     });
 
-    //#region 合并并插入Direction和Clef
+    //#region 合并并插入Direction/Clef/Pdir
     const dirMap = new Map<string, Directions>();
 
     //控制符号（踏板/变速）
@@ -386,9 +393,106 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
         }
     });
 
+    //#region 高音区域标记
+
+    // 记录新数据顺便加上id
+    measure.pdirs?.forEach(pdir => {
+        pdir.id = pdirList.length + 1;
+        pdirList.push(pdir)
+    });
+
+    // 匹配坐标并插入
+    const pdirsToRemove: Pdir[] = [];
+
+    pdirList.forEach(pdir => {
+        if (measure._DEBUG_) console.log("------\n测试：", JSON.stringify(pdir))
+        result.forEach(xmlNotes => {
+            const currentStaff = Math.floor(xmlNotes.trackId / 4) + 1;
+            if (pdir.staff !== currentStaff) return;
+
+            xmlNotes.notes.forEach(note => {
+                if (!('x' in note)) return;
+
+
+                if (measure._DEBUG_) console.log('note.x:', note.x)
+
+                // 处理开始标记：插入在音符前面
+                if (pdir.x1 !== undefined && pdir.x1 <= note.x!) {
+                    if (measure._DEBUG_) console.log('在前方插入开始标记', JSON.stringify(pdir))
+                    injectPdirInfo(xmlNotes.notes, note, 'before', { type: 'start', pdir });
+                    pdir.x1 = undefined;
+                }
+
+                // 处理结束标记：插入在音符后面
+                if (pdir.stopx !== undefined && pdir.stopx < note.x!) {
+                    if (measure._DEBUG_) console.log('在前方插入结束标记', JSON.stringify(pdir))
+                    injectPdirInfo(xmlNotes.notes, note, 'before', { type: 'stop', pdir });
+                    pdir.stopx = undefined;
+
+                    // 只有当起始和结束都已处理，才标记为可移除
+                    if (pdir.x1 === undefined) {
+                        pdirsToRemove.push(pdir);
+                    }
+                }
+            });
+        });
+        if (measure._DEBUG_) console.log("--------")
+    });
+
+    pdirList.forEach(pdir => {
+        // 如果 stopx 已经小于 0，说明结束位置已经错过
+        if (pdir.stopx !== undefined && pdir.stopx < -0.1) {
+            console.warn(`W: 标记丢失结束点 [${JSON.stringify(pdir)}'}`);
+            pdirsToRemove.push(pdir);
+        }
+    });
+
+    // 清理已完全处理的跨小节标记
+    pdirsToRemove.forEach(p => {
+        const idx = pdirList.indexOf(p);
+        if (idx !== -1) pdirList.splice(idx, 1);
+    });
+    //#endregion
+
+
+    // 最后左移旧数据（跨小节坐标转换）
+    pdirList.forEach(pdir => {
+        if (pdir.x1 !== undefined) pdir.x1 -= measure.w;
+        if (pdir.stopx !== undefined) pdir.stopx -= measure.w;
+    });
+
     return result;
 }
 //#region ========
+
+/**
+ * 在指定的 XmlNote 前面或后面插入 PdirInfo
+ * @param notes 数组引用
+ * @param targetNote 目标音符对象
+ * @param position 插入位置：'before' | 'after'
+ * @param pdirInfo 要插入的数据
+ */
+function injectPdirInfo(notes: XmlItem[], targetNote: XmlNote, position: 'before' | 'after', pdirInfo: PdirInfo) {
+    const noteIndex = notes.indexOf(targetNote);
+    if (noteIndex === -1) return;
+
+    // 确定目标插入点的索引
+    const insertIndex = position === 'before' ? noteIndex : noteIndex + 1;
+    const potentialDir = notes[insertIndex];
+
+    // 如果该位置已经是 Directions 节点，则合并 items
+    if (potentialDir && 'items' in potentialDir) {
+        potentialDir.items.push(pdirInfo);
+    } else {
+        // 否则新建一个 Directions 节点
+        const newDir: Directions = {
+            staff: pdirInfo.pdir.staff,
+            tick: 0, // 此时已是文档流结构，tick 主要用于 XML 排序参考
+            items: [pdirInfo]
+        };
+        notes.splice(insertIndex, 0, newDir);
+    }
+}
 
 function createRestNotes(duration: number): XmlNote[] {
     const rests: XmlNote[] = [];
@@ -420,8 +524,9 @@ function createRestNotes(duration: number): XmlNote[] {
 export function formatXmlNotes(notes: (XmlNote | Directions)[]): string {
     return notes.map(note => {
         if ("items" in note) {
-            return `[(${note.items.map((e: Clef | Direction) => {
+            return `[(${note.items.map((e: Clef | Direction | PdirInfo) => {
                 if ('clef' in e) return `高低音${e.clef}`
+                if ('size' in e) return `音高${e.size}`
                 if (e.type == 'metronome') return `变速${e.value}`
                 if (e.type == 'pedal') return `踏板${e.text}`
                 return `${e.type}`

@@ -45,7 +45,9 @@ export interface Measure {
     clefs?: Clef[];
     rbar?: {
         type: string;
-    };
+    },
+    pdirs?: Pdir[];
+    _DEBUG_?: boolean;
 }
 
 export interface Note {
@@ -167,6 +169,20 @@ export interface Clef {
     tick: number;
     clef: "Treble" | "Bass" | string;
 }
+
+export interface Pdir {
+    size: number;
+    line: string;
+    y1: number;
+    x1?: number | undefined;
+    y2: number;
+    staff: number;
+    type: string;
+    crescendo?: boolean;
+    stopx?: number | undefined; //结束音符的x坐标，跨小节
+
+    id?: number;
+};
 
 interface Line {
     m1: number;

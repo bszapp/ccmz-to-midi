@@ -1,4 +1,4 @@
-import type { CCXML, TiePair } from "./ccxml.ts";
+import type { CCXML, Pdir, TiePair } from "./ccxml.ts";
 import { create } from 'xmlbuilder2';
 import { formatXmlNotes, notesToXmlNotes, xmlNodeDuration, type XmlNoteElement } from "./xmltype.ts";
 
@@ -120,24 +120,23 @@ export default function app(input: CCXML) {
 
         const part = root.ele('part', { id: `P${pIdx + 1}` });
 
-        //圆滑线记录
-        const tieList: TiePair[] = []
+        const tieList: TiePair[] = [];//圆滑线记录
+        const pdirList: Pdir[] = [];//高音区域记录
 
         p.measures.forEach((m, mIdx) => {
-            //#region-2:分小节
+            //#region-2:分小节[DEBUG]
             //（第一小节、第二小节……）
-
-            console.log(`===========\n第${mIdx + 1}小节`);
-
-            if ([1].includes(mIdx + 1)) {
-                console.log('TEST', JSON.stringify(m))
+            if ([81, 82].includes(mIdx + 1)) {
+                m._DEBUG_ = true;
             }
+
+            if (m._DEBUG_) console.log(`===========\n第${mIdx + 1}小节 w=${m.w}`);
+            if (m._DEBUG_) console.log('原始数据', JSON.stringify(m))
 
             const meas = part.ele('measure', { number: m.num, width: m.w.toString() });
 
             // 换行
             if (input.lines.some(line => line.m1 === mIdx)) {
-
                 let p1;
                 if (mIdx === 0) {
                     p1 = meas.ele('print');
@@ -187,10 +186,10 @@ export default function app(input: CCXML) {
                 });
             }
 
-            const xmlNotes = notesToXmlNotes(mIdx, m, tieList);
+            const xmlNotes = notesToXmlNotes(mIdx, m, tieList, pdirList);
             xmlNotes.forEach((xmlNote, xmlNoteIdx) => {
                 //#region-3:分声部+谱表
-                console.log(`声部${xmlNote.trackId}:${formatXmlNotes(xmlNote.notes)}`);
+                if (m._DEBUG_) console.log(`声部${xmlNote.trackId}:${formatXmlNotes(xmlNote.notes)}`);
 
                 let trackTotalDuration = 0;
 
@@ -206,17 +205,45 @@ export default function app(input: CCXML) {
                     if ("items" in xn) {
                         xn.items.forEach(dir => {
                             if ('clef' in dir) {
-                                //console.log('高低音', JSON.stringify(dir))
+                                if (m._DEBUG_) console.log('高低音', JSON.stringify(dir))
                                 const attributes = meas.ele('attributes');
                                 const clef = attributes.ele('clef', { number: staff });
                                 clef.ele('sign').txt(dir.clef === 'Treble' ? 'G' : 'F');
                                 clef.ele('line').txt(dir.clef === 'Treble' ? '2' : '4');
+                            } else if ('pdir' in dir) {
+                                const pdir = dir.pdir;
+                                const direction = meas.ele('direction', { placement: pdir.y1 > 0 ? 'below' : 'above' });
+                                const dirType = direction.ele('direction-type');
+
+                                // 处理渐强渐弱 (Wedge: crescendo/diminuendo)
+                                if (pdir.type === 'wedge') {
+                                    const wedgeType = dir.type === 'start'
+                                        ? (pdir.crescendo ? 'crescendo' : 'diminuendo')
+                                        : 'stop';
+
+                                    dirType.ele('wedge', {
+                                        type: wedgeType,
+                                        number: pdir.id // 对应你注释里的 id
+                                    });
+                                }
+                                // 处理八度位移 (Shift: 8va/8vb)
+                                else if (pdir.type === 'shift') {
+                                    direction.ele('offset').txt('0'); // 可选，视具体对齐需要
+                                    const octShiftType = dir.type === 'start' ? 'down' : 'stop';
+                                    const size = pdir.size || 8;
+
+                                    dirType.ele('octave-shift', {
+                                        type: octShiftType,
+                                        number: pdir.id,
+                                        size: size
+                                    });
+                                }
                             } else {
                                 const direction = meas.ele('direction', { placement: dir.param.y > 0 ? 'below' : 'above' });
 
                                 // 1. 处理节拍器 (Metronome)
                                 if (dir.type === 'metronome') {
-                                    //console.log("变速", JSON.stringify(dir))
+                                    if (m._DEBUG_) console.log("变速", JSON.stringify(dir))
                                     const typep = direction.ele('direction-type');
                                     const metro = typep.ele('metronome');
 
@@ -361,12 +388,13 @@ export default function app(input: CCXML) {
                                 }
                             }
 
-                            //圆滑线、滑音
+                            //圆滑线、滑音、高音区域
                             xn.pairs?.forEach(pairInfo => {
-                                const { type, data } = pairInfo;
-                                const xmlTagName = data.type;
-                                // 将 data 断言为 any 以获取动态属性
-                                const d = data as any;
+                                if (m._DEBUG_) console.log('pairs', JSON.stringify(pairInfo))
+                                const { type, pair } = pairInfo;
+                                const xmlTagName = pair.type;
+
+                                const d = pair as any;
 
                                 if (type === 'start') {
                                     // 使用 Record<string, any> 允许添加任意属性
