@@ -126,7 +126,7 @@ export default function app(input: CCXML) {
         p.measures.forEach((m, mIdx) => {
             //#region-2:分小节[DEBUG]
             //（第一小节、第二小节……）
-            if ([25, 32, 33].includes(mIdx + 1)) {
+            if ([17, 18].includes(mIdx + 1)) {
                 m._DEBUG_ = true;
             }
 
@@ -280,40 +280,30 @@ export default function app(input: CCXML) {
                                     const directionType = direction.ele('direction-type');
                                     const textLower = dir.text.toLowerCase();
 
-                                    // 1. 物理单位换算：将浏览器的 px 转换为 MusicXML 的 pt (11.25px * 0.75 = 8.44pt)
                                     const PX_TO_PT = 0.75;
-                                    const rawFontSize = dir.param?.['font-size'] || 11.25;
-                                    const fontSizeXML = (parseFloat(rawFontSize) * PX_TO_PT).toFixed(2);
 
-                                    // 2. 提取样式参数
+                                    const rawFontSize = dir.param?.['font-size'] || 11.25;
+                                    const fontSizeXML = (parseFloat(String(rawFontSize)) * PX_TO_PT).toFixed(2);
+
                                     const fontWeight = dir.param?.['font-weight'] || "normal";
                                     const fontFamily = input.defaults.lyricfont || "SimHei";
 
-                                    // 3. 构建统一的样式属性对象
                                     const textAttributes = {
-                                        'font-family': fontFamily,
+                                        'font-family': String(fontFamily),
                                         'font-size': fontSizeXML,
-                                        'font-weight': fontWeight
+                                        'font-weight': String(fontWeight)
                                     };
 
-                                    // A. 判断是否是强弱音 (f, p, mf...)
                                     if (['p', 'pp', 'ppp', 'f', 'ff', 'fff', 'mf', 'mp', 'sfz'].includes(textLower)) {
-                                        // 强弱符号通常使用专门的 dynamics 标签，不直接设字体
                                         directionType.ele('dynamics', { placement: 'below' }).ele(textLower);
                                     }
-
-                                    // B. 判断是否是减速类 (rit. / rall.)
                                     else if (textLower.includes('rit') || textLower.includes('rall')) {
-                                        // 额外添加斜体样式
                                         directionType.ele('words', {
                                             ...textAttributes,
                                             'font-style': 'italic'
                                         }).txt(dir.text);
-
                                         direction.ele('sound', { ritardando: "yes" });
                                     }
-
-                                    // C. 普通装饰性文字 (如 JSON 里的数字指法 "4" 或其他文本)
                                     else {
                                         directionType.ele('words', textAttributes).txt(dir.text);
                                     }
@@ -480,6 +470,18 @@ export default function app(input: CCXML) {
                                     notations.ele('arpeggiate');
                                 }
                             });
+
+                            if (xn.lyrics) {
+                                xn.lyrics.forEach((lyricData) => {
+                                    const lyric = n.ele('lyric', { number: (lyricData.num + 1).toString() });
+
+                                    lyric.ele('syllabic').txt('single');
+
+                                    const textEle = lyric.ele('text', {
+                                        'font-family': input.defaults.lyricfont,
+                                    }).txt(lyricData.text);
+                                });
+                            }
                         });
                     }
                 });

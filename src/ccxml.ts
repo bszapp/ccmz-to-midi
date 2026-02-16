@@ -86,6 +86,8 @@ export interface Note {
         slash?: boolean;     // 是否带有斜线 (碎音/Acciaccatura)
     } | undefined;
 
+    lyrics?: Lyric[];
+
     hide?: boolean | undefined;
 }
 
@@ -148,6 +150,11 @@ export interface Ends {
     stop: boolean,
     m2: number,
     num: string
+}
+
+export interface Lyric {
+    text: string,
+    num: number
 }
 
 

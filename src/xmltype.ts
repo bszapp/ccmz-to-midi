@@ -1,4 +1,4 @@
-import type { Clef, Direction, Measure, Note, NoteArts, Pdir, TiePair } from "./ccxml.ts";
+import type { Clef, Direction, Lyric, Measure, Note, NoteArts, Pdir, TiePair } from "./ccxml.ts";
 
 export type XmlItem = XmlNote | Directions;
 
@@ -30,6 +30,7 @@ export interface XmlNote {
     tuplet?: TupletInfo | undefined; // 连音信息
     arts?: NoteArts[] | undefined;
     pairs?: PairInfo[] | undefined;
+    lyrics?: Lyric[] | undefined;
 
     x?: number | undefined;
 }
@@ -303,6 +304,7 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
                 tuplet: tupletInfo,
                 pairs: pairInfo,
                 grace: note.grace,
+                lyrics: note.lyrics,
                 x: note.x
             }
         };
