@@ -12,6 +12,8 @@ const run = async () => {
     const inputPath = path.join(__dirname, '../data/score.json');
     const outputPath = path.join(__dirname, '../data/output.xml');
 
+    console.log('\n'.repeat(50));
+
     const data = await fs.readFile(inputPath, 'utf-8');
     const score = JSON.parse(data) as CCXML;
 

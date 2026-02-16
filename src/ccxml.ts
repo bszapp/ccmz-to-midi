@@ -43,10 +43,11 @@ export interface Measure {
     };
     time?: Time;
     clefs?: Clef[];
-    rbar?: {
-        type: string;
-    },
     pdirs?: Pdir[];
+    lbar?: Lbar;
+    rbar?: Rbar;
+    ends?: Ends;
+
     _DEBUG_?: boolean;
 }
 
@@ -132,6 +133,23 @@ export interface BeamInfo {
     i: number;  // 连杠层级
     n2: number; // 连接到的目标音符索引
 }
+
+export interface Lbar {
+    type: string
+    repeat: string
+}
+export interface Rbar {
+    type: string
+    repeat: string
+}
+export interface Ends {
+    y: number,
+    m1: number,
+    stop: boolean,
+    m2: number,
+    num: string
+}
+
 
 export interface Direction {
     staff: number;

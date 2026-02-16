@@ -126,11 +126,11 @@ export default function app(input: CCXML) {
         p.measures.forEach((m, mIdx) => {
             //#region-2:分小节[DEBUG]
             //（第一小节、第二小节……）
-            if ([81, 82].includes(mIdx + 1)) {
+            if ([25, 32, 33].includes(mIdx + 1)) {
                 m._DEBUG_ = true;
             }
 
-            if (m._DEBUG_) console.log(`===========\n第${mIdx + 1}小节 w=${m.w}`);
+            console.log(`===========\n第${mIdx + 1}小节 w=${m.w}`);
             if (m._DEBUG_) console.log('原始数据', JSON.stringify(m))
 
             const meas = part.ele('measure', { number: m.num, width: m.w.toString() });
@@ -156,21 +156,11 @@ export default function app(input: CCXML) {
             }
 
             // 属性设置
-            if (mIdx === 0 || m.fifths || m.time || m.clefs) {
-                const attr = meas.ele('attributes');
-                //刻度？
-                attr.ele('divisions').txt("4");
-                if (m.fifths) attr.ele('key').ele('fifths').txt(m.fifths.fifths.toString());
-                if (m.time) attr.ele('time').ele('beats').txt(m.time.beats.toString()).up().ele('beat-type').txt(m.time.beatu.toString());
-                if (m.staves) attr.ele('staves').txt(m.staves.toString());
-                if (m.clefs) {
-                    m.clefs.forEach(c => {
-                        const clef = attr.ele('clef', { number: c.staff.toString() });
-                        const isTreble = c.clef === 'Treble';
-                        clef.ele('sign').txt(isTreble ? 'G' : 'F').up().ele('line').txt(isTreble ? '2' : '4');
-                    });
-                }
-            }
+            const attr = meas.ele('attributes');
+            attr.ele('divisions').txt("24");//这里最小单位是16分音符（再小我没见过，不做适配）//不对看见32分音符的了，不管了越大越好
+            if (m.fifths) attr.ele('key').ele('fifths').txt(m.fifths.fifths.toString());//音调（小节全局升降号）
+            if (m.time) attr.ele('time').ele('beats').txt(m.time.beats.toString()).up().ele('beat-type').txt(m.time.beatu.toString());
+            if (m.staves) attr.ele('staves').txt(m.staves.toString());
 
             // 速度标记
             if (mIdx == 0 && m.dirs) {
@@ -186,6 +176,28 @@ export default function app(input: CCXML) {
                 });
             }
 
+            // 处理重复记号
+            if (m.lbar && m.lbar.repeat) {
+                const bl = meas.ele('barline', { location: 'left' });
+                bl.ele('bar-style').txt('heavy-light').up().ele('repeat', { direction: m.lbar.repeat });
+            }
+
+            if (m.ends) {
+                const blv = meas.ele('barline', { location: 'left' });
+                blv.ele('ending', { number: m.ends.num, type: 'start' });
+                if (m.ends.stop) {
+                    const rblv = meas.ele('barline', { location: 'right' });
+                    rblv.ele('ending', { number: m.ends.num, type: 'stop' });
+                    if (m.rbar && m.rbar.repeat) {
+                        rblv.ele('bar-style').txt('light-heavy').up().ele('repeat', { direction: m.rbar.repeat });
+                    }
+                }
+            } else if (m.rbar && m.rbar.repeat) {
+                const rbl = meas.ele('barline', { location: 'right' });
+                rbl.ele('bar-style').txt('light-heavy').up().ele('repeat', { direction: m.rbar.repeat });
+            }
+
+            //处理音符
             const xmlNotes = notesToXmlNotes(mIdx, m, tieList, pdirList);
             xmlNotes.forEach((xmlNote, xmlNoteIdx) => {
                 //#region-3:分声部+谱表
@@ -198,7 +210,7 @@ export default function app(input: CCXML) {
 
                     const durRaw = xmlNodeDuration(xn);
                     trackTotalDuration += durRaw;
-                    const duration = durRaw / 120;
+                    const duration = durRaw / 20;
                     const voice = (xmlNote.trackId + 1).toString();
                     const staff = (Math.floor(xmlNote.trackId / 4) + 1).toString();
 
@@ -214,6 +226,7 @@ export default function app(input: CCXML) {
                                 const pdir = dir.pdir;
                                 const direction = meas.ele('direction', { placement: pdir.y1 > 0 ? 'below' : 'above' });
                                 const dirType = direction.ele('direction-type');
+                                direction.ele('staff').txt(pdir.staff.toString());
 
                                 // 处理渐强渐弱 (Wedge: crescendo/diminuendo)
                                 if (pdir.type === 'wedge') {
@@ -228,7 +241,6 @@ export default function app(input: CCXML) {
                                 }
                                 // 处理八度位移 (Shift: 8va/8vb)
                                 else if (pdir.type === 'shift') {
-                                    direction.ele('offset').txt('0'); // 可选，视具体对齐需要
                                     const octShiftType = dir.type === 'start' ? 'down' : 'stop';
                                     const size = pdir.size || 8;
 
@@ -263,10 +275,48 @@ export default function app(input: CCXML) {
                                     };
                                     typep.ele('pedal', pedalAttr);
                                 }
-                                // 3. 处理普通文本 (Words)
+                                // 3. 处理文本与指令
                                 else if (dir.text) {
-                                    const typep = direction.ele('direction-type');
-                                    typep.ele('words').txt(dir.text);
+                                    const directionType = direction.ele('direction-type');
+                                    const textLower = dir.text.toLowerCase();
+
+                                    // 1. 物理单位换算：将浏览器的 px 转换为 MusicXML 的 pt (11.25px * 0.75 = 8.44pt)
+                                    const PX_TO_PT = 0.75;
+                                    const rawFontSize = dir.param?.['font-size'] || 11.25;
+                                    const fontSizeXML = (parseFloat(rawFontSize) * PX_TO_PT).toFixed(2);
+
+                                    // 2. 提取样式参数
+                                    const fontWeight = dir.param?.['font-weight'] || "normal";
+                                    const fontFamily = input.defaults.lyricfont || "SimHei";
+
+                                    // 3. 构建统一的样式属性对象
+                                    const textAttributes = {
+                                        'font-family': fontFamily,
+                                        'font-size': fontSizeXML,
+                                        'font-weight': fontWeight
+                                    };
+
+                                    // A. 判断是否是强弱音 (f, p, mf...)
+                                    if (['p', 'pp', 'ppp', 'f', 'ff', 'fff', 'mf', 'mp', 'sfz'].includes(textLower)) {
+                                        // 强弱符号通常使用专门的 dynamics 标签，不直接设字体
+                                        directionType.ele('dynamics', { placement: 'below' }).ele(textLower);
+                                    }
+
+                                    // B. 判断是否是减速类 (rit. / rall.)
+                                    else if (textLower.includes('rit') || textLower.includes('rall')) {
+                                        // 额外添加斜体样式
+                                        directionType.ele('words', {
+                                            ...textAttributes,
+                                            'font-style': 'italic'
+                                        }).txt(dir.text);
+
+                                        direction.ele('sound', { ritardando: "yes" });
+                                    }
+
+                                    // C. 普通装饰性文字 (如 JSON 里的数字指法 "4" 或其他文本)
+                                    else {
+                                        directionType.ele('words', textAttributes).txt(dir.text);
+                                    }
                                 }
 
                                 direction.ele('staff').txt(staff);
@@ -388,7 +438,7 @@ export default function app(input: CCXML) {
                                 }
                             }
 
-                            //圆滑线、滑音、高音区域
+                            //圆滑线、滑音
                             xn.pairs?.forEach(pairInfo => {
                                 if (m._DEBUG_) console.log('pairs', JSON.stringify(pairInfo))
                                 const { type, pair } = pairInfo;
@@ -435,7 +485,7 @@ export default function app(input: CCXML) {
                 });
 
                 if (xmlNoteIdx < xmlNotes.length - 1) {
-                    meas.ele('backup').ele('duration').txt((trackTotalDuration / 120).toString());
+                    meas.ele('backup').ele('duration').txt((trackTotalDuration / 20).toString());
                 }
             });
 

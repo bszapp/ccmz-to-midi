@@ -487,7 +487,7 @@ function injectPdirInfo(notes: XmlItem[], targetNote: XmlNote, position: 'before
         // 否则新建一个 Directions 节点
         const newDir: Directions = {
             staff: pdirInfo.pdir.staff,
-            tick: 0, // 此时已是文档流结构，tick 主要用于 XML 排序参考
+            tick: 0,
             items: [pdirInfo]
         };
         notes.splice(insertIndex, 0, newDir);
