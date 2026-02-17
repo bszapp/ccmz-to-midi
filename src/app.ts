@@ -2,7 +2,13 @@ import type { CCXML, Pdir, TiePair } from "./ccxml.ts";
 import { create } from 'xmlbuilder2';
 import { formatXmlNotes, notesToXmlNotes, xmlNodeDuration, type XmlNoteElement } from "./xmltype.ts";
 
-export default function app(input: CCXML) {
+interface AppConfig {
+    date: string;//文件构建日期
+    enableShift: boolean;//显示高八度区域
+    fontScale: number;//字体px到乐谱缩放
+}
+
+export default function app(input: CCXML, config: AppConfig) {
     const root = create({ version: '1.0', encoding: 'UTF-8' })
         .dtd({
             pubID: '-//Recordare//DTD MusicXML 4.0 Partwise//EN',
@@ -18,7 +24,7 @@ export default function app(input: CCXML) {
 
     // Identification
     const ident = root.ele('identification');
-    ident.ele('creator', { type: "composer" }).txt("作曲 / 编排");
+    ident.ele('creator', { type: "composer" }).txt(input.title.composer.replace(/\r?\n/g, " "));
     const encoding = ident.ele('encoding');
     encoding.ele('software').txt("bszapp/ccmz-to-midi");
     encoding.ele('encoding-date').txt(new Date().toISOString().split('T')[0] || "");
@@ -28,9 +34,9 @@ export default function app(input: CCXML) {
     encoding.ele('supports', { element: "print", attribute: "new-system", type: "yes", value: "yes" });
     encoding.ele('supports', { element: "stem", type: "yes" });
     const misc = ident.ele('miscellaneous');
-    misc.ele('miscellaneous-field', { name: "creationDate" }).txt("1145-01-04");
-    misc.ele('miscellaneous-field', { name: "platform" }).txt("Microsoft Windows");
-    misc.ele('miscellaneous-field', { name: "subtitle" }).txt("副标题");
+    misc.ele('miscellaneous-field', { name: "creationDate" }).txt(config.date);
+    misc.ele('miscellaneous-field', { name: "subtitle" }).txt(input.title.subtitle);
+    misc.ele('miscellaneous-field', { name: "copyright" }).txt(`本文件来自虫虫钢琴ccmz格式转换，版权归原作者所有，未经许可不得二次修改分发\n来源：${input.qrcode.link}\n转换工具：https://bszapp.github.io/ccmz-to-midi/`);
 
     // Defaults
     const defs = root.ele('defaults');
@@ -130,7 +136,7 @@ export default function app(input: CCXML) {
         p.measures.forEach((m, mIdx) => {
             //#region-2:分小节[DEBUG]
             //（第一小节、第二小节……）
-            if ([1].includes(mIdx + 1)) {
+            if ([8].includes(mIdx + 1)) {
                 m._DEBUG_ = true;
             }
 
@@ -258,11 +264,11 @@ export default function app(input: CCXML) {
 
                                     dirType.ele('wedge', {
                                         type: wedgeType,
-                                        number: pdir.id // 对应你注释里的 id
+                                        number: pdir.id
                                     });
                                 }
                                 // 处理八度位移 (Shift: 8va/8vb)
-                                else if (pdir.type === 'shift') {
+                                else if (pdir.type === 'shift' && config.enableShift) {
                                     const octShiftType = dir.type === 'start' ? 'down' : 'stop';
                                     const size = pdir.size || 8;
 
@@ -302,18 +308,20 @@ export default function app(input: CCXML) {
                                     const directionType = direction.ele('direction-type');
                                     const textLower = dir.text.toLowerCase();
 
-                                    const PX_TO_PT = 0.75;
+                                    const PX_TO_PT = config.fontScale;
 
                                     const rawFontSize = dir.param?.['font-size'] || 11.25;
                                     const fontSizeXML = (parseFloat(String(rawFontSize)) * PX_TO_PT).toFixed(2);
 
                                     const fontWeight = dir.param?.['font-weight'] || "normal";
                                     const fontFamily = input.defaults.lyricfont || "SimHei";
+                                    const fontStyle = dir.param?.['font-style'] || "normal";
 
                                     const textAttributes = {
                                         'font-family': String(fontFamily),
                                         'font-size': fontSizeXML,
-                                        'font-weight': String(fontWeight)
+                                        'font-weight': String(fontWeight),
+                                        'font-style': String(fontStyle)
                                     };
 
                                     if (['p', 'pp', 'ppp', 'f', 'ff', 'fff', 'mf', 'mp', 'sfz'].includes(textLower)) {
@@ -413,10 +421,17 @@ export default function app(input: CCXML) {
                             }
 
                             // 8. [time-modification]
-                            if (xn.tuplet) {
+                            if (xn.tuplet || xn.isTremolo) {
                                 const timeMod = n.ele('time-modification');
-                                timeMod.ele('actual-notes').txt(xn.tuplet.actual.toString());
-                                timeMod.ele('normal-notes').txt(xn.tuplet.normal.toString());
+                                var normal = xn.tuplet?.normal ?? 1;
+                                var actural = xn.tuplet?.actual ?? 1;
+                                if (xn.isTremolo) {
+                                    if (m._DEBUG_) console.log('震音');
+                                    actural *= 2;
+                                }
+                                timeMod.ele('actual-notes').txt(actural.toString());
+                                timeMod.ele('normal-notes').txt(normal.toString());
+
                             }
 
                             // 9. [stem]
@@ -437,7 +452,7 @@ export default function app(input: CCXML) {
 
                             // 连音标记 (tuplet bracket)
                             if (xn.tuplet && (xn.tuplet.type === 'start' || xn.tuplet.type === 'end')) {
-                                console.log("连音", JSON.stringify(xn.tuplet));
+                                if (m._DEBUG_) console.log("连音", JSON.stringify(xn.tuplet));
                                 const tType = xn.tuplet.type === 'start' ? 'start' : 'stop';
                                 notations.ele('tuplet', { type: tType, bracket: 'yes' });
                             }
@@ -454,7 +469,7 @@ export default function app(input: CCXML) {
                                 }
                             }
 
-                            //圆滑线、滑音
+                            //圆滑线、滑音、震音
                             xn.pairs?.forEach(pairInfo => {
                                 if (m._DEBUG_) console.log('pairs', JSON.stringify(pairInfo))
                                 const { type, pair } = pairInfo;

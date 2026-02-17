@@ -31,7 +31,7 @@ export interface XmlNote {
     arts?: NoteArts[] | undefined;
     pairs?: PairInfo[] | undefined;
     lyrics?: Lyric[] | undefined;
-
+    isTremolo?: boolean;//震音标记
     x?: number | undefined;
 }
 
@@ -101,7 +101,8 @@ export function xmlNodeDuration(note: XmlNote | Directions): number {
     }
 
     //连音需要重新缩放
-    const scale = note.tuplet ? note.tuplet.normal / note.tuplet.actual : 1;
+    var scale = note.tuplet ? note.tuplet.normal / note.tuplet.actual : 1;
+    if (note.isTremolo) scale /= 2;
 
     return (base + extra) * scale;
 }
@@ -240,6 +241,7 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
 
         // 圆滑线、滑音处理
         var pairInfo: PairInfo[] = [];
+        var isTremolo = false;
         const idsToDelete: TiePair[] = [];
 
         pairList.forEach(e => {
@@ -248,6 +250,7 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
                     type: 'start',
                     pair: e
                 });
+                if (e.type == 'tremolo') isTremolo = true;
             } else if (mIdx === e.m2 && noteI === e.n2
                 || e.m2 === undefined && e.n2 === undefined && e.trackId === trackId //有始无终？
             ) {
@@ -255,6 +258,7 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
                     type: 'stop',
                     pair: e
                 });
+                if (e.type == 'tremolo') isTremolo = true;
                 // 记录需要删除的 id
                 idsToDelete.push(e);
             }
@@ -313,7 +317,8 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
                 pairs: pairInfo,
                 grace: note.grace,
                 lyrics: note.lyrics,
-                x: note.x
+                x: note.x,
+                isTremolo,
             }
         };
 
@@ -386,7 +391,10 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
         const targetTick = remapTick(dirGroup.tick);
 
         // 检查是否包含需要强制插入的信息（如谱号转换）
-        const isForceInsert = dirGroup.items?.some(item => 'clef' in item);
+        const isForceInsert = dirGroup.items?.some(item => {
+            return 'clef' in item //谱号转换
+                || 'text' in item //文字记号
+        });
 
         for (const track of potentialTracks) {
             let currentTick = 0;
@@ -539,7 +547,7 @@ function createRestNotes(duration: number): XmlNote[] {
                 lenType: p.type,
                 dots: 0,
                 isRest: true,
-                elems: { nums: p.t / 480, show: false } // 空白占位符
+                elems: { nums: p.t / 480, show: false }, // 空白占位符
             });
             remaining -= p.t;
         }

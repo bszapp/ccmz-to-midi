@@ -17,7 +17,11 @@ const run = async () => {
     const data = await fs.readFile(inputPath, 'utf-8');
     const score = JSON.parse(data) as CCXML;
 
-    const xml = ccxmlToXml(score);
+    const xml = ccxmlToXml(score, {
+        date: '1145-01-14',
+        enableShift: true,
+        fontScale: 0.65
+    });
     await fs.writeFile(outputPath, xml, 'utf-8');
 
     console.log("输出到:", outputPath);

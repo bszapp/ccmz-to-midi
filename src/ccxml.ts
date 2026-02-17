@@ -9,6 +9,10 @@ export interface CCXML {
         };
         lyricfont: string;
     };
+    qrcode: {
+        link: string;
+        title: string;
+    },
     parts: Part[];
     groups: any[];
     fifths: number;
@@ -176,6 +180,7 @@ export interface Direction {
         y2?: number;
         'font-size'?: number;
         'font-weight'?: string;
+        'font-style'?: string;
     };
 }
 
