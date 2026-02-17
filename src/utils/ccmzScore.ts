@@ -48,8 +48,9 @@ export const ccmzScore = async (
 
     const fileName = type === 1 ? "data.ccxml" : "score.json";
     const scoreData = JSON.parse(await unzipFile(data, fileName));
+    const fileTime = JSON.parse(await unzipFile(data, 'info.json'))["File Time"]
 
     onLog("解压数据...完成", null, true);
 
-    return scoreData;
+    return { score: scoreData, time: fileTime };
 };

@@ -477,3 +477,83 @@ export function Input({ title, value, onChange }: InputProps) {
         </div>
     );
 }
+
+interface CheckboxProps {
+    label: string;
+    checked: boolean;
+    onClick: (checked: boolean) => void;
+}
+
+export function Checkbox({ label, checked, onClick }: CheckboxProps) {
+    // 新增：控制缩放的状态
+    const [isPressed, setIsPressed] = useState(false);
+
+    const tickSvg = `data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJtMi4xOTQgNC4zMjYgMi40MDIgMi40MjIgNS40ODctNS40OTgiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==`;
+
+    // 处理按下事件
+    const handlePress = () => setIsPressed(true);
+    // 处理释放事件
+    const handleRelease = () => setIsPressed(false);
+
+    return (
+        <div
+            onClick={() => onClick(!checked)}
+            onMouseDown={handlePress}
+            onMouseUp={handleRelease}
+            onMouseLeave={handleRelease}
+            onTouchStart={handlePress}
+            onTouchEnd={handleRelease}
+
+            style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '5px 9px',
+                cursor: 'pointer',
+                userSelect: 'none',
+                WebkitTapHighlightColor: 'transparent',
+            }}
+        >
+            <div
+                className="miui-checkbox"
+                style={{
+                    position: 'relative',
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    backgroundColor: checked ? 'var(--primary-color)' : '#e8e8e8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    transform: isPressed ? 'scale(0.9)' : 'scale(0.999999)',//浏览器有bug？
+                    transition: 'all 0.2s',
+                }}
+            >
+                <div
+                    style={{
+                        width: '14px',
+                        height: '9px',
+                        backgroundImage: `url(${tickSvg})`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'contain',
+                        position: 'absolute',
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -45%)',
+                        opacity: checked ? 1 : 0,
+                        transition: 'opacity 0.2s',
+                    }}
+                />
+            </div>
+            <span
+                style={{
+                    paddingLeft: '6px',
+                    color: '#000',
+                    fontSize: '16px',
+                }}
+            >
+                {label}
+            </span>
+        </div>
+    );
+}

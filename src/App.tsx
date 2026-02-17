@@ -32,6 +32,8 @@ function App() {
     const [fileType, setFileType] = useState<FileType>('midi');
     const [volume, setVolume] = useState(100);
     const [pdfType, setPdfType] = useState(0);
+    const [fontScale, setFontScale] = useState(0.65);
+    const [enableShift, setEnableShift] = useState(true);
 
     const [logs, setLogs] = useState<{ text: string; type: LogType; btn?: { label: string; action: () => void }; id: string }[]>([]);
     const [runState, setRunState] = useState<'running' | 'success' | 'error' | 'success-pdf'>('running');
@@ -44,6 +46,8 @@ function App() {
         setVolume(100);
         setView('config');
         setIsOpen(true);
+        setFontScale(0.65);
+        setEnableShift(true);
     };
 
 
@@ -133,10 +137,10 @@ function App() {
         try {
             if (fileType === 'pdf') {
                 if (pdfType === 0) {
-                    const scoreData = await ccmzScore(fileData, onLog);
+                    const { score } = await ccmzScore(fileData, onLog);
                     if (destroyPdfRef.current) destroyPdfRef.current();
 
-                    const { resultInfo, print, destroy } = await loadPdf(scoreData, onLog);
+                    const { resultInfo, print, destroy } = await loadPdf(score, onLog);
                     destroyPdfRef.current = destroy;
                     printPdfRef.current = print;
 
@@ -145,10 +149,10 @@ function App() {
                     setRunState('success-pdf');
 
                 } else if (pdfType === 1) {
-                    const scoreData = await ccmzScore(fileData, onLog);
+                    const { score } = await ccmzScore(fileData, onLog);
                     if (destroyPdfRef.current) destroyPdfRef.current();
 
-                    const resultFile: File = await scorePdfFile(scoreData, onLog);
+                    const resultFile: File = await scorePdfFile(score, onLog);
                     if (taskId !== currentTaskIdRef.current) return;
 
                     setOutputFile(resultFile);
@@ -164,13 +168,13 @@ function App() {
                 setLogs(prev => [...prev, { text: `已生成文件 ${resultFile.name} 大小：${formatFileSize(resultFile.size)}`, type: 'success', id: crypto.randomUUID() }]);
                 setRunState('success');
             } else if (fileType === 'xml') {
-                const scoreData = await ccmzScore(fileData, onLog);
-                const xml: string = await ccxmlToXml(scoreData, {
-                    date: '1145-01-14',
-                    enableShift: true,
-                    fontScale: 0.65
+                const { score, time } = await ccmzScore(fileData, onLog);
+                const xml: string = await ccxmlToXml(score, {
+                    date: time?.split?.(' ')[0] ?? "1145-01-14",
+                    enableShift,
+                    fontScale
                 }, onLog);
-                const fileName = `${scoreData.title?.title ?? fileData.name.replace(/\.[^/.]+$/, "")}.musicxml`;
+                const fileName = `${score.title?.title ?? fileData.name.replace(/\.[^/.]+$/, "")}.musicxml`;
                 const resultFile = new File([xml], fileName, { type: 'text/xml' });
                 if (taskId !== currentTaskIdRef.current) return;
                 setOutputFile(resultFile);
@@ -220,12 +224,13 @@ function App() {
                             {currentView === 'config' ? (
                                 <ConfigContent
                                     file={fileData || new File([], '')}
-                                    fileType={fileType}
-                                    setFileType={setFileType}
-                                    volume={volume}
-                                    setVolume={setVolume}
-                                    pdfType={pdfType}
-                                    setPdfType={setPdfType}
+
+                                    fileType={fileType} setFileType={setFileType}
+                                    volume={volume} setVolume={setVolume}
+                                    pdfType={pdfType} setPdfType={setPdfType}
+                                    fontScale={fontScale} setFontScale={setFontScale}
+                                    enableShift={enableShift} setEnableShift={setEnableShift}
+
                                     onClose={() => setIsOpen(false)}
                                     onStart={handleStart}
                                 />

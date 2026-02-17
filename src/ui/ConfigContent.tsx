@@ -1,16 +1,18 @@
-import { Slider, Button, RadioGroup } from './Miui';
+import { Slider, Button, RadioGroup, Checkbox } from './Miui';
 import AnimatedContent from './AnimatedContent';
 import Spacer from './Spacer';
 import formatFileSize from '../utils/formatFileSize';
 
 interface ConfigProps {
     file: File;
-    fileType: 'midi' | 'pdf' | 'xml';
-    setFileType: (t: 'midi' | 'pdf' | 'xml') => void;
-    volume: number;
-    setVolume: (v: number) => void;
-    pdfType: number;
-    setPdfType: (v: number) => void;
+
+    //配置信息
+    fileType: 'midi' | 'pdf' | 'xml'; setFileType: (t: 'midi' | 'pdf' | 'xml') => void;
+    volume: number; setVolume: (v: number) => void;
+    pdfType: number; setPdfType: (v: number) => void;
+    fontScale: number; setFontScale: (v: number) => void;
+    enableShift: boolean; setEnableShift: (v: boolean) => void;
+
     onClose: () => void;
     onStart: () => void;
 }
@@ -19,6 +21,8 @@ function ConfigContent({ file,
     fileType, setFileType,
     volume, setVolume,
     pdfType, setPdfType,
+    fontScale, setFontScale,
+    enableShift, setEnableShift,
     onClose,
     onStart
 }: ConfigProps) {
@@ -106,8 +110,22 @@ function ConfigContent({ file,
                                 <div style={{ padding: '4px 4px 0', fontSize: '14px', color: '#666' }}>
                                     既可以直接打印，也可以编辑的格式
                                 </div>
-                                <div style={{ padding: '4px 4px 0', fontSize: '14px', color: '#c00' }}>
-                                    前面的区域，以后再来探索吧 []~(￣▽￣)~*
+                                <Spacer height='16px' />
+                                <div style={{ fontSize: '16px', color: '#222' }}>转换选项</div>
+                                <Spacer height='4px' />
+                                <Checkbox label="启用高八度标记（实验性）" checked={enableShift} onClick={setEnableShift} />
+                                <div style={{ fontSize: '12px', color: '#666' }}>
+                                    此功能在大多数乐谱是正常的，如果出现标记范围不全、多标或者连续标记导致音高异常可尝试关闭
+                                </div>
+                                <Spacer height='12px' />
+                                <Slider
+                                    title="标记字号缩放比"
+                                    value={(fontScale - 0.3) / 0.7}
+                                    onChange={(val) => setFontScale(0.3 + val * 0.7)}
+                                    valueToString={(val) => `${(0.3 + val * 0.7).toFixed(2)}x`}
+                                />
+                                <div style={{ fontSize: '12px', color: '#666' }}>
+                                    调整musicxml乐谱上的标记文字（演奏记号、指法等）的大小
                                 </div>
                             </>
                         )}
