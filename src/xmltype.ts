@@ -156,23 +156,31 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
     }[] = [];
     notes.forEach((note, noteI) => {
         const trackId = noteTrackId(note);
-        note.elems?.forEach(el => {
-            el.pairs?.forEach(pair => {
-                if (pair.type === "tuplet") {
-                    tuplets.push({
-                        startI: noteI,
-                        endI: pair.n2 !== undefined ? pair.n2 : (noteI + (pair.value || 1) - 1),
-                        value: pair.value || 0
-                    });
-                } else {
-                    //先写入标记数据
-                    pair.m1 = mIdx;
-                    pair.n1 = noteI;
-                    pair.trackId = trackId;
-                    pair.id = pairList.filter(p => p.type == pair.type).length + 1;
-                    pairList.push(pair);
+        const allPairs = [];
+        if (note.elems) {
+            note.elems.forEach(el => { if (el.pairs) allPairs.push(...el.pairs); });
+        }
+        if (note.rest && note.rest.pairs) {
+            //休止符也有三连音？（来自Are You Lost）
+            allPairs.push(...note.rest.pairs);
+        }
+
+        allPairs.forEach(pair => {
+            if (pair.type === "tuplet") {
+                const tupletData = {
+                    startI: noteI,
+                    endI: pair.n2 !== undefined ? pair.n2 : (noteI + (pair.value || 1) - 1),
+                    value: pair.value || 0
                 }
-            });
+                tuplets.push(tupletData);
+            } else {
+                //先写入标记数据
+                pair.m1 = mIdx;
+                pair.n1 = noteI;
+                pair.trackId = trackId;
+                pair.id = pairList.filter(p => p.type == pair.type).length + 1;
+                pairList.push(pair);
+            }
         });
     });
 
@@ -375,19 +383,45 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
             .sort((a, b) => a.trackId - b.trackId);
 
         let inserted = false;
+        const targetTick = remapTick(dirGroup.tick);
+
+        // 检查是否包含需要强制插入的信息（如谱号转换）
+        const isForceInsert = dirGroup.items?.some(item => 'clef' in item);
+
         for (const track of potentialTracks) {
             let currentTick = 0;
+            let bestIndex = -1;
+
             for (let i = 0; i <= track.notes.length; i++) {
-                if (currentTick === remapTick(dirGroup.tick)) {
+                // 情况 A: 完美匹配
+                if (Math.abs(currentTick - targetTick) < 1e-5) {
                     track.notes.splice(i, 0, dirGroup);
                     inserted = true;
                     break;
                 }
+
+                // 情况 B: 记录第一个超过目标时间点的位置（作为“最近缝隙”）
+                if (currentTick > targetTick && bestIndex === -1) {
+                    bestIndex = i;
+                }
+
                 if (i < track.notes.length) {
-                    currentTick += xmlNodeDuration(track.notes[i]!);
+                    const note = track.notes[i];
+                    if (note) currentTick += xmlNodeDuration(note);
                 }
             }
+
             if (inserted) break;
+
+            // 如果没找到完美匹配，但属于强制插入类型（如 Clef）
+            if (isForceInsert) {
+                // 如果 targetTick 比全曲还长，插在末尾；否则插在找到的最近缝隙
+                const finalIndex = bestIndex !== -1 ? bestIndex : track.notes.length;
+                track.notes.splice(finalIndex, 0, dirGroup);
+                inserted = true;
+                if (measure._DEBUG_) console.log(`W: 强制插入控制信息`, JSON.stringify(dirGroup));
+                break;
+            }
         }
 
         if (!inserted) {
@@ -440,16 +474,6 @@ export function notesToXmlNotes(mIdx: number, measure: Measure, pairList: TiePai
         });
         if (measure._DEBUG_) console.log("--------")
     });
-
-    pdirList.forEach(pdir => {
-        // 如果 stopx 已经小于 0，说明结束位置已经错过
-        if (pdir.stopx !== undefined && pdir.stopx < -0.1) {
-            console.warn(`W: 标记丢失结束点 [${JSON.stringify(pdir)}'}`);
-            pdirsToRemove.push(pdir);
-        }
-    });
-
-    // 清理已完全处理的跨小节标记
     pdirsToRemove.forEach(p => {
         const idx = pdirList.indexOf(p);
         if (idx !== -1) pdirList.splice(idx, 1);

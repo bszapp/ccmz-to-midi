@@ -102,10 +102,14 @@ export default function app(input: CCXML) {
     input.parts.forEach((p, i) => {
         const pid = `P${i + 1}`;
         const scorePart = partList.ele('score-part', { id: pid });
-        // 接口无 partName，使用标题或默认值
-        scorePart.ele('part-name').txt(input.title.title || "Piano").up()
-            .ele('part-abbreviation').txt(pid).up()
-            .ele('score-instrument', { id: `${pid}-I1` }).ele('instrument-name').txt("Piano").up().ele('instrument-sound').txt("keyboard.piano").up().up()
+        const name = input.lines?.[0]?.lineStaves?.find(s => s.parti === i)?.name ?? "";
+        const shortName = input.lines?.[1]?.lineStaves?.find(s => s.parti === i)?.name ?? "";
+        console.log("乐器信息", { i, name, shortName });
+        scorePart.ele('part-name').txt(name).up() //全称
+            .ele('part-abbreviation').txt(shortName).up() //简称
+            .ele('score-instrument', { id: `${pid}-I1` })
+            .ele('instrument-name').txt("Piano").up()
+            .ele('instrument-sound').txt("keyboard.piano").up().up()
             .ele('midi-device', { id: `${pid}-I1`, port: "1" }).up()
             .ele('midi-instrument', { id: `${pid}-I1` })
             .ele('midi-channel').txt("1").up()
@@ -126,7 +130,7 @@ export default function app(input: CCXML) {
         p.measures.forEach((m, mIdx) => {
             //#region-2:分小节[DEBUG]
             //（第一小节、第二小节……）
-            if ([17, 18].includes(mIdx + 1)) {
+            if ([1].includes(mIdx + 1)) {
                 m._DEBUG_ = true;
             }
 
@@ -135,21 +139,39 @@ export default function app(input: CCXML) {
 
             const meas = part.ele('measure', { number: m.num, width: m.w.toString() });
 
-            // 换行
-            if (input.lines.some(line => line.m1 === mIdx)) {
+            // 换行换页
+            const lineConfig = input.lines.find(line => line.m1 === mIdx);
+            if (lineConfig) {
                 let p1;
-                if (mIdx === 0) {
+                //换页符
+                if (lineConfig.newpage === true) {
+                    p1 = meas.ele('print', { 'new-page': 'yes', 'new-system': 'yes' });
+                }
+                //首行信息
+                else if (mIdx === 0) {
                     p1 = meas.ele('print');
-                    const sysLayout = p1.ele('system-layout');
-                    sysLayout.ele('system-margins').ele('left-margin').txt("50").up().ele('right-margin').txt("0");
-                    sysLayout.ele('top-system-distance').txt("170");
-                } else {
+                }
+                //换行符
+                else {
                     p1 = meas.ele('print', { 'new-system': 'yes' });
-                    const sysLayout = p1.ele('system-layout');
-                    sysLayout.ele('system-margins').ele('left-margin').txt("0").up().ele('right-margin').txt("0");
-                    sysLayout.ele('system-distance').txt("237.5");
                 }
 
+                const sysLayout = p1.ele('system-layout');
+                if (mIdx === 0) {
+                    sysLayout.ele('system-margins')
+                        .ele('left-margin').txt("50").up()
+                        .ele('right-margin').txt("0");
+                    sysLayout.ele('top-system-distance').txt("170");
+                } else {
+                    sysLayout.ele('system-margins')
+                        .ele('left-margin').txt("0").up()
+                        .ele('right-margin').txt("0");
+                    if (lineConfig.newpage) {
+                        sysLayout.ele('top-system-distance').txt("120");
+                    } else {
+                        sysLayout.ele('system-distance').txt("237.5");
+                    }
+                }
                 if (m.staves > 1) {
                     p1.ele('staff-layout', { number: "2" }).ele('staff-distance').txt("65");
                 }
@@ -368,6 +390,9 @@ export default function app(input: CCXML) {
 
                             // 4. [tie]
                             if (el.tied) {
+                                if (m._DEBUG_) {
+                                    console.log(`[tie]音符:${el.step}${el.octave} | 偏移:${trackTotalDuration} | ${JSON.stringify(el.tied)}`);
+                                }
                                 if (el.tied.type === 'stop') n.ele('tie', { type: 'stop' });
                                 else if (el.tied.type === 'start') n.ele('tie', { type: 'start' });
                                 else if (el.tied.type === 'continue') {
@@ -412,11 +437,12 @@ export default function app(input: CCXML) {
 
                             // 连音标记 (tuplet bracket)
                             if (xn.tuplet && (xn.tuplet.type === 'start' || xn.tuplet.type === 'end')) {
+                                console.log("连音", JSON.stringify(xn.tuplet));
                                 const tType = xn.tuplet.type === 'start' ? 'start' : 'stop';
                                 notations.ele('tuplet', { type: tType, bracket: 'yes' });
                             }
 
-                            // 连音线 (tied)
+                            // 延音线 (tied)
                             if (el.tied) {
                                 if (el.tied.type === 'stop') {
                                     notations.ele('tied', { type: 'stop' });
@@ -433,11 +459,11 @@ export default function app(input: CCXML) {
                                 if (m._DEBUG_) console.log('pairs', JSON.stringify(pairInfo))
                                 const { type, pair } = pairInfo;
                                 const xmlTagName = pair.type;
+                                if (xmlTagName == 'tied') return;
 
                                 const d = pair as any;
 
                                 if (type === 'start') {
-                                    // 使用 Record<string, any> 允许添加任意属性
                                     const attributes: Record<string, any> = {
                                         type: 'start',
                                         number: d.id
@@ -456,11 +482,27 @@ export default function app(input: CCXML) {
                                     if (xmlTagName === 'glissando' && d.text) {
                                         ele.txt(d.text);
                                     }
+
+                                    if (xmlTagName === 'tremolo') {
+                                        const ornaments = notations.ele('ornaments');
+                                        ornaments.ele('tremolo', {
+                                            type: type,
+                                            number: d.id
+                                        }).txt(d.num);
+                                    }
                                 } else if (type === 'stop') {
-                                    notations.ele(xmlTagName, {
-                                        type: 'stop',
-                                        number: d.id
-                                    });
+                                    if (xmlTagName === 'tremolo') {
+                                        const ornaments = notations.ele('ornaments');
+                                        ornaments.ele('tremolo', {
+                                            type: 'stop',
+                                            number: d.id
+                                        }).txt(d.num);
+                                    } else {
+                                        notations.ele(xmlTagName, {
+                                            type: 'stop',
+                                            number: d.id
+                                        });
+                                    }
                                 }
                             });
 

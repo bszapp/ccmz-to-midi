@@ -68,6 +68,7 @@ export interface Note {
 
     rest?: {                 // 休止符属性，存在此对象则表示该音符为休止符
         nums: number;        // 休止符占据的单位长度或数量
+        pairs: TiePair[];
     };
     stem?: {                 // 符干属性
         type: string;        // 符干方向，如 "up" 或 "down"
@@ -113,7 +114,7 @@ interface NoteElement {
 export interface TiePair {
     m2?: number | undefined;      // 目标小节索引
     n2?: number | undefined;      // 目标音符索引
-    type: "tied" | "slur" | "tuplet" | "glissando"; // tied延音线(这里不处理了) slur圆滑线(跨小节) tuplet连音(单个小节内) glissando滑音(跨小节)
+    type: "tied" | "slur" | "tuplet" | "glissando" | "tremolo"; // tied延音线(这里不处理了) slur圆滑线(跨小节) tuplet连音(单个小节内) glissando滑音(跨小节)
     x1: number;
     y1: number;
     x2: number;
@@ -231,4 +232,5 @@ interface LineStaff {
     time: Time;
     parti: number;
     height: number;
+    name: string;
 }
