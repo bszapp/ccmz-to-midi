@@ -8,7 +8,16 @@ interface AppConfig {
     fontScale: number;//字体px到乐谱缩放
 }
 
-export default function app(input: CCXML, config: AppConfig) {
+export default async function app(
+    input: CCXML,
+    config: AppConfig,
+    onLog?: (message: string, action: { label: string; onClick: () => void } | null, replaceLast?: boolean) => void
+) {
+    const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, onLog ? ms : 0));
+
+    onLog?.("写入头部...", null);
+    await wait(100);
+
     const root = create({ version: '1.0', encoding: 'UTF-8' })
         .dtd({
             pubID: '-//Recordare//DTD MusicXML 4.0 Partwise//EN',
@@ -36,7 +45,7 @@ export default function app(input: CCXML, config: AppConfig) {
     const misc = ident.ele('miscellaneous');
     misc.ele('miscellaneous-field', { name: "creationDate" }).txt(config.date);
     misc.ele('miscellaneous-field', { name: "subtitle" }).txt(input.title.subtitle);
-    misc.ele('miscellaneous-field', { name: "copyright" }).txt(`本文件来自虫虫钢琴ccmz格式转换，版权归原作者所有，未经许可不得二次修改分发\n来源：${input.qrcode.link}\n转换工具：https://bszapp.github.io/ccmz-to-midi/`);
+    misc.ele('miscellaneous-field', { name: "copyright" }).txt(`本文件来自虫虫钢琴ccmz格式转换，版权归原作者所有，未经许可不得二次修改分发\n${input.qrcode ? `来源：${input.qrcode.link}\n` : ''}转换工具：https://bszapp.github.io/ccmz-to-midi/`);
 
     // Defaults
     const defs = root.ele('defaults');
@@ -105,7 +114,7 @@ export default function app(input: CCXML, config: AppConfig) {
     const typeMap: Record<number, string> = { 1: 'whole', 2: 'half', 4: 'quarter', 8: 'eighth', 16: '16th', 32: '32nd' };
 
     const partList = root.ele('part-list');
-    input.parts.forEach((p, i) => {
+    input.parts.forEach((_, i) => {
         const pid = `P${i + 1}`;
         const scorePart = partList.ele('score-part', { id: pid });
         const name = input.lines?.[0]?.lineStaves?.find(s => s.parti === i)?.name ?? "";
@@ -124,19 +133,24 @@ export default function app(input: CCXML, config: AppConfig) {
             .ele('pan').txt("0");
     });
 
-    input.parts.forEach((p, pIdx) => {
+    onLog?.("写入头部...完成", null, true);
+
+    for (const [pIdx, p] of input.parts.entries()) {
         //#region-1:分每个乐器
         //（钢琴？小提琴？……）
+
+        onLog?.(`写入乐器#${pIdx + 1}...(0/${p.measures.length})`, null);
 
         const part = root.ele('part', { id: `P${pIdx + 1}` });
 
         const tieList: TiePair[] = [];//圆滑线记录
         const pdirList: Pdir[] = [];//高音区域记录
 
-        p.measures.forEach((m, mIdx) => {
+        for (const [mIdx, m] of p.measures.entries()) {
+            if (mIdx % 5 == 0) await wait(0);
             //#region-2:分小节[DEBUG]
             //（第一小节、第二小节……）
-            if ([8].includes(mIdx + 1)) {
+            if ([114514].includes(mIdx + 1)) {
                 m._DEBUG_ = true;
             }
 
@@ -382,8 +396,8 @@ export default function app(input: CCXML, config: AppConfig) {
                                 n.ele('grace', graceAttr);
                             }
 
-                            if (elIdx > 0) n.ele('chord');
                             if (xn.cue) n.ele('cue');
+                            if (elIdx > 0) n.ele('chord');
 
                             // 2. [pitch]
                             const p = n.ele('pitch');
@@ -533,8 +547,7 @@ export default function app(input: CCXML, config: AppConfig) {
                                     const lyric = n.ele('lyric', { number: (lyricData.num + 1).toString() });
 
                                     lyric.ele('syllabic').txt('single');
-
-                                    const textEle = lyric.ele('text', {
+                                    lyric.ele('text', {
                                         'font-family': input.defaults.lyricfont,
                                     }).txt(lyricData.text);
                                 });
@@ -552,10 +565,11 @@ export default function app(input: CCXML, config: AppConfig) {
                 meas.ele('barline', { location: "right" }).ele('bar-style').txt(m.rbar.type);
             }
             //#endregion 2
-        });
+
+            onLog?.(`写入乐器#${pIdx + 1}...(${mIdx + 1}/${p.measures.length})`, null, true);
+        };
         //#endregion 1
-    });
+    };
 
     return root.end({ prettyPrint: true });
 }
-

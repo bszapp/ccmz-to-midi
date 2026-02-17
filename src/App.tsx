@@ -13,7 +13,6 @@ import formatFileSize from './utils/formatFileSize.js';
 import { ccmzScore } from './utils/ccmzScore.js';
 import { scorePdfFile } from './utils/scorePdfFile.js';
 import ccxmlToXml from './ccxml/app.ts';
-import type { CCXML } from './ccxml/ccxml.ts';
 
 declare global {
     interface Window {
@@ -166,11 +165,11 @@ function App() {
                 setRunState('success');
             } else if (fileType === 'xml') {
                 const scoreData = await ccmzScore(fileData, onLog);
-                const xml: string = ccxmlToXml(scoreData, {
+                const xml: string = await ccxmlToXml(scoreData, {
                     date: '1145-01-14',
                     enableShift: true,
                     fontScale: 0.65
-                });
+                }, onLog);
                 const fileName = `${scoreData.title?.title ?? fileData.name.replace(/\.[^/.]+$/, "")}.musicxml`;
                 const resultFile = new File([xml], fileName, { type: 'text/xml' });
                 if (taskId !== currentTaskIdRef.current) return;

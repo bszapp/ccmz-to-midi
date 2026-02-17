@@ -117,7 +117,7 @@ function ConfigContent({ file,
             <Spacer height='16px' />
             <div style={{ display: 'flex', gap: '12px' }}>
                 <Button onClick={onClose}>取消</Button>
-                <Button onClick={onStart} isPrimary disabled={fileType === 'xml'}>开始</Button>
+                <Button onClick={onStart} isPrimary>开始</Button>
             </div>
         </div>
     );
