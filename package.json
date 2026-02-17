@@ -28,7 +28,8 @@
     "lucide-react": "^0.563.0",
     "serve-handler": "^6.1.6",
     "svg2pdf.js": "^2.7.0",
-    "vue": "^2.7.16"
+    "vue": "^2.7.16",
+    "xmlbuilder2": "^4.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

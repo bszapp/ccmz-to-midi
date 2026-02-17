@@ -12,6 +12,8 @@ import { ccmzToMidi } from './utils/ccmzToMidi.js';
 import formatFileSize from './utils/formatFileSize.js';
 import { ccmzScore } from './utils/ccmzScore.js';
 import { scorePdfFile } from './utils/scorePdfFile.js';
+import ccxmlToXml from './ccxml/app.ts';
+import type { CCXML } from './ccxml/ccxml.ts';
 
 declare global {
     interface Window {
@@ -162,6 +164,23 @@ function App() {
                 setOutputFile(resultFile);
                 setLogs(prev => [...prev, { text: `已生成文件 ${resultFile.name} 大小：${formatFileSize(resultFile.size)}`, type: 'success', id: crypto.randomUUID() }]);
                 setRunState('success');
+            } else if (fileType === 'xml') {
+                const scoreData = await ccmzScore(fileData, onLog);
+                const xml: string = ccxmlToXml(scoreData, {
+                    date: '1145-01-14',
+                    enableShift: true,
+                    fontScale: 0.65
+                });
+                const fileName = `${scoreData.title?.title ?? fileData.name.replace(/\.[^/.]+$/, "")}.musicxml`;
+                const resultFile = new File([xml], fileName, { type: 'text/xml' });
+                if (taskId !== currentTaskIdRef.current) return;
+                setOutputFile(resultFile);
+                setLogs(prev => [...prev, {
+                    text: `已生成文件 ${resultFile.name} 大小：${formatFileSize(resultFile.size)}`,
+                    type: 'success',
+                    id: crypto.randomUUID()
+                }]);
+                setRunState('success');
             }
         } catch (e: any) {
             if (taskId !== currentTaskIdRef.current) return;
@@ -182,7 +201,7 @@ function App() {
         >
             <style>
                 {`
-                div::selection {
+                #app-main div::selection {
                     background: color-mix(in srgb, var(--primary-color), transparent 70%);
                 }
                 
