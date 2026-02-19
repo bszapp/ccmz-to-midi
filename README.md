@@ -12,7 +12,20 @@ https://bszapp.github.io/ccmz-to-midi/
 - 全部速度信息
 - 踏板信息
 
-另外还支持直接转换为PDF
+## PDF转换内容
+- 所见即所得，网站、手机客户端的所有内容都可以转换
+
+## musicxml转换内容
+- 区分乐器、谱表、声部
+- 换行符、分页符
+- 全部音符、装饰音及其部分标记
+- 连音、震音、琶音、滑音
+- 延音线、圆滑线、八度区域记号
+- 踏板信息
+- 强弱符号、渐强渐弱标记
+- 演奏指令，变速、高低音变化以及文字信息
+- 小节之间跳跃、反复
+- ……想不起来了
 
 ## 转换方式
 - 拖入文件转换
@@ -20,9 +33,10 @@ https://bszapp.github.io/ccmz-to-midi/
 - 复制书签链接粘贴下载（部分手机浏览器）
 - 油猴脚本下载
 
-最新源码懒得传了，旧版本的源码在main分支（没有pdf功能，可以看油猴脚本的打印按钮是怎么做的），新版本源码在2分支（下载然后`npm install` `npm run build`或者`npm run docs:dev`）
+最新文章懒得传了，新版本源码在2分支，包含转换midi、pdf、musicxml的源码（下载然后`npm install` `npm run build`或者`npm run docs:dev`）
+以前的旧版本的源码在main分支（没有pdf功能，可以看油猴脚本的打印按钮是怎么做的）
 
-另外最近在研究ccmz转成musicxml，源码可以在ccxml-to-musicxml分支查看，`npm install`然后`npm run dev`即可使用
+ccmz转成musicxml的源码可以单独在ccxml-to-musicxml分支查看，`npm install`然后`npm run dev`即可使用
 
 ---
 应该是平台的灰产吧……
