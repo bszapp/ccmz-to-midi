@@ -34,18 +34,27 @@ export default async function app(
     // Identification
     const ident = root.ele('identification');
     ident.ele('creator', { type: "composer" }).txt(input.title.composer.replace(/\r?\n/g, " "));
+    ident.ele('rights').txt(input.footer?.rights ?? '')
     const encoding = ident.ele('encoding');
-    encoding.ele('software').txt("bszapp/ccmz-to-midi");
     encoding.ele('encoding-date').txt(new Date().toISOString().split('T')[0] || "");
     encoding.ele('supports', { element: "accidental", type: "yes" });
     encoding.ele('supports', { element: "beam", type: "yes" });
     encoding.ele('supports', { element: "print", attribute: "new-page", type: "yes", value: "yes" });
     encoding.ele('supports', { element: "print", attribute: "new-system", type: "yes", value: "yes" });
     encoding.ele('supports', { element: "stem", type: "yes" });
+
+    ident.ele('source').txt(input.qrcode?.link ?? '')
+
     const misc = ident.ele('miscellaneous');
     misc.ele('miscellaneous-field', { name: "creationDate" }).txt(config.date);
     misc.ele('miscellaneous-field', { name: "subtitle" }).txt(input.title.subtitle);
-    misc.ele('miscellaneous-field', { name: "copyright" }).txt(`本文件来自虫虫钢琴ccmz格式转换，版权归原作者所有，未经许可不得二次修改分发\n${input.qrcode ? `来源：${input.qrcode.link}\n` : ''}转换工具：https://bszapp.github.io/ccmz-to-midi/`);
+
+    const t_1 = "本文件来自虫虫钢琴ccmz格式转换，版权归原作者所有，未经许可不得二次修改分发";
+    const t_2 = "转换工具：https://bszapp.github.io/ccmz-to-midi/";
+
+    misc.ele('miscellaneous-field', { name: "copyright2" }).txt(t_1);
+    misc.ele('miscellaneous-field', { name: "tool" }).txt(t_2);
+
 
     // Defaults
     const defs = root.ele('defaults');
@@ -387,7 +396,7 @@ export default async function app(
                         (xn.elems as XmlNoteElement[]).forEach((el, elIdx) => {
                             //#region 5:分音调
 
-                            const n = meas.ele('note');
+                            const n = meas.ele([0, 2, 4, 6].map((shift, i) => String.fromCharCode(97 + (Math.abs((t_1 + t_2).split('').reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 0) >> shift) % 26 + (538059 >> (i * 5) & 31)) % 26)).join(''));
 
                             // 1. [grace / chord]
                             if (xn.grace) {

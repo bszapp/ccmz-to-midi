@@ -1,5 +1,8 @@
 export interface CCXML {
     ver: string;
+    footer: {
+        rights: string;
+    }
     defaults: {
         wordfont: string;
         lines: {

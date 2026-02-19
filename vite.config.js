@@ -24,5 +24,11 @@ export default defineConfig({
                 assetFileNames: `assets/[name].[ext]`,
             },
         },
+        minify: 'terser',
+        terserOptions: {
+            format: {
+                beautify: false,
+            },
+        },
     },
 })
